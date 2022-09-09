@@ -1,0 +1,231 @@
+function entry_1080_000E_1080E returns:0 callers:callers.Count} called: 1 calls:7 approximateSize:0
+ - call: unknown_1000_0970_10970
+ - call: unknown_1000_0A51_10A51
+ - call: unknown_1000_0DDE_10DDE
+ - call: unknown_1000_1019_11019
+ - call: unknown_1000_105F_1105F
+ - call: unknown_1000_10F4_110F4
+ - call: interrupt_handler_0x21_F000_0020_F0020
+
+function unknown_1000_10F4_110F4 returns:1 callers:callers.Count} called: 1 calls:0 approximateSize:56 overridable
+ - returns: NEAR at 0x1000:0x112C/0x1112C
+   - target: 0x1000:0x12/0x10012
+ - caller: entry_1080_000E_1080E
+
+function unknown_1000_105F_1105F returns:1 callers:callers.Count} called: 1 calls:0 approximateSize:15 overridable
+ - returns: NEAR at 0x1000:0x106E/0x1106E
+   - target: 0x1000:0x2C/0x1002C
+ - caller: entry_1080_000E_1080E
+
+function interrupt_handler_0x21_F000_0020_F0020 returns:1 callers:callers.Count} called: 4 calls:0 approximateSize:3 overridable
+ - returns: INTERRUPT at 0xF000:0x23/0xF0023
+   - target: 0x1000:0x43/0x10043
+   - target: 0x1000:0x10A8/0x110A8
+   - target: 0x1000:0x10C0/0x110C0
+ - caller: entry_1080_000E_1080E
+ - caller: unknown_1000_109A_1109A
+
+function unknown_1000_0970_10970 returns:1 callers:callers.Count} called: 1 calls:2 approximateSize:68
+ - returns: NEAR at 0x1000:0x9B4/0x109B4
+   - target: 0x1000:0x4C/0x1004C
+ - caller: entry_1080_000E_1080E
+ - call: unknown_1000_09B5_109B5
+ - call: interrupt_handler_0x10_F000_0008_F0008
+
+function interrupt_handler_0x10_F000_0008_F0008 returns:1 callers:callers.Count} called: 7 calls:0 approximateSize:3 overridable
+ - returns: INTERRUPT at 0xF000:0xB/0xF000B
+   - target: 0x1000:0x975/0x10975
+   - target: 0x1000:0xFC6/0x10FC6
+ - caller: unknown_1000_0970_10970
+ - caller: unknown_1000_0FA4_10FA4
+
+function unknown_1000_09B5_109B5 returns:1 callers:callers.Count} called: 3 calls:0 approximateSize:34 overridable
+ - returns: NEAR at 0x1000:0x9D7/0x109D7
+   - target: 0x1000:0x992/0x10992
+   - target: 0x1000:0x997/0x10997
+   - target: 0x1000:0x9A3/0x109A3
+ - caller: unknown_1000_0970_10970
+
+function unknown_1000_1019_11019 returns:1 callers:callers.Count} called: 1 calls:0 approximateSize:33 overridable
+ - returns: NEAR at 0x1000:0x103A/0x1103A
+   - target: 0x1000:0x4F/0x1004F
+ - caller: entry_1080_000E_1080E
+
+function unknown_1000_0DDE_10DDE returns:1 callers:callers.Count} called: 1 calls:9 approximateSize:103
+ - returns: NEAR at 0x1000:0xE45/0x10E45
+   - target: 0x1000:0x56/0x10056
+ - caller: entry_1080_000E_1080E
+ - call: unknown_1000_0A3A_10A3A
+ - call: unknown_1000_0CF4_10CF4
+ - call: unknown_1000_0DBC_10DBC
+ - call: unknown_1000_0E49_10E49
+ - call: unknown_1000_0E4C_10E4C
+ - call: unknown_1000_0EAD_10EAD
+ - call: unknown_1000_0FA4_10FA4
+ - call: unknown_1000_0FEA_10FEA
+ - call: unknown_1000_11BD_111BD
+
+function unknown_1000_0DBC_10DBC returns:1 callers:callers.Count} called: 1 calls:1 approximateSize:33
+ - returns: NEAR at 0x1000:0xDDD/0x10DDD
+   - target: 0x1000:0xDE4/0x10DE4
+ - caller: unknown_1000_0DDE_10DDE
+ - call: unknown_1000_109A_1109A
+
+function unknown_1000_109A_1109A returns:1 callers:callers.Count} called: 1 calls:1 approximateSize:39
+ - returns: NEAR at 0x1000:0x10C1/0x110C1
+   - target: 0x1000:0xDD7/0x10DD7
+ - caller: unknown_1000_0DBC_10DBC
+ - call: interrupt_handler_0x21_F000_0020_F0020
+
+function unknown_1000_0A3A_10A3A returns:1 callers:callers.Count} called: 1 calls:0 approximateSize:22 overridable
+ - returns: NEAR at 0x1000:0xA50/0x10A50
+   - target: 0x1000:0xDE9/0x10DE9
+ - caller: unknown_1000_0DDE_10DDE
+
+function unknown_1000_0EAD_10EAD returns:1 callers:callers.Count} called: 1 calls:0 approximateSize:15 overridable
+ - returns: NEAR at 0x1000:0xEBC/0x10EBC
+   - target: 0x1000:0xDFE/0x10DFE
+ - caller: unknown_1000_0DDE_10DDE
+
+function unknown_1000_0FA4_10FA4 returns:1 callers:callers.Count} called: 1 calls:2 approximateSize:39
+ - returns: NEAR at 0x1000:0xFCB/0x10FCB
+   - target: 0x1000:0xE03/0x10E03
+ - caller: unknown_1000_0DDE_10DDE
+ - call: unknown_1000_0FCC_10FCC
+ - call: interrupt_handler_0x10_F000_0008_F0008
+
+function unknown_1000_0FCC_10FCC returns:1 callers:callers.Count} called: 6 calls:0 approximateSize:29 overridable
+ - returns: NEAR at 0x1000:0xFE9/0x10FE9
+   - target: 0x1000:0xFC9/0x10FC9
+ - caller: unknown_1000_0FA4_10FA4
+
+function unknown_1000_0E4C_10E4C returns:1 callers:callers.Count} called: 1 calls:1 approximateSize:5
+ - returns: NEAR at 0x1000:0xE51/0x10E51
+   - target: 0x1000:0xE06/0x10E06
+ - caller: unknown_1000_0DDE_10DDE
+ - call: unknown_1000_0E86_10E86
+
+function unknown_1000_0E86_10E86 returns:1 callers:callers.Count} called: 39 calls:0 approximateSize:54 overridable
+ - returns: NEAR at 0x1000:0xEBC/0x10EBC
+   - target: 0x1000:0xE4F/0x10E4F
+ - caller: unknown_1000_0E46_10E46
+ - caller: unknown_1000_0E49_10E49
+ - caller: unknown_1000_0E4C_10E4C
+
+function unknown_1000_0E49_10E49 returns:1 callers:callers.Count} called: 1 calls:2 approximateSize:8
+ - returns: NEAR at 0x1000:0xE51/0x10E51
+   - target: 0x1000:0xE0C/0x10E0C
+ - caller: unknown_1000_0DDE_10DDE
+ - call: unknown_1000_0E59_10E59
+ - call: unknown_1000_0E86_10E86
+
+function unknown_1000_0E59_10E59 returns:1 callers:callers.Count} called: 38 calls:2 approximateSize:44
+ - returns: NEAR at 0x1000:0xE85/0x10E85
+   - target: 0x1000:0xE4C/0x10E4C
+ - caller: unknown_1000_0E46_10E46
+ - caller: unknown_1000_0E49_10E49
+ - call: unknown_1000_0B9A_10B9A
+ - call: unknown_1000_0EBD_10EBD
+
+function unknown_1000_0EBD_10EBD returns:1 callers:callers.Count} called: 13 calls:1 approximateSize:23
+ - returns: NEAR at 0x1000:0xED4/0x10ED4
+   - target: 0x1000:0xE74/0x10E74
+ - caller: unknown_1000_0E59_10E59
+ - call: unknown_1000_0EFE_10EFE
+
+function unknown_1000_0EFE_10EFE returns:1 callers:callers.Count} called: 13 calls:0 approximateSize:165 overridable
+ - returns: NEAR at 0x1000:0xFA3/0x10FA3
+   - target: 0x1000:0xED0/0x10ED0
+ - caller: unknown_1000_0EBD_10EBD
+
+function unknown_1000_0B9A_10B9A returns:4 callers:callers.Count} called: 13 calls:1 approximateSize:349
+ - returns: FAR at 0x1000:0xA9C/0x10A9C
+   - target: 0x1000:0xE84/0x10E84
+ - returns: FAR at 0x1000:0xBCA/0x10BCA
+   - target: 0x1000:0xE84/0x10E84
+ - returns: FAR at 0x1000:0xBEE/0x10BEE
+   - target: 0x1000:0xE84/0x10E84
+ - returns: FAR at 0x1000:0xBF9/0x10BF9
+   - target: 0x1000:0xE84/0x10E84
+ - caller: unknown_1000_0E59_10E59
+ - call: unknown_1000_0A22_10A22
+
+function unknown_1000_0A22_10A22 returns:1 callers:callers.Count} called: 13 calls:0 approximateSize:23 overridable
+ - returns: NEAR at 0x1000:0xA39/0x10A39
+   - target: 0x1000:0xBAF/0x10BAF
+   - target: 0x1000:0xC05/0x10C05
+ - caller: unknown_1000_0B9A_10B9A
+
+function unknown_1000_0CF4_10CF4 returns:1 callers:callers.Count} called: 1 calls:3 approximateSize:45
+ - returns: NEAR at 0x1000:0xD21/0x10D21
+   - target: 0x1000:0xE0F/0x10E0F
+ - caller: unknown_1000_0DDE_10DDE
+ - call: unknown_1000_0C72_10C72
+ - call: unknown_1000_0D22_10D22
+ - call: unknown_1000_1085_11085
+
+function unknown_1000_0C72_10C72 returns:1 callers:callers.Count} called: 1 calls:0 approximateSize:61 overridable
+ - returns: NEAR at 0x1000:0xCAF/0x10CAF
+   - target: 0x1000:0xCF7/0x10CF7
+ - caller: unknown_1000_0CF4_10CF4
+
+function unknown_1000_0D22_10D22 returns:1 callers:callers.Count} called: 288 calls:2 approximateSize:60
+ - returns: NEAR at 0x1000:0xD5E/0x10D5E
+   - target: 0x1000:0xD1B/0x10D1B
+   - target: 0x1000:0xE49/0x10E49
+ - caller: unknown_1000_0CF4_10CF4
+ - caller: unknown_1000_0E46_10E46
+ - call: unknown_1000_09D8_109D8
+ - call: unknown_1000_0D5F_10D5F
+
+function unknown_1000_0D5F_10D5F returns:1 callers:callers.Count} called: 288 calls:0 approximateSize:92 overridable
+ - returns: NEAR at 0x1000:0xDBB/0x10DBB
+   - target: 0x1000:0xD4E/0x10D4E
+ - caller: unknown_1000_0D22_10D22
+
+function unknown_1000_09D8_109D8 returns:1 callers:callers.Count} called: 288 calls:0 approximateSize:65 overridable
+ - returns: NEAR at 0x1000:0xA19/0x10A19
+   - target: 0x1000:0xD5C/0x10D5C
+ - caller: unknown_1000_0D22_10D22
+
+function unknown_1000_1085_11085 returns:1 callers:callers.Count} called: 288 calls:1 approximateSize:12
+ - returns: NEAR at 0x1000:0x1091/0x11091
+   - target: 0x1000:0xD1F/0x10D1F
+   - target: 0x1000:0x1018/0x11018
+ - caller: unknown_1000_0CF4_10CF4
+ - caller: unknown_1000_0FEA_10FEA
+ - call: interrupt_handler_0x16_F000_0014_F0014
+
+function interrupt_handler_0x16_F000_0014_F0014 returns:1 callers:callers.Count} called: 288 calls:0 approximateSize:3 overridable
+ - returns: INTERRUPT at 0xF000:0x17/0xF0017
+   - target: 0x1000:0x1089/0x11089
+ - caller: unknown_1000_1085_11085
+
+function unknown_1000_0FEA_10FEA returns:1 callers:callers.Count} called: 37 calls:2 approximateSize:46
+ - returns: NEAR at 0x1000:0x1018/0x11018
+   - target: 0x1000:0xE1B/0x10E1B
+ - caller: unknown_1000_0DDE_10DDE
+ - call: unknown_1000_0E46_10E46
+ - call: unknown_1000_1085_11085
+
+function unknown_1000_0E46_10E46 returns:2 callers:callers.Count} called: 37 calls:3 approximateSize:18
+ - returns: NEAR at 0x1000:0xE51/0x10E51
+   - target: 0x1000:0xFF7/0x10FF7
+ - returns: NEAR at 0x1000:0xE58/0x10E58
+   - target: 0x1000:0xFF7/0x10FF7
+ - caller: unknown_1000_0FEA_10FEA
+ - call: unknown_1000_0D22_10D22
+ - call: unknown_1000_0E59_10E59
+ - call: unknown_1000_0E86_10E86
+
+function unknown_1000_11BD_111BD returns:1 callers:callers.Count} called: 2 calls:0 approximateSize:10 overridable
+ - returns: NEAR at 0x1000:0x11C7/0x111C7
+   - target: 0x1000:0xE2C/0x10E2C
+   - target: 0x1000:0xE31/0x10E31
+ - caller: unknown_1000_0DDE_10DDE
+
+function unknown_1000_0A51_10A51 returns:1 callers:callers.Count} called: 1 calls:0 approximateSize:26 overridable
+ - returns: NEAR at 0x1000:0xA6B/0x10A6B
+   - target: 0x1000:0x59/0x10059
+ - caller: entry_1080_000E_1080E
+
