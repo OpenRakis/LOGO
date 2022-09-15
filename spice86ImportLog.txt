@@ -1,0 +1,657 @@
+Info: Reading function symbols
+Info: Importing function symbols
+Info: Importing function at address 1000:1085
+Info: Found symbol unknown_1000_1085_11085 at address 1000:1085. Deleting it.
+Info: Found function FUN_1000_1085 at address 1000:1085. Deleting it.
+Info: Creating function at address 1000:1085 with name unknown_1000_1085_11085
+Info: Importing function at address 1000:0e46
+Info: Found symbol unknown_1000_0E46_10E46 at address 1000:0e46. Deleting it.
+Info: Found function FUN_1000_0e46 at address 1000:0e46. Deleting it.
+Info: Creating function at address 1000:0e46 with name unknown_1000_0E46_10E46
+Info: Importing function at address 1000:0e86
+Info: Found symbol unknown_1000_0E86_10E86 at address 1000:0e86. Deleting it.
+Info: Found function FUN_1000_0e86 at address 1000:0e86. Deleting it.
+Info: Creating function at address 1000:0e86 with name unknown_1000_0E86_10E86
+Info: Importing function at address f000:0008
+Info: Found symbol interrupt_handler_0x10_F000_0008_F0008 at address f000:0008. Deleting it.
+Info: Found function FUN_f000_0008 at address f000:0008. Deleting it.
+Info: Creating function at address f000:0008 with name interrupt_handler_0x10_F000_0008_F0008
+Info: Importing function at address 1000:0e49
+Info: Found symbol unknown_1000_0E49_10E49 at address 1000:0e49. Deleting it.
+Info: Found function FUN_1000_0e49 at address 1000:0e49. Deleting it.
+Info: Creating function at address 1000:0e49 with name unknown_1000_0E49_10E49
+Info: Importing function at address 1000:0e4c
+Info: Found symbol unknown_1000_0E4C_10E4C at address 1000:0e4c. Deleting it.
+Info: Found function FUN_1000_0e4c at address 1000:0e4c. Deleting it.
+Info: Creating function at address 1000:0e4c with name unknown_1000_0E4C_10E4C
+Info: Importing function at address 1000:0fcc
+Info: Found symbol unknown_1000_0FCC_10FCC at address 1000:0fcc. Deleting it.
+Info: Found function FUN_1000_0fcc at address 1000:0fcc. Deleting it.
+Info: Creating function at address 1000:0fcc with name unknown_1000_0FCC_10FCC
+Info: Importing function at address 1000:080e
+Info: Found symbol entry_1080_000E_1080E at address 1000:080e. Deleting it.
+Info: Found function FUN_1000_080e at address 1000:080e. Deleting it.
+Info: Creating function at address 1000:080e with name entry_1080_000E_1080E
+Info: Importing function at address 1000:0a51
+Info: Found symbol unknown_1000_0A51_10A51 at address 1000:0a51. Deleting it.
+Info: Found function FUN_1000_0a51 at address 1000:0a51. Deleting it.
+Info: Creating function at address 1000:0a51 with name unknown_1000_0A51_10A51
+Info: Importing function at address 1000:0e59
+Info: Found symbol unknown_1000_0E59_10E59 at address 1000:0e59. Deleting it.
+Info: Found function FUN_1000_0e59 at address 1000:0e59. Deleting it.
+Info: Creating function at address 1000:0e59 with name unknown_1000_0E59_10E59
+Info: Importing function at address 1000:1019
+Info: Found symbol unknown_1000_1019_11019 at address 1000:1019. Deleting it.
+Info: Found function FUN_1000_1019 at address 1000:1019. Deleting it.
+Info: Creating function at address 1000:1019 with name unknown_1000_1019_11019
+Info: Importing function at address 1000:09d8
+Info: Found symbol unknown_1000_09D8_109D8 at address 1000:09d8. Deleting it.
+Info: Found function FUN_1000_09d8 at address 1000:09d8. Deleting it.
+Info: Creating function at address 1000:09d8 with name unknown_1000_09D8_109D8
+Info: Importing function at address 1000:0b9a
+Info: Found symbol unknown_1000_0B9A_10B9A at address 1000:0b9a. Deleting it.
+Info: Found function FUN_1000_0b9a at address 1000:0b9a. Deleting it.
+Info: Creating function at address 1000:0b9a with name unknown_1000_0B9A_10B9A
+Info: Importing function at address 1000:109a
+Info: Found symbol unknown_1000_109A_1109A at address 1000:109a. Deleting it.
+Info: Found function FUN_1000_109a at address 1000:109a. Deleting it.
+Info: Creating function at address 1000:109a with name unknown_1000_109A_1109A
+Info: Importing function at address f000:0014
+Info: Found symbol interrupt_handler_0x16_F000_0014_F0014 at address f000:0014. Deleting it.
+Info: Found function FUN_f000_0014 at address f000:0014. Deleting it.
+Info: Creating function at address f000:0014 with name interrupt_handler_0x16_F000_0014_F0014
+Info: Importing function at address 1000:0d5f
+Info: Found symbol unknown_1000_0D5F_10D5F at address 1000:0d5f. Deleting it.
+Info: Found function FUN_1000_0d5f at address 1000:0d5f. Deleting it.
+Info: Creating function at address 1000:0d5f with name unknown_1000_0D5F_10D5F
+Info: Importing function at address 1000:105f
+Info: Found symbol unknown_1000_105F_1105F at address 1000:105f. Deleting it.
+Info: Found function FUN_1000_105f at address 1000:105f. Deleting it.
+Info: Creating function at address 1000:105f with name unknown_1000_105F_1105F
+Info: Importing function at address 1000:0dde
+Info: Found symbol unknown_1000_0DDE_10DDE at address 1000:0dde. Deleting it.
+Info: Found function FUN_1000_0dde at address 1000:0dde. Deleting it.
+Info: Creating function at address 1000:0dde with name unknown_1000_0DDE_10DDE
+Info: Importing function at address 1000:0a22
+Info: Found symbol unknown_1000_0A22_10A22 at address 1000:0a22. Deleting it.
+Info: Found function FUN_1000_0a22 at address 1000:0a22. Deleting it.
+Info: Creating function at address 1000:0a22 with name unknown_1000_0A22_10A22
+Info: Importing function at address 1000:0d22
+Info: Found symbol unknown_1000_0D22_10D22 at address 1000:0d22. Deleting it.
+Info: Found function FUN_1000_0d22 at address 1000:0d22. Deleting it.
+Info: Creating function at address 1000:0d22 with name unknown_1000_0D22_10D22
+Info: Importing function at address 1000:0fa4
+Info: Found symbol unknown_1000_0FA4_10FA4 at address 1000:0fa4. Deleting it.
+Info: Found function FUN_1000_0fa4 at address 1000:0fa4. Deleting it.
+Info: Creating function at address 1000:0fa4 with name unknown_1000_0FA4_10FA4
+Info: Importing function at address 1000:0fea
+Info: Found symbol unknown_1000_0FEA_10FEA at address 1000:0fea. Deleting it.
+Info: Found function FUN_1000_0fea at address 1000:0fea. Deleting it.
+Info: Creating function at address 1000:0fea with name unknown_1000_0FEA_10FEA
+Info: Importing function at address 1000:0ead
+Info: Found symbol unknown_1000_0EAD_10EAD at address 1000:0ead. Deleting it.
+Info: Found function FUN_1000_0ead at address 1000:0ead. Deleting it.
+Info: Creating function at address 1000:0ead with name unknown_1000_0EAD_10EAD
+Info: Importing function at address f000:0020
+Info: Found symbol interrupt_handler_0x21_F000_0020_F0020 at address f000:0020. Deleting it.
+Info: Found function FUN_f000_0020 at address f000:0020. Deleting it.
+Info: Creating function at address f000:0020 with name interrupt_handler_0x21_F000_0020_F0020
+Info: Importing function at address 1000:0970
+Info: Found symbol unknown_1000_0970_10970 at address 1000:0970. Deleting it.
+Info: Found function FUN_1000_0970 at address 1000:0970. Deleting it.
+Info: Creating function at address 1000:0970 with name unknown_1000_0970_10970
+Info: Importing function at address 1000:0c72
+Info: Found symbol unknown_1000_0C72_10C72 at address 1000:0c72. Deleting it.
+Info: Found function FUN_1000_0c72 at address 1000:0c72. Deleting it.
+Info: Creating function at address 1000:0c72 with name unknown_1000_0C72_10C72
+Info: Importing function at address 1000:09b5
+Info: Found symbol unknown_1000_09B5_109B5 at address 1000:09b5. Deleting it.
+Info: Found function FUN_1000_09b5 at address 1000:09b5. Deleting it.
+Info: Creating function at address 1000:09b5 with name unknown_1000_09B5_109B5
+Info: Importing function at address 1000:0cf4
+Info: Found symbol unknown_1000_0CF4_10CF4 at address 1000:0cf4. Deleting it.
+Info: Found function FUN_1000_0cf4 at address 1000:0cf4. Deleting it.
+Info: Creating function at address 1000:0cf4 with name unknown_1000_0CF4_10CF4
+Info: Importing function at address 1000:10f4
+Info: Found symbol unknown_1000_10F4_110F4 at address 1000:10f4. Deleting it.
+Info: Found function FUN_1000_10f4 at address 1000:10f4. Deleting it.
+Info: Creating function at address 1000:10f4 with name unknown_1000_10F4_110F4
+Info: Importing function at address 1000:0a3a
+Info: Found symbol unknown_1000_0A3A_10A3A at address 1000:0a3a. Deleting it.
+Info: Found function FUN_1000_0a3a at address 1000:0a3a. Deleting it.
+Info: Creating function at address 1000:0a3a with name unknown_1000_0A3A_10A3A
+Info: Importing function at address 1000:0ebd
+Info: Found symbol unknown_1000_0EBD_10EBD at address 1000:0ebd. Deleting it.
+Info: Found function FUN_1000_0ebd at address 1000:0ebd. Deleting it.
+Info: Creating function at address 1000:0ebd with name unknown_1000_0EBD_10EBD
+Info: Importing function at address 1000:11bd
+Info: Found symbol unknown_1000_11BD_111BD at address 1000:11bd. Deleting it.
+Info: Found function FUN_1000_11bd at address 1000:11bd. Deleting it.
+Info: Creating function at address 1000:11bd with name unknown_1000_11BD_111BD
+Info: Importing function at address 1000:0dbc
+Info: Found symbol unknown_1000_0DBC_10DBC at address 1000:0dbc. Deleting it.
+Info: Found function FUN_1000_0dbc at address 1000:0dbc. Deleting it.
+Info: Creating function at address 1000:0dbc with name unknown_1000_0DBC_10DBC
+Info: Importing function at address 1000:0efe
+Info: Found symbol unknown_1000_0EFE_10EFE at address 1000:0efe. Deleting it.
+Info: Found function FUN_1000_0efe at address 1000:0efe. Deleting it.
+Info: Creating function at address 1000:0efe with name unknown_1000_0EFE_10EFE
+Info: Reading execution flow
+Info: Importing execution flow
+Info: No need to disassemble 1000:146c
+Info: No need to disassemble 1000:14a3
+Info: No need to disassemble 1000:1499
+Info: Disassembly status for 1000:14a8: success
+Info: Disassembly status for 1000:14b4: success
+Info: Disassembly status for 1000:14c0: success
+Info: No need to disassemble 1000:14cc
+Info: Disassembly status for 1000:14eb: success
+Info: Disassembly status for 1000:14eb: success
+Info: No need to disassemble 1000:1499
+Info: No need to disassemble 1000:14d8
+Info: No need to disassemble 1000:14f3
+Info: Disassembly status for 1000:14eb: success
+Info: No need to disassemble 1000:152c
+Info: Disassembly status for 1000:1539: success
+Info: No need to disassemble 1000:1554
+Info: Disassembly status for 1000:1561: success
+Info: No need to disassemble 1000:1540
+Info: No need to disassemble 1000:0000
+Info: No need to disassemble 1000:1127
+Info: No need to disassemble 1000:0023
+Info: No need to disassemble 1000:1061
+Info: No need to disassemble 1000:106e
+Info: No need to disassemble 1000:09c1
+Info: No need to disassemble 1000:09d6
+Info: No need to disassemble 1000:09bd
+Info: No need to disassemble 1000:10b8
+Info: No need to disassemble 1000:0fdf
+Info: No need to disassemble 1000:0fab
+Info: No need to disassemble 1000:0fcb
+Info: No need to disassemble 1000:0eb2
+Info: No need to disassemble 1000:0f30
+Info: No need to disassemble 1000:0f39
+Info: No need to disassemble 1000:0f36
+Info: No need to disassemble 1000:0f30
+Info: No need to disassemble 1000:0f41
+Info: No need to disassemble 1000:0f4d
+Info: No need to disassemble 1000:0f59
+Info: No need to disassemble 1000:0f65
+Info: No need to disassemble 1000:0f30
+Info: No need to disassemble 1000:0f7d
+Info: No need to disassemble 1000:0f6a
+Info: No need to disassemble 1000:0f6a
+Info: No need to disassemble 1000:0ba0
+Info: No need to disassemble 1000:0a2b
+Info: No need to disassemble 1000:0bbe
+Info: No need to disassemble 1000:0c85
+Info: No need to disassemble 1000:0c82
+Info: No need to disassemble 1000:0ca2
+Info: No need to disassemble 1000:0d79
+Info: No need to disassemble 1000:09ff
+Info: No need to disassemble 1000:0a01
+Info: No need to disassemble 1000:0a03
+Info: No need to disassemble 1000:0a05
+Info: No need to disassemble 1000:1091
+Info: No need to disassemble 1000:0d17
+Info: No need to disassemble 1000:09ec
+Info: No need to disassemble 1000:0e12
+Info: No need to disassemble 1000:0bfa
+Info: No need to disassemble 1000:0c31
+Info: No need to disassemble 1000:0c3b
+Info: No need to disassemble 1000:0a74
+Info: No need to disassemble 1000:0aa9
+Info: No need to disassemble 1000:0ac2
+Info: No need to disassemble 1000:0a74
+Info: No need to disassemble 1000:0a74
+Info: No need to disassemble 1000:0a6c
+Info: No need to disassemble 1000:0a80
+Info: No need to disassemble 1000:0a6c
+Info: No need to disassemble 1000:0a8f
+Info: No need to disassemble 1000:1007
+Info: No need to disassemble 1000:0bd9
+Info: No need to disassemble 1000:0bef
+Info: No need to disassemble 1000:0bdf
+Info: No need to disassemble 1000:0bdf
+Info: No need to disassemble 1000:0bdb
+Info: No need to disassemble 1000:0bdb
+Info: No need to disassemble 1000:0e84
+Info: No need to disassemble 1000:0e52
+Info: No need to disassemble 1000:11c7
+Info: No need to disassemble 1000:0e44
+Info: No need to disassemble 1000:0a60
+Info: No need to disassemble 1000:0a67
+Info: No need to disassemble 1000:10f4
+Info: No need to disassemble 1000:105f
+Info: No need to disassemble 1000:0970
+Info: No need to disassemble 1000:09b5
+Info: No need to disassemble 1000:09b5
+Info: No need to disassemble 1000:09b5
+Info: No need to disassemble 1000:1019
+Info: No need to disassemble 1000:0dde
+Info: No need to disassemble 1000:0dbc
+Info: No need to disassemble 1000:109a
+Info: No need to disassemble 1000:0a3a
+Info: No need to disassemble 1000:0ead
+Info: No need to disassemble 1000:0fa4
+Info: No need to disassemble 1000:0fcc
+Info: No need to disassemble 1000:0e4c
+Info: No need to disassemble 1000:0e86
+Info: No need to disassemble 1000:0e49
+Info: No need to disassemble 1000:0e59
+Info: No need to disassemble 1000:0ebd
+Info: No need to disassemble 1000:0efe
+Info: No need to disassemble 1000:0b9a
+Info: No need to disassemble 1000:0a22
+Info: No need to disassemble 1000:0cf4
+Info: No need to disassemble 1000:0c72
+Info: No need to disassemble 1000:0d22
+Info: No need to disassemble 1000:0d5f
+Info: No need to disassemble 1000:09d8
+Info: No need to disassemble 1000:1085
+Info: No need to disassemble 1000:0fea
+Info: No need to disassemble 1000:0e46
+Info: No need to disassemble 1000:0d22
+Info: No need to disassemble 1000:1085
+Info: No need to disassemble 1000:0a22
+Info: No need to disassemble 1000:11bd
+Info: No need to disassemble 1000:11bd
+Info: No need to disassemble 1000:0a51
+Info: No need to disassemble 1000:0000
+Info: No need to disassemble 1000:0012
+Info: No need to disassemble 1000:0023
+Info: No need to disassemble 1000:002c
+Info: No need to disassemble 1000:004c
+Info: No need to disassemble 1000:004f
+Info: No need to disassemble 1000:0056
+Info: No need to disassemble 1000:0059
+Info: No need to disassemble 1000:080e
+Info: No need to disassemble 1000:0970
+Info: No need to disassemble 1000:0970
+Info: No need to disassemble 1000:0992
+Info: No need to disassemble 1000:0997
+Info: No need to disassemble 1000:09a3
+Info: No need to disassemble 1000:09b5
+Info: No need to disassemble 1000:09b5
+Info: No need to disassemble 1000:09b5
+Info: No need to disassemble 1000:09b5
+Info: No need to disassemble 1000:09bd
+Info: No need to disassemble 1000:09c1
+Info: No need to disassemble 1000:09d6
+Info: No need to disassemble 1000:09d8
+Info: No need to disassemble 1000:09d8
+Info: No need to disassemble 1000:09ec
+Info: No need to disassemble 1000:09ff
+Info: No need to disassemble 1000:0a01
+Info: No need to disassemble 1000:0a03
+Info: No need to disassemble 1000:0a05
+Info: No need to disassemble 1000:0a22
+Info: No need to disassemble 1000:0a22
+Info: No need to disassemble 1000:0a22
+Info: No need to disassemble 1000:0a2b
+Info: No need to disassemble 1000:0a3a
+Info: No need to disassemble 1000:0a3a
+Info: No need to disassemble 1000:0a51
+Info: No need to disassemble 1000:0a51
+Info: No need to disassemble 1000:0a60
+Info: No need to disassemble 1000:0a67
+Info: No need to disassemble 1000:0a6c
+Info: No need to disassemble 1000:0a6c
+Info: No need to disassemble 1000:0a74
+Info: No need to disassemble 1000:0a74
+Info: No need to disassemble 1000:0a74
+Info: No need to disassemble 1000:0a80
+Info: No need to disassemble 1000:0a8f
+Info: No need to disassemble 1000:0aa9
+Info: No need to disassemble 1000:0ac2
+Info: No need to disassemble 1000:0b9a
+Info: No need to disassemble 1000:0b9a
+Info: No need to disassemble 1000:0ba0
+Info: No need to disassemble 1000:0baf
+Info: No need to disassemble 1000:0bbe
+Info: No need to disassemble 1000:0bd9
+Info: No need to disassemble 1000:0bdb
+Info: No need to disassemble 1000:0bdb
+Info: No need to disassemble 1000:0bdf
+Info: No need to disassemble 1000:0bdf
+Info: No need to disassemble 1000:0bef
+Info: No need to disassemble 1000:0bfa
+Info: No need to disassemble 1000:0c05
+Info: No need to disassemble 1000:0c31
+Info: No need to disassemble 1000:0c3b
+Info: No need to disassemble 1000:0c72
+Info: No need to disassemble 1000:0c72
+Info: No need to disassemble 1000:0c82
+Info: No need to disassemble 1000:0c85
+Info: No need to disassemble 1000:0ca2
+Info: No need to disassemble 1000:0cf4
+Info: No need to disassemble 1000:0cf4
+Info: No need to disassemble 1000:0cf7
+Info: No need to disassemble 1000:0d17
+Info: No need to disassemble 1000:0d1b
+Info: No need to disassemble 1000:0d1f
+Info: No need to disassemble 1000:0d22
+Info: No need to disassemble 1000:0d22
+Info: No need to disassemble 1000:0d22
+Info: No need to disassemble 1000:0d4e
+Info: No need to disassemble 1000:0d5c
+Info: No need to disassemble 1000:0d5f
+Info: No need to disassemble 1000:0d5f
+Info: No need to disassemble 1000:0d79
+Info: No need to disassemble 1000:0dbc
+Info: No need to disassemble 1000:0dbc
+Info: No need to disassemble 1000:0dd7
+Info: No need to disassemble 1000:0dde
+Info: No need to disassemble 1000:0dde
+Info: No need to disassemble 1000:0de4
+Info: No need to disassemble 1000:0de9
+Info: No need to disassemble 1000:0dfe
+Info: No need to disassemble 1000:0e03
+Info: No need to disassemble 1000:0e06
+Info: No need to disassemble 1000:0e0c
+Info: No need to disassemble 1000:0e0f
+Info: No need to disassemble 1000:0e12
+Info: No need to disassemble 1000:0e1b
+Info: No need to disassemble 1000:0e2c
+Info: No need to disassemble 1000:0e31
+Info: No need to disassemble 1000:0e44
+Info: No need to disassemble 1000:0e46
+Info: No need to disassemble 1000:0e46
+Info: No need to disassemble 1000:0e49
+Info: No need to disassemble 1000:0e49
+Info: No need to disassemble 1000:0e49
+Info: No need to disassemble 1000:0e4c
+Info: No need to disassemble 1000:0e4c
+Info: No need to disassemble 1000:0e4c
+Info: No need to disassemble 1000:0e4f
+Info: No need to disassemble 1000:0e52
+Info: No need to disassemble 1000:0e59
+Info: No need to disassemble 1000:0e59
+Info: No need to disassemble 1000:0e74
+Info: No need to disassemble 1000:0e84
+Info: No need to disassemble 1000:0e84
+Info: No need to disassemble 1000:0e84
+Info: No need to disassemble 1000:0e84
+Info: No need to disassemble 1000:0e84
+Info: No need to disassemble 1000:0e86
+Info: No need to disassemble 1000:0e86
+Info: No need to disassemble 1000:0ead
+Info: No need to disassemble 1000:0ead
+Info: No need to disassemble 1000:0eb2
+Info: No need to disassemble 1000:0ebd
+Info: No need to disassemble 1000:0ebd
+Info: No need to disassemble 1000:0ed0
+Info: No need to disassemble 1000:0efe
+Info: No need to disassemble 1000:0efe
+Info: No need to disassemble 1000:0f30
+Info: No need to disassemble 1000:0f30
+Info: No need to disassemble 1000:0f30
+Info: No need to disassemble 1000:0f36
+Info: No need to disassemble 1000:0f39
+Info: No need to disassemble 1000:0f41
+Info: No need to disassemble 1000:0f4d
+Info: No need to disassemble 1000:0f59
+Info: No need to disassemble 1000:0f65
+Info: No need to disassemble 1000:0f6a
+Info: No need to disassemble 1000:0f6a
+Info: No need to disassemble 1000:0f7d
+Info: No need to disassemble 1000:0fa4
+Info: No need to disassemble 1000:0fa4
+Info: No need to disassemble 1000:0fab
+Info: No need to disassemble 1000:0fc9
+Info: No need to disassemble 1000:0fcb
+Info: No need to disassemble 1000:0fcc
+Info: No need to disassemble 1000:0fcc
+Info: No need to disassemble 1000:0fdf
+Info: No need to disassemble 1000:0fea
+Info: No need to disassemble 1000:0fea
+Info: No need to disassemble 1000:0ff7
+Info: No need to disassemble 1000:0ff7
+Info: No need to disassemble 1000:1007
+Info: No need to disassemble 1000:1018
+Info: No need to disassemble 1000:1019
+Info: No need to disassemble 1000:1019
+Info: No need to disassemble 1000:105f
+Info: No need to disassemble 1000:105f
+Info: No need to disassemble 1000:1061
+Info: No need to disassemble 1000:106e
+Info: No need to disassemble 1000:1085
+Info: No need to disassemble 1000:1085
+Info: No need to disassemble 1000:1085
+Info: No need to disassemble 1000:1091
+Info: No need to disassemble 1000:109a
+Info: No need to disassemble 1000:109a
+Info: No need to disassemble 1000:10b8
+Info: No need to disassemble 1000:10f4
+Info: No need to disassemble 1000:10f4
+Info: No need to disassemble 1000:1127
+Info: No need to disassemble 1000:11bd
+Info: No need to disassemble 1000:11bd
+Info: No need to disassemble 1000:11bd
+Info: No need to disassemble 1000:11c7
+Info: No need to disassemble 1000:145b
+Info: No need to disassemble 1000:146c
+Info: No need to disassemble 1000:1499
+Info: No need to disassemble 1000:1499
+Info: No need to disassemble 1000:14a3
+Info: Disassembly status for 1000:14a8: success
+Info: Disassembly status for 1000:14b4: success
+Info: Disassembly status for 1000:14c0: success
+Info: No need to disassemble 1000:14cc
+Info: No need to disassemble 1000:14d8
+Info: Disassembly status for 1000:14eb: success
+Info: Disassembly status for 1000:14eb: success
+Info: Disassembly status for 1000:14eb: success
+Info: No need to disassemble 1000:14f3
+Info: No need to disassemble 1000:152c
+Info: Disassembly status for 1000:1539: success
+Info: No need to disassemble 1000:1540
+Info: No need to disassemble 1000:1554
+Info: Disassembly status for 1000:1561: success
+Info: No need to disassemble f000:0008
+Info: No need to disassemble f000:0014
+Info: No need to disassemble f000:0020
+Info: Decompiling functions to discover new code. This will take a while and even get stuck at 99% for some minutes. Don't panic.
+Info: Renaming functions guessed by ghidra
+Info: Renamed 0 functions
+Info: Splitting jump functions
+Info: Function orphan_range_1000_0000_10000 Doesn't need to be split
+Info: Function entry_1080_000E_1080E Doesn't need to be split
+Info: Function unknown_1000_0970_10970 Doesn't need to be split
+Info: Function unknown_1000_09B5_109B5 Doesn't need to be split
+Info: Function unknown_1000_09D8_109D8 Doesn't need to be split
+Info: Function unknown_1000_0A22_10A22 Doesn't need to be split
+Info: Function unknown_1000_0A3A_10A3A Doesn't need to be split
+Info: Function unknown_1000_0A51_10A51 Doesn't need to be split
+Info: Function unknown_1000_0B9A_10B9A Doesn't need to be split
+Info: Function unknown_1000_0C72_10C72 Doesn't need to be split
+Info: Function unknown_1000_0CF4_10CF4 Doesn't need to be split
+Info: Function unknown_1000_0D22_10D22 Doesn't need to be split
+Info: Function unknown_1000_0D5F_10D5F Doesn't need to be split
+Info: Function unknown_1000_0DBC_10DBC Doesn't need to be split
+Info: Function unknown_1000_0DDE_10DDE Doesn't need to be split
+Info: Function unknown_1000_0E46_10E46 Doesn't need to be split
+Info: Function unknown_1000_0E49_10E49 Doesn't need to be split
+Info: Function unknown_1000_0E4C_10E4C Doesn't need to be split
+Info: Function unknown_1000_0E59_10E59 Doesn't need to be split
+Info: Function unknown_1000_0E86_10E86 Doesn't need to be split
+Info: Function unknown_1000_0EAD_10EAD Doesn't need to be split
+Info: Function split_1000_0EB2_10EB2 Doesn't need to be split
+Info: Function unknown_1000_0EBD_10EBD Doesn't need to be split
+Info: Function unknown_1000_0EFE_10EFE Doesn't need to be split
+Info: Function split_1000_0F30_10F30 Doesn't need to be split
+Info: Function unknown_1000_0FA4_10FA4 Doesn't need to be split
+Info: Function unknown_1000_0FCC_10FCC Doesn't need to be split
+Info: Function unknown_1000_0FEA_10FEA Doesn't need to be split
+Info: Function unknown_1000_1019_11019 Doesn't need to be split
+Info: Function unknown_1000_105F_1105F Doesn't need to be split
+Info: Function unknown_1000_1085_11085 Doesn't need to be split
+Info: Function unknown_1000_109A_1109A Doesn't need to be split
+Info: Function unknown_1000_10F4_110F4 Doesn't need to be split
+Info: Function ghidra_guess_1000_112D_1112D Doesn't need to be split
+Info: Function unknown_1000_11BD_111BD Doesn't need to be split
+Info: Function orphan_range_1000_1588_11588 Doesn't need to be split
+Info: Function interrupt_handler_0x10_F000_0008_F0008 Doesn't need to be split
+Info: Function interrupt_handler_0x16_F000_0014_F0014 Doesn't need to be split
+Info: Function interrupt_handler_0x21_F000_0020_F0020 Doesn't need to be split
+Info: Splitted 0 functions.
+Info: Recreating functions with potential orphans
+Info: Function orphan_range_1000_0000_10000 found for range 0x1008F -> 0x11584. Attempting to re-create it.
+Info: Re-creating function at address 1000:0000 with name orphan_range_1000_0000_10000
+Info: Function unknown_1000_11BD_111BD found for range 0x11586 -> 0x11586. Attempting to re-create it.
+Info: Re-creating function at address 1000:11bd with name unknown_1000_11BD_111BD
+Info: Found 136 orphaned instructions spanning over 2 ranges.
+Info: Orphan finder did some changes. Previous: 0 now: 2
+Info: Decompiling functions to discover new code. This will take a while and even get stuck at 99% for some minutes. Don't panic.
+Info: Renaming functions guessed by ghidra
+Info: Renamed 0 functions
+Info: Splitting jump functions
+Info: Function orphan_range_1000_0000_10000 Doesn't need to be split
+Info: Function entry_1080_000E_1080E Doesn't need to be split
+Info: Function unknown_1000_0970_10970 Doesn't need to be split
+Info: Function unknown_1000_09B5_109B5 Doesn't need to be split
+Info: Function unknown_1000_09D8_109D8 Doesn't need to be split
+Info: Function unknown_1000_0A22_10A22 Doesn't need to be split
+Info: Function unknown_1000_0A3A_10A3A Doesn't need to be split
+Info: Function unknown_1000_0A51_10A51 Doesn't need to be split
+Info: Function unknown_1000_0B9A_10B9A Doesn't need to be split
+Info: Function unknown_1000_0C72_10C72 Doesn't need to be split
+Info: Function unknown_1000_0CF4_10CF4 Doesn't need to be split
+Info: Function unknown_1000_0D22_10D22 Doesn't need to be split
+Info: Function unknown_1000_0D5F_10D5F Doesn't need to be split
+Info: Function unknown_1000_0DBC_10DBC Doesn't need to be split
+Info: Function unknown_1000_0DDE_10DDE Doesn't need to be split
+Info: Function unknown_1000_0E46_10E46 Doesn't need to be split
+Info: Function unknown_1000_0E49_10E49 Doesn't need to be split
+Info: Function unknown_1000_0E4C_10E4C Doesn't need to be split
+Info: Function unknown_1000_0E59_10E59 Doesn't need to be split
+Info: Function unknown_1000_0E86_10E86 Doesn't need to be split
+Info: Function unknown_1000_0EAD_10EAD Doesn't need to be split
+Info: Function split_1000_0EB2_10EB2 Doesn't need to be split
+Info: Function unknown_1000_0EBD_10EBD Doesn't need to be split
+Info: Function unknown_1000_0EFE_10EFE Doesn't need to be split
+Info: Function split_1000_0F30_10F30 Doesn't need to be split
+Info: Function unknown_1000_0FA4_10FA4 Doesn't need to be split
+Info: Function unknown_1000_0FCC_10FCC Doesn't need to be split
+Info: Function unknown_1000_0FEA_10FEA Doesn't need to be split
+Info: Function unknown_1000_1019_11019 Doesn't need to be split
+Info: Function unknown_1000_105F_1105F Doesn't need to be split
+Info: Function unknown_1000_1085_11085 Doesn't need to be split
+Info: Function unknown_1000_109A_1109A Doesn't need to be split
+Info: Function unknown_1000_10F4_110F4 Doesn't need to be split
+Info: Function ghidra_guess_1000_112D_1112D Doesn't need to be split
+Info: Function unknown_1000_11BD_111BD Doesn't need to be split
+Info: Function orphan_range_1000_1588_11588 Doesn't need to be split
+Info: Function interrupt_handler_0x10_F000_0008_F0008 Doesn't need to be split
+Info: Function interrupt_handler_0x16_F000_0014_F0014 Doesn't need to be split
+Info: Function interrupt_handler_0x21_F000_0020_F0020 Doesn't need to be split
+Info: Splitted 0 functions.
+Info: Recreating functions with potential orphans
+Info: Function unknown_1000_11BD_111BD found for range 0x1145B -> 0x11584. Attempting to re-create it.
+Info: Re-creating function at address 1000:11bd with name unknown_1000_11BD_111BD
+Info: Function unknown_1000_11BD_111BD found for range 0x11586 -> 0x11586. Attempting to re-create it.
+Info: Re-creating function at address 1000:11bd with name unknown_1000_11BD_111BD
+Info: Found 135 orphaned instructions spanning over 2 ranges.
+Info: There are still orphans, recreating the functions directly.
+Info: Address 0x1145B corresponds to segment 0x1000
+Info: Creating function with entry point 1000:145b with name orphan_range_1000_145B_1145B with range [1000:145b, 1000:1584]
+Info: Address 0x11586 corresponds to segment 0x1000
+Info: Creating function with entry point 1000:1586 with name orphan_range_1000_1586_11586 with range [1000:1586, 1000:1586]
+Info: Remaining Orphan ranges to functions did some changes. Previous: 0 now: 2
+Info: Decompiling functions to discover new code. This will take a while and even get stuck at 99% for some minutes. Don't panic.
+Info: Renaming functions guessed by ghidra
+Info: Renamed 0 functions
+Info: Splitting jump functions
+Info: Function orphan_range_1000_0000_10000 Doesn't need to be split
+Info: Function entry_1080_000E_1080E Doesn't need to be split
+Info: Function unknown_1000_0970_10970 Doesn't need to be split
+Info: Function unknown_1000_09B5_109B5 Doesn't need to be split
+Info: Function unknown_1000_09D8_109D8 Doesn't need to be split
+Info: Function unknown_1000_0A22_10A22 Doesn't need to be split
+Info: Function unknown_1000_0A3A_10A3A Doesn't need to be split
+Info: Function unknown_1000_0A51_10A51 Doesn't need to be split
+Info: Function unknown_1000_0B9A_10B9A Doesn't need to be split
+Info: Function unknown_1000_0C72_10C72 Doesn't need to be split
+Info: Function unknown_1000_0CF4_10CF4 Doesn't need to be split
+Info: Function unknown_1000_0D22_10D22 Doesn't need to be split
+Info: Function unknown_1000_0D5F_10D5F Doesn't need to be split
+Info: Function unknown_1000_0DBC_10DBC Doesn't need to be split
+Info: Function unknown_1000_0DDE_10DDE Doesn't need to be split
+Info: Function unknown_1000_0E46_10E46 Doesn't need to be split
+Info: Function unknown_1000_0E49_10E49 Doesn't need to be split
+Info: Function unknown_1000_0E4C_10E4C Doesn't need to be split
+Info: Function unknown_1000_0E59_10E59 Doesn't need to be split
+Info: Function unknown_1000_0E86_10E86 Doesn't need to be split
+Info: Function unknown_1000_0EAD_10EAD Doesn't need to be split
+Info: Function split_1000_0EB2_10EB2 Doesn't need to be split
+Info: Function unknown_1000_0EBD_10EBD Doesn't need to be split
+Info: Function unknown_1000_0EFE_10EFE Doesn't need to be split
+Info: Function split_1000_0F30_10F30 Doesn't need to be split
+Info: Function unknown_1000_0FA4_10FA4 Doesn't need to be split
+Info: Function unknown_1000_0FCC_10FCC Doesn't need to be split
+Info: Function unknown_1000_0FEA_10FEA Doesn't need to be split
+Info: Function unknown_1000_1019_11019 Doesn't need to be split
+Info: Function unknown_1000_105F_1105F Doesn't need to be split
+Info: Function unknown_1000_1085_11085 Doesn't need to be split
+Info: Function unknown_1000_109A_1109A Doesn't need to be split
+Info: Function unknown_1000_10F4_110F4 Doesn't need to be split
+Info: Function ghidra_guess_1000_112D_1112D Doesn't need to be split
+Info: Function unknown_1000_11BD_111BD Doesn't need to be split
+Info: Function orphan_range_1000_145B_1145B Doesn't need to be split
+Info: Function orphan_range_1000_1586_11586 Doesn't need to be split
+Info: Function orphan_range_1000_1588_11588 Doesn't need to be split
+Info: Function interrupt_handler_0x10_F000_0008_F0008 Doesn't need to be split
+Info: Function interrupt_handler_0x16_F000_0014_F0014 Doesn't need to be split
+Info: Function interrupt_handler_0x21_F000_0020_F0020 Doesn't need to be split
+Info: Splitted 0 functions.
+Info: Recreating functions with potential orphans
+Info: Found 0 orphaned instructions spanning over 0 ranges.
+Info: Orphan finder did some changes. Previous: 2 now: 0
+Info: Decompiling functions to discover new code. This will take a while and even get stuck at 99% for some minutes. Don't panic.
+Info: Renaming functions guessed by ghidra
+Info: Renamed 0 functions
+Info: Splitting jump functions
+Info: Function orphan_range_1000_0000_10000 Doesn't need to be split
+Info: Function entry_1080_000E_1080E Doesn't need to be split
+Info: Function unknown_1000_0970_10970 Doesn't need to be split
+Info: Function unknown_1000_09B5_109B5 Doesn't need to be split
+Info: Function unknown_1000_09D8_109D8 Doesn't need to be split
+Info: Function unknown_1000_0A22_10A22 Doesn't need to be split
+Info: Function unknown_1000_0A3A_10A3A Doesn't need to be split
+Info: Function unknown_1000_0A51_10A51 Doesn't need to be split
+Info: Function unknown_1000_0B9A_10B9A Doesn't need to be split
+Info: Function unknown_1000_0C72_10C72 Doesn't need to be split
+Info: Function unknown_1000_0CF4_10CF4 Doesn't need to be split
+Info: Function unknown_1000_0D22_10D22 Doesn't need to be split
+Info: Function unknown_1000_0D5F_10D5F Doesn't need to be split
+Info: Function unknown_1000_0DBC_10DBC Doesn't need to be split
+Info: Function unknown_1000_0DDE_10DDE Doesn't need to be split
+Info: Function unknown_1000_0E46_10E46 Doesn't need to be split
+Info: Function unknown_1000_0E49_10E49 Doesn't need to be split
+Info: Function unknown_1000_0E4C_10E4C Doesn't need to be split
+Info: Function unknown_1000_0E59_10E59 Doesn't need to be split
+Info: Function unknown_1000_0E86_10E86 Doesn't need to be split
+Info: Function unknown_1000_0EAD_10EAD Doesn't need to be split
+Info: Function split_1000_0EB2_10EB2 Doesn't need to be split
+Info: Function unknown_1000_0EBD_10EBD Doesn't need to be split
+Info: Function unknown_1000_0EFE_10EFE Doesn't need to be split
+Info: Function split_1000_0F30_10F30 Doesn't need to be split
+Info: Function unknown_1000_0FA4_10FA4 Doesn't need to be split
+Info: Function unknown_1000_0FCC_10FCC Doesn't need to be split
+Info: Function unknown_1000_0FEA_10FEA Doesn't need to be split
+Info: Function unknown_1000_1019_11019 Doesn't need to be split
+Info: Function unknown_1000_105F_1105F Doesn't need to be split
+Info: Function unknown_1000_1085_11085 Doesn't need to be split
+Info: Function unknown_1000_109A_1109A Doesn't need to be split
+Info: Function unknown_1000_10F4_110F4 Doesn't need to be split
+Info: Function ghidra_guess_1000_112D_1112D Doesn't need to be split
+Info: Function unknown_1000_11BD_111BD Doesn't need to be split
+Info: Function orphan_range_1000_145B_1145B Doesn't need to be split
+Info: Function orphan_range_1000_1586_11586 Doesn't need to be split
+Info: Function orphan_range_1000_1588_11588 Doesn't need to be split
+Info: Function interrupt_handler_0x10_F000_0008_F0008 Doesn't need to be split
+Info: Function interrupt_handler_0x16_F000_0014_F0014 Doesn't need to be split
+Info: Function interrupt_handler_0x21_F000_0020_F0020 Doesn't need to be split
+Info: Splitted 0 functions.
+Info: Recreating functions with potential orphans
+Info: Found 0 orphaned instructions spanning over 0 ranges.

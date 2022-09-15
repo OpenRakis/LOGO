@@ -34,7 +34,7 @@ interrupt_handler_0x16_F000_0014_F0014 0xF0014 f
 interrupt_handler_0x21_F000_0020_F0020 0xF0020 f
 spice86_label_1000_0000_10000 0x10000 l
 spice86_label_1000_0023_10023 0x10023 l
-spice86_label_1000_09B3_109B3 0x109B3 l
+spice86_label_1000_09BD_109BD 0x109BD l
 spice86_label_1000_09C1_109C1 0x109C1 l
 spice86_label_1000_09D6_109D6 0x109D6 l
 spice86_label_1000_09EC_109EC 0x109EC l

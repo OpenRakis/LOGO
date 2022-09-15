@@ -1,24 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-		<OutputType>Exe</OutputType>
-		<TargetFramework>net6.0</TargetFramework>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-	</PropertyGroup>
-	<ItemGroup>
-		<None Remove=".gitignore" />
-	</ItemGroup>
-	<ItemGroup>
-		<Using Include="Spice86.Core.Emulator.Memory" />
-		<Using Include="Spice86.Core.Emulator.ReverseEngineer" />
-		<Using Include="Spice86.Core.Emulator.VM" />
-		<Using Include="Spice86.Core.Utils" />
-		<Using Include="Spice86.Core.Emulator.Function" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="../Spice86/src/Spice86/Spice86.csproj" />
-		<ProjectReference Include="../Spice86/src/Spice86.Core/Spice86.Core.csproj" />
-		<ProjectReference Include="../Spice86/src/Spice86.Shared/Spice86.Shared.csproj" />
-		<ProjectReference Include="../Spice86/src/Spice86.Logging/Spice86.Logging.csproj" />
-	</ItemGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Spice86.Core.Emulator.Memory" />
+    <Using Include="Spice86.Core.Emulator.ReverseEngineer" />
+    <Using Include="Spice86.Core.Emulator.VM" />
+    <Using Include="Spice86.Core.Utils" />
+    <Using Include="Spice86.Core.Emulator.Function" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spice86\src\Spice86\Spice86.csproj" />
+    <ProjectReference Include="..\Spice86\src\Spice86.Shared\Spice86.Shared.csproj" />
+    <ProjectReference Include="..\Spice86\src\Spice86.Logging\Spice86.Logging.csproj" />
+    <ProjectReference Include="..\Spice86\src\Bufdio.Spice86\Bufdio.Spice86.csproj" />
+    <ProjectReference Include="..\Spice86\src\Spice86.Core\Spice86.Core.csproj" />
+  </ItemGroup>
 </Project>

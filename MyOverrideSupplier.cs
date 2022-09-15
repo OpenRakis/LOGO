@@ -9,6 +9,9 @@ public class MyOverrideSupplier : IOverrideSupplier
         int programStartAddress,
         Machine machine)
     {
-        return new();
+        Dictionary<SegmentedAddress, FunctionInformation> functionInformations = new();
+        // You can extend / replace GeneratedOverrides with your own overrides.
+        // GeneratedOverrides(functionInformations, machine);
+        return functionInformations;
     }
 }
