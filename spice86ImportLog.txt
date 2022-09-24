@@ -1,5 +1,9 @@
 Info: Reading function symbols
 Info: Importing function symbols
+Info: Importing function at address 1000:0000
+Info: Found symbol entry_1000_0000_10000 at address 1000:0000. Deleting it.
+Info: Found function FUN_1000_0000 at address 1000:0000. Deleting it.
+Info: Creating function at address 1000:0000 with name entry_1000_0000_10000
 Info: Importing function at address 1000:1085
 Info: Found symbol unknown_1000_1085_11085 at address 1000:1085. Deleting it.
 Info: Found function FUN_1000_1085 at address 1000:1085. Deleting it.
@@ -28,10 +32,6 @@ Info: Importing function at address 1000:0fcc
 Info: Found symbol unknown_1000_0FCC_10FCC at address 1000:0fcc. Deleting it.
 Info: Found function FUN_1000_0fcc at address 1000:0fcc. Deleting it.
 Info: Creating function at address 1000:0fcc with name unknown_1000_0FCC_10FCC
-Info: Importing function at address 1000:080e
-Info: Found symbol entry_1080_000E_1080E at address 1000:080e. Deleting it.
-Info: Found function FUN_1000_080e at address 1000:080e. Deleting it.
-Info: Creating function at address 1000:080e with name entry_1080_000E_1080E
 Info: Importing function at address 1000:0a51
 Info: Found symbol unknown_1000_0A51_10A51 at address 1000:0a51. Deleting it.
 Info: Found function FUN_1000_0a51 at address 1000:0a51. Deleting it.
@@ -138,125 +138,107 @@ Info: Found function FUN_1000_0efe at address 1000:0efe. Deleting it.
 Info: Creating function at address 1000:0efe with name unknown_1000_0EFE_10EFE
 Info: Reading execution flow
 Info: Importing execution flow
-Info: No need to disassemble 1000:146c
-Info: No need to disassemble 1000:14a3
-Info: No need to disassemble 1000:1499
-Info: Disassembly status for 1000:14a8: success
-Info: Disassembly status for 1000:14b4: success
-Info: Disassembly status for 1000:14c0: success
-Info: No need to disassemble 1000:14cc
-Info: Disassembly status for 1000:14eb: success
-Info: Disassembly status for 1000:14eb: success
-Info: No need to disassemble 1000:1499
-Info: No need to disassemble 1000:14d8
-Info: No need to disassemble 1000:14f3
-Info: Disassembly status for 1000:14eb: success
-Info: No need to disassemble 1000:152c
-Info: Disassembly status for 1000:1539: success
-Info: No need to disassemble 1000:1554
-Info: Disassembly status for 1000:1561: success
-Info: No need to disassemble 1000:1540
-Info: No need to disassemble 1000:0000
-Info: No need to disassemble 1000:1127
 Info: No need to disassemble 1000:0023
-Info: No need to disassemble 1000:1061
-Info: No need to disassemble 1000:106e
+Info: No need to disassemble 1000:09b3
 Info: No need to disassemble 1000:09c1
 Info: No need to disassemble 1000:09d6
 Info: No need to disassemble 1000:09bd
-Info: No need to disassemble 1000:10b8
-Info: No need to disassemble 1000:0fdf
-Info: No need to disassemble 1000:0fab
-Info: No need to disassemble 1000:0fcb
-Info: No need to disassemble 1000:0eb2
-Info: No need to disassemble 1000:0f30
-Info: No need to disassemble 1000:0f39
-Info: No need to disassemble 1000:0f36
-Info: No need to disassemble 1000:0f30
-Info: No need to disassemble 1000:0f41
-Info: No need to disassemble 1000:0f4d
-Info: No need to disassemble 1000:0f59
-Info: No need to disassemble 1000:0f65
-Info: No need to disassemble 1000:0f30
-Info: No need to disassemble 1000:0f7d
-Info: No need to disassemble 1000:0f6a
-Info: No need to disassemble 1000:0f6a
-Info: No need to disassemble 1000:0ba0
-Info: No need to disassemble 1000:0a2b
-Info: No need to disassemble 1000:0bbe
-Info: No need to disassemble 1000:0c85
-Info: No need to disassemble 1000:0c82
-Info: No need to disassemble 1000:0ca2
-Info: No need to disassemble 1000:0d79
+Info: No need to disassemble 1000:09ec
 Info: No need to disassemble 1000:09ff
 Info: No need to disassemble 1000:0a01
 Info: No need to disassemble 1000:0a03
 Info: No need to disassemble 1000:0a05
-Info: No need to disassemble 1000:1091
-Info: No need to disassemble 1000:0d17
-Info: No need to disassemble 1000:09ec
-Info: No need to disassemble 1000:0e12
+Info: No need to disassemble 1000:0a2b
+Info: No need to disassemble 1000:0a67
+Info: No need to disassemble 1000:0a60
+Info: No need to disassemble 1000:0aa9
+Info: No need to disassemble 1000:0a80
+Info: No need to disassemble 1000:0a74
+Info: No need to disassemble 1000:0a6c
+Info: No need to disassemble 1000:0ac2
+Info: No need to disassemble 1000:0a74
+Info: No need to disassemble 1000:0a6c
+Info: No need to disassemble 1000:0a8f
+Info: No need to disassemble 1000:0ba0
 Info: No need to disassemble 1000:0bfa
+Info: No need to disassemble 1000:0bd9
+Info: No need to disassemble 1000:0bbe
+Info: No need to disassemble 1000:0bef
+Info: No need to disassemble 1000:0bdf
+Info: No need to disassemble 1000:0bdb
+Info: No need to disassemble 1000:0bdf
+Info: No need to disassemble 1000:0bdb
 Info: No need to disassemble 1000:0c31
 Info: No need to disassemble 1000:0c3b
 Info: No need to disassemble 1000:0a74
-Info: No need to disassemble 1000:0aa9
-Info: No need to disassemble 1000:0ac2
-Info: No need to disassemble 1000:0a74
-Info: No need to disassemble 1000:0a74
-Info: No need to disassemble 1000:0a6c
-Info: No need to disassemble 1000:0a80
-Info: No need to disassemble 1000:0a6c
-Info: No need to disassemble 1000:0a8f
-Info: No need to disassemble 1000:1007
-Info: No need to disassemble 1000:0bd9
-Info: No need to disassemble 1000:0bef
-Info: No need to disassemble 1000:0bdf
-Info: No need to disassemble 1000:0bdf
-Info: No need to disassemble 1000:0bdb
-Info: No need to disassemble 1000:0bdb
-Info: No need to disassemble 1000:0e84
-Info: No need to disassemble 1000:0e52
-Info: No need to disassemble 1000:11c7
+Info: No need to disassemble 1000:0c85
+Info: No need to disassemble 1000:0c82
+Info: No need to disassemble 1000:0ca2
+Info: No need to disassemble 1000:0d17
+Info: No need to disassemble 1000:0d79
+Info: No need to disassemble 1000:0e12
 Info: No need to disassemble 1000:0e44
-Info: No need to disassemble 1000:0a60
-Info: No need to disassemble 1000:0a67
+Info: No need to disassemble 1000:0e52
+Info: No need to disassemble 1000:0e84
+Info: No need to disassemble 1000:0eb2
+Info: No need to disassemble 1000:0f30
+Info: No need to disassemble 1000:0f39
+Info: No need to disassemble 1000:0f41
+Info: No need to disassemble 1000:0f30
+Info: No need to disassemble 1000:0f36
+Info: No need to disassemble 1000:0f4d
+Info: No need to disassemble 1000:0f7d
+Info: No need to disassemble 1000:0f59
+Info: No need to disassemble 1000:0f65
+Info: No need to disassemble 1000:0f30
+Info: No need to disassemble 1000:0f6a
+Info: No need to disassemble 1000:0f6a
+Info: No need to disassemble 1000:0fcb
+Info: No need to disassemble 1000:0fab
+Info: No need to disassemble 1000:0fdf
+Info: No need to disassemble 1000:1007
+Info: No need to disassemble 1000:106e
+Info: No need to disassemble 1000:1061
+Info: No need to disassemble 1000:1091
+Info: No need to disassemble 1000:10b8
+Info: No need to disassemble 1000:1127
+Info: No need to disassemble 1000:11c7
 Info: No need to disassemble 1000:10f4
 Info: No need to disassemble 1000:105f
 Info: No need to disassemble 1000:0970
-Info: No need to disassemble 1000:09b5
-Info: No need to disassemble 1000:09b5
-Info: No need to disassemble 1000:09b5
 Info: No need to disassemble 1000:1019
 Info: No need to disassemble 1000:0dde
-Info: No need to disassemble 1000:0dbc
+Info: No need to disassemble 1000:0a51
+Info: No need to disassemble 1000:09b5
+Info: No need to disassemble 1000:09b5
+Info: No need to disassemble 1000:09b5
+Info: No need to disassemble 1000:0a22
+Info: No need to disassemble 1000:0a22
+Info: No need to disassemble 1000:0c72
+Info: No need to disassemble 1000:0d22
+Info: No need to disassemble 1000:1085
+Info: No need to disassemble 1000:0d5f
+Info: No need to disassemble 1000:09d8
 Info: No need to disassemble 1000:109a
+Info: No need to disassemble 1000:0dbc
 Info: No need to disassemble 1000:0a3a
 Info: No need to disassemble 1000:0ead
 Info: No need to disassemble 1000:0fa4
-Info: No need to disassemble 1000:0fcc
 Info: No need to disassemble 1000:0e4c
-Info: No need to disassemble 1000:0e86
 Info: No need to disassemble 1000:0e49
-Info: No need to disassemble 1000:0e59
-Info: No need to disassemble 1000:0ebd
-Info: No need to disassemble 1000:0efe
-Info: No need to disassemble 1000:0b9a
-Info: No need to disassemble 1000:0a22
 Info: No need to disassemble 1000:0cf4
-Info: No need to disassemble 1000:0c72
-Info: No need to disassemble 1000:0d22
-Info: No need to disassemble 1000:0d5f
-Info: No need to disassemble 1000:09d8
-Info: No need to disassemble 1000:1085
 Info: No need to disassemble 1000:0fea
-Info: No need to disassemble 1000:0e46
+Info: No need to disassemble 1000:11bd
+Info: No need to disassemble 1000:11bd
 Info: No need to disassemble 1000:0d22
+Info: No need to disassemble 1000:0e59
+Info: No need to disassemble 1000:0e86
+Info: No need to disassemble 1000:0ebd
+Info: No need to disassemble 1000:0b9a
+Info: No need to disassemble 1000:0efe
+Info: No need to disassemble 1000:0fcc
+Info: No need to disassemble 1000:0e46
 Info: No need to disassemble 1000:1085
-Info: No need to disassemble 1000:0a22
-Info: No need to disassemble 1000:11bd
-Info: No need to disassemble 1000:11bd
-Info: No need to disassemble 1000:0a51
 Info: No need to disassemble 1000:0000
 Info: No need to disassemble 1000:0012
 Info: No need to disassemble 1000:0023
@@ -265,12 +247,12 @@ Info: No need to disassemble 1000:004c
 Info: No need to disassemble 1000:004f
 Info: No need to disassemble 1000:0056
 Info: No need to disassemble 1000:0059
-Info: No need to disassemble 1000:080e
 Info: No need to disassemble 1000:0970
 Info: No need to disassemble 1000:0970
 Info: No need to disassemble 1000:0992
 Info: No need to disassemble 1000:0997
 Info: No need to disassemble 1000:09a3
+Info: No need to disassemble 1000:09b3
 Info: No need to disassemble 1000:09b5
 Info: No need to disassemble 1000:09b5
 Info: No need to disassemble 1000:09b5
@@ -429,25 +411,6 @@ Info: No need to disassemble 1000:11bd
 Info: No need to disassemble 1000:11bd
 Info: No need to disassemble 1000:11bd
 Info: No need to disassemble 1000:11c7
-Info: No need to disassemble 1000:145b
-Info: No need to disassemble 1000:146c
-Info: No need to disassemble 1000:1499
-Info: No need to disassemble 1000:1499
-Info: No need to disassemble 1000:14a3
-Info: Disassembly status for 1000:14a8: success
-Info: Disassembly status for 1000:14b4: success
-Info: Disassembly status for 1000:14c0: success
-Info: No need to disassemble 1000:14cc
-Info: No need to disassemble 1000:14d8
-Info: Disassembly status for 1000:14eb: success
-Info: Disassembly status for 1000:14eb: success
-Info: Disassembly status for 1000:14eb: success
-Info: No need to disassemble 1000:14f3
-Info: No need to disassemble 1000:152c
-Info: Disassembly status for 1000:1539: success
-Info: No need to disassemble 1000:1540
-Info: No need to disassemble 1000:1554
-Info: Disassembly status for 1000:1561: success
 Info: No need to disassemble f000:0008
 Info: No need to disassemble f000:0014
 Info: No need to disassemble f000:0020
@@ -455,8 +418,7 @@ Info: Decompiling functions to discover new code. This will take a while and eve
 Info: Renaming functions guessed by ghidra
 Info: Renamed 0 functions
 Info: Splitting jump functions
-Info: Function orphan_range_1000_0000_10000 Doesn't need to be split
-Info: Function entry_1080_000E_1080E Doesn't need to be split
+Info: Function entry_1000_0000_10000 Doesn't need to be split
 Info: Function unknown_1000_0970_10970 Doesn't need to be split
 Info: Function unknown_1000_09B5_109B5 Doesn't need to be split
 Info: Function unknown_1000_09D8_109D8 Doesn't need to be split
@@ -490,165 +452,6 @@ Info: Function unknown_1000_109A_1109A Doesn't need to be split
 Info: Function unknown_1000_10F4_110F4 Doesn't need to be split
 Info: Function ghidra_guess_1000_112D_1112D Doesn't need to be split
 Info: Function unknown_1000_11BD_111BD Doesn't need to be split
-Info: Function orphan_range_1000_1588_11588 Doesn't need to be split
-Info: Function interrupt_handler_0x10_F000_0008_F0008 Doesn't need to be split
-Info: Function interrupt_handler_0x16_F000_0014_F0014 Doesn't need to be split
-Info: Function interrupt_handler_0x21_F000_0020_F0020 Doesn't need to be split
-Info: Splitted 0 functions.
-Info: Recreating functions with potential orphans
-Info: Function orphan_range_1000_0000_10000 found for range 0x1008F -> 0x11584. Attempting to re-create it.
-Info: Re-creating function at address 1000:0000 with name orphan_range_1000_0000_10000
-Info: Function unknown_1000_11BD_111BD found for range 0x11586 -> 0x11586. Attempting to re-create it.
-Info: Re-creating function at address 1000:11bd with name unknown_1000_11BD_111BD
-Info: Found 136 orphaned instructions spanning over 2 ranges.
-Info: Orphan finder did some changes. Previous: 0 now: 2
-Info: Decompiling functions to discover new code. This will take a while and even get stuck at 99% for some minutes. Don't panic.
-Info: Renaming functions guessed by ghidra
-Info: Renamed 0 functions
-Info: Splitting jump functions
-Info: Function orphan_range_1000_0000_10000 Doesn't need to be split
-Info: Function entry_1080_000E_1080E Doesn't need to be split
-Info: Function unknown_1000_0970_10970 Doesn't need to be split
-Info: Function unknown_1000_09B5_109B5 Doesn't need to be split
-Info: Function unknown_1000_09D8_109D8 Doesn't need to be split
-Info: Function unknown_1000_0A22_10A22 Doesn't need to be split
-Info: Function unknown_1000_0A3A_10A3A Doesn't need to be split
-Info: Function unknown_1000_0A51_10A51 Doesn't need to be split
-Info: Function unknown_1000_0B9A_10B9A Doesn't need to be split
-Info: Function unknown_1000_0C72_10C72 Doesn't need to be split
-Info: Function unknown_1000_0CF4_10CF4 Doesn't need to be split
-Info: Function unknown_1000_0D22_10D22 Doesn't need to be split
-Info: Function unknown_1000_0D5F_10D5F Doesn't need to be split
-Info: Function unknown_1000_0DBC_10DBC Doesn't need to be split
-Info: Function unknown_1000_0DDE_10DDE Doesn't need to be split
-Info: Function unknown_1000_0E46_10E46 Doesn't need to be split
-Info: Function unknown_1000_0E49_10E49 Doesn't need to be split
-Info: Function unknown_1000_0E4C_10E4C Doesn't need to be split
-Info: Function unknown_1000_0E59_10E59 Doesn't need to be split
-Info: Function unknown_1000_0E86_10E86 Doesn't need to be split
-Info: Function unknown_1000_0EAD_10EAD Doesn't need to be split
-Info: Function split_1000_0EB2_10EB2 Doesn't need to be split
-Info: Function unknown_1000_0EBD_10EBD Doesn't need to be split
-Info: Function unknown_1000_0EFE_10EFE Doesn't need to be split
-Info: Function split_1000_0F30_10F30 Doesn't need to be split
-Info: Function unknown_1000_0FA4_10FA4 Doesn't need to be split
-Info: Function unknown_1000_0FCC_10FCC Doesn't need to be split
-Info: Function unknown_1000_0FEA_10FEA Doesn't need to be split
-Info: Function unknown_1000_1019_11019 Doesn't need to be split
-Info: Function unknown_1000_105F_1105F Doesn't need to be split
-Info: Function unknown_1000_1085_11085 Doesn't need to be split
-Info: Function unknown_1000_109A_1109A Doesn't need to be split
-Info: Function unknown_1000_10F4_110F4 Doesn't need to be split
-Info: Function ghidra_guess_1000_112D_1112D Doesn't need to be split
-Info: Function unknown_1000_11BD_111BD Doesn't need to be split
-Info: Function orphan_range_1000_1588_11588 Doesn't need to be split
-Info: Function interrupt_handler_0x10_F000_0008_F0008 Doesn't need to be split
-Info: Function interrupt_handler_0x16_F000_0014_F0014 Doesn't need to be split
-Info: Function interrupt_handler_0x21_F000_0020_F0020 Doesn't need to be split
-Info: Splitted 0 functions.
-Info: Recreating functions with potential orphans
-Info: Function unknown_1000_11BD_111BD found for range 0x1145B -> 0x11584. Attempting to re-create it.
-Info: Re-creating function at address 1000:11bd with name unknown_1000_11BD_111BD
-Info: Function unknown_1000_11BD_111BD found for range 0x11586 -> 0x11586. Attempting to re-create it.
-Info: Re-creating function at address 1000:11bd with name unknown_1000_11BD_111BD
-Info: Found 135 orphaned instructions spanning over 2 ranges.
-Info: There are still orphans, recreating the functions directly.
-Info: Address 0x1145B corresponds to segment 0x1000
-Info: Creating function with entry point 1000:145b with name orphan_range_1000_145B_1145B with range [1000:145b, 1000:1584]
-Info: Address 0x11586 corresponds to segment 0x1000
-Info: Creating function with entry point 1000:1586 with name orphan_range_1000_1586_11586 with range [1000:1586, 1000:1586]
-Info: Remaining Orphan ranges to functions did some changes. Previous: 0 now: 2
-Info: Decompiling functions to discover new code. This will take a while and even get stuck at 99% for some minutes. Don't panic.
-Info: Renaming functions guessed by ghidra
-Info: Renamed 0 functions
-Info: Splitting jump functions
-Info: Function orphan_range_1000_0000_10000 Doesn't need to be split
-Info: Function entry_1080_000E_1080E Doesn't need to be split
-Info: Function unknown_1000_0970_10970 Doesn't need to be split
-Info: Function unknown_1000_09B5_109B5 Doesn't need to be split
-Info: Function unknown_1000_09D8_109D8 Doesn't need to be split
-Info: Function unknown_1000_0A22_10A22 Doesn't need to be split
-Info: Function unknown_1000_0A3A_10A3A Doesn't need to be split
-Info: Function unknown_1000_0A51_10A51 Doesn't need to be split
-Info: Function unknown_1000_0B9A_10B9A Doesn't need to be split
-Info: Function unknown_1000_0C72_10C72 Doesn't need to be split
-Info: Function unknown_1000_0CF4_10CF4 Doesn't need to be split
-Info: Function unknown_1000_0D22_10D22 Doesn't need to be split
-Info: Function unknown_1000_0D5F_10D5F Doesn't need to be split
-Info: Function unknown_1000_0DBC_10DBC Doesn't need to be split
-Info: Function unknown_1000_0DDE_10DDE Doesn't need to be split
-Info: Function unknown_1000_0E46_10E46 Doesn't need to be split
-Info: Function unknown_1000_0E49_10E49 Doesn't need to be split
-Info: Function unknown_1000_0E4C_10E4C Doesn't need to be split
-Info: Function unknown_1000_0E59_10E59 Doesn't need to be split
-Info: Function unknown_1000_0E86_10E86 Doesn't need to be split
-Info: Function unknown_1000_0EAD_10EAD Doesn't need to be split
-Info: Function split_1000_0EB2_10EB2 Doesn't need to be split
-Info: Function unknown_1000_0EBD_10EBD Doesn't need to be split
-Info: Function unknown_1000_0EFE_10EFE Doesn't need to be split
-Info: Function split_1000_0F30_10F30 Doesn't need to be split
-Info: Function unknown_1000_0FA4_10FA4 Doesn't need to be split
-Info: Function unknown_1000_0FCC_10FCC Doesn't need to be split
-Info: Function unknown_1000_0FEA_10FEA Doesn't need to be split
-Info: Function unknown_1000_1019_11019 Doesn't need to be split
-Info: Function unknown_1000_105F_1105F Doesn't need to be split
-Info: Function unknown_1000_1085_11085 Doesn't need to be split
-Info: Function unknown_1000_109A_1109A Doesn't need to be split
-Info: Function unknown_1000_10F4_110F4 Doesn't need to be split
-Info: Function ghidra_guess_1000_112D_1112D Doesn't need to be split
-Info: Function unknown_1000_11BD_111BD Doesn't need to be split
-Info: Function orphan_range_1000_145B_1145B Doesn't need to be split
-Info: Function orphan_range_1000_1586_11586 Doesn't need to be split
-Info: Function orphan_range_1000_1588_11588 Doesn't need to be split
-Info: Function interrupt_handler_0x10_F000_0008_F0008 Doesn't need to be split
-Info: Function interrupt_handler_0x16_F000_0014_F0014 Doesn't need to be split
-Info: Function interrupt_handler_0x21_F000_0020_F0020 Doesn't need to be split
-Info: Splitted 0 functions.
-Info: Recreating functions with potential orphans
-Info: Found 0 orphaned instructions spanning over 0 ranges.
-Info: Orphan finder did some changes. Previous: 2 now: 0
-Info: Decompiling functions to discover new code. This will take a while and even get stuck at 99% for some minutes. Don't panic.
-Info: Renaming functions guessed by ghidra
-Info: Renamed 0 functions
-Info: Splitting jump functions
-Info: Function orphan_range_1000_0000_10000 Doesn't need to be split
-Info: Function entry_1080_000E_1080E Doesn't need to be split
-Info: Function unknown_1000_0970_10970 Doesn't need to be split
-Info: Function unknown_1000_09B5_109B5 Doesn't need to be split
-Info: Function unknown_1000_09D8_109D8 Doesn't need to be split
-Info: Function unknown_1000_0A22_10A22 Doesn't need to be split
-Info: Function unknown_1000_0A3A_10A3A Doesn't need to be split
-Info: Function unknown_1000_0A51_10A51 Doesn't need to be split
-Info: Function unknown_1000_0B9A_10B9A Doesn't need to be split
-Info: Function unknown_1000_0C72_10C72 Doesn't need to be split
-Info: Function unknown_1000_0CF4_10CF4 Doesn't need to be split
-Info: Function unknown_1000_0D22_10D22 Doesn't need to be split
-Info: Function unknown_1000_0D5F_10D5F Doesn't need to be split
-Info: Function unknown_1000_0DBC_10DBC Doesn't need to be split
-Info: Function unknown_1000_0DDE_10DDE Doesn't need to be split
-Info: Function unknown_1000_0E46_10E46 Doesn't need to be split
-Info: Function unknown_1000_0E49_10E49 Doesn't need to be split
-Info: Function unknown_1000_0E4C_10E4C Doesn't need to be split
-Info: Function unknown_1000_0E59_10E59 Doesn't need to be split
-Info: Function unknown_1000_0E86_10E86 Doesn't need to be split
-Info: Function unknown_1000_0EAD_10EAD Doesn't need to be split
-Info: Function split_1000_0EB2_10EB2 Doesn't need to be split
-Info: Function unknown_1000_0EBD_10EBD Doesn't need to be split
-Info: Function unknown_1000_0EFE_10EFE Doesn't need to be split
-Info: Function split_1000_0F30_10F30 Doesn't need to be split
-Info: Function unknown_1000_0FA4_10FA4 Doesn't need to be split
-Info: Function unknown_1000_0FCC_10FCC Doesn't need to be split
-Info: Function unknown_1000_0FEA_10FEA Doesn't need to be split
-Info: Function unknown_1000_1019_11019 Doesn't need to be split
-Info: Function unknown_1000_105F_1105F Doesn't need to be split
-Info: Function unknown_1000_1085_11085 Doesn't need to be split
-Info: Function unknown_1000_109A_1109A Doesn't need to be split
-Info: Function unknown_1000_10F4_110F4 Doesn't need to be split
-Info: Function ghidra_guess_1000_112D_1112D Doesn't need to be split
-Info: Function unknown_1000_11BD_111BD Doesn't need to be split
-Info: Function orphan_range_1000_145B_1145B Doesn't need to be split
-Info: Function orphan_range_1000_1586_11586 Doesn't need to be split
-Info: Function orphan_range_1000_1588_11588 Doesn't need to be split
 Info: Function interrupt_handler_0x10_F000_0008_F0008 Doesn't need to be split
 Info: Function interrupt_handler_0x16_F000_0014_F0014 Doesn't need to be split
 Info: Function interrupt_handler_0x21_F000_0020_F0020 Doesn't need to be split

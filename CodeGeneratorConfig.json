@@ -2,5 +2,5 @@
     "Namespace":"logo",
     "CodeToInject": { },
     "InstructionsToReplace": { },
-    "GenerateCheckExternalEventsBeforeInstruction":false
+    "GenerateCheckExternalEventsBeforeInstruction":true
 }

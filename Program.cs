@@ -5,4 +5,4 @@
 using logo;
 
 // Put the SHA256 checksum of your target DOS program here.
-Spice86.Program.RunWithOverrides<MyOverrideSupplier>(args, "f83e879e80af7db21903e664b8bdc7645d521856994fa2dc321bad0051b96aa8");
+Spice86.Program.RunWithOverrides<MyOverrideSupplier>(args, "896a55f02555f708b57c6fd7576c8404aa479c1ec6e90fbbb230130bc7a31921");
