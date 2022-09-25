@@ -54,10 +54,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DefineFunction(cs1, 0x109A, unknown_1000_109A_1109A, false);
         DefineFunction(cs1, 0x10F4, unknown_1000_10F4_110F4, false);
         DefineFunction(cs1, 0x11BD, unknown_1000_11BD_111BD, false);
-        // 0xF000
-        DefineFunction(cs2, 0x8, interrupt_handler_0x10_F000_0008_F0008, false);
-        DefineFunction(cs2, 0x14, interrupt_handler_0x16_F000_0014_F0014, false);
-        DefineFunction(cs2, 0x20, interrupt_handler_0x21_F000_0020_F0020, false);
     }
 
     public void DetectCodeRewrites()
@@ -2689,41 +2685,5 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AL = Alu.And8(AL, 0xDF);
         // RET  (1000_11C7 / 0x111C7)
         return NearRet();
-    }
-
-    public virtual Action interrupt_handler_0x10_F000_0008_F0008(int loadOffset)
-    {
-        // NOP  (F000_0008 / 0xF0008)
-
-        // NOP  (F000_0009 / 0xF0009)
-
-        // NOP  (F000_000A / 0xF000A)
-
-        // IRET  (F000_000B / 0xF000B)
-        return InterruptRet();
-    }
-
-    public virtual Action interrupt_handler_0x16_F000_0014_F0014(int loadOffset)
-    {
-        // NOP  (F000_0014 / 0xF0014)
-
-        // NOP  (F000_0015 / 0xF0015)
-
-        // NOP  (F000_0016 / 0xF0016)
-
-        // IRET  (F000_0017 / 0xF0017)
-        return InterruptRet();
-    }
-
-    public virtual Action interrupt_handler_0x21_F000_0020_F0020(int loadOffset)
-    {
-        // NOP  (F000_0020 / 0xF0020)
-
-        // NOP  (F000_0021 / 0xF0021)
-
-        // NOP  (F000_0022 / 0xF0022)
-
-        // IRET  (F000_0023 / 0xF0023)
-        return InterruptRet();
     }
 }
