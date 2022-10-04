@@ -418,47 +418,34 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0A51_10A51(int loadOffset)
     {
         // PUSH DS (1000_0A51 / 0x10A51)
         Stack.Push16(DS);
-        // MOV AX,0xa000 (1000_0A52 / 0x10A52)
         AX = 0xA000;
-        // MOV DS,AX (1000_0A55 / 0x10A55)
         DS = AX;
-        // MOV ES,AX (1000_0A57 / 0x10A57)
         ES = AX;
-        // XOR SI,SI (1000_0A59 / 0x10A59)
+        // XOR SI,SI
         SI = 0;
-        // XOR DI,DI (1000_0A5B / 0x10A5B)
+        // XOR DI,DI
         DI = 0;
-        // MOV CX,0xfa00 (1000_0A5D / 0x10A5D)
         CX = 0xFA00;
-    label_1000_0A60_10A60:
-        // LODSB SI (1000_0A60 / 0x10A60)
-        AL = UInt8[DS, SI];
-        SI = (ushort)(SI + Direction8);
-        // CMP AL,0xa0 (1000_0A61 / 0x10A61)
-        Alu.Sub8(AL, 0xA0);
-        // JNC 0x1000:0a67 (1000_0A63 / 0x10A63)
-        if (!CarryFlag)
+        ushort num1;
+        do
         {
-            goto label_1000_0A67_10A67;
+            AL = UInt8[DS, SI];
+            SI += (ushort)Direction8;
+            if (CarryFlag)
+                AL = 0;
+            UInt8[ES, DI] = AL;
+            DI += (ushort)Direction8;
+            num1 = --CX;
         }
-        // XOR AL,AL (1000_0A65 / 0x10A65)
-        AL = 0;
-    label_1000_0A67_10A67:
-        // STOSB ES:DI (1000_0A67 / 0x10A67)
-        UInt8[ES, DI] = AL;
-        DI = (ushort)(DI + Direction8);
-        // LOOP 0x1000:0a60 (1000_0A68 / 0x10A68)
-        if (--CX != 0)
-        {
-            goto label_1000_0A60_10A60;
-        }
-        // POP DS (1000_0A6A / 0x10A6A)
+        while (num1 != 0);
         DS = Stack.Pop16();
-        // RET  (1000_0A6B / 0x10A6B)
         return NearRet();
     }
 
