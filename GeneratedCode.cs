@@ -2495,61 +2495,46 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_109A_1109A(int loadOffset)
     {
-    label_1000_109A_1109A:
-        // PUSH DS (1000_109A / 0x1109A)
-        Stack.Push16(DS);
-        // MOV AX,ES (1000_109B / 0x1109B)
-        AX = ES;
-        // MOV DS,AX (1000_109D / 0x1109D)
-        DS = AX;
-        // MOV CX,0x8000 (1000_109F / 0x1109F)
-        CX = 0x8000;
-        // MOV DX,DI (1000_10A2 / 0x110A2)
-        DX = DI;
-        // MOV AH,0x3f (1000_10A4 / 0x110A4)
-        AH = 0x3F;
-        // INT 0x21 (1000_10A6 / 0x110A6)
-        Interrupt(0x21);
-        // POP DS (1000_10A8 / 0x110A8)
-        DS = Stack.Pop16();
-        // JC 0x1000:10bb (1000_10A9 / 0x110A9)
-        if (CarryFlag)
+        while (true)
         {
-            goto label_1000_10BB_110BB;
+            Stack.Push16(DS);
+            AX = ES;
+            DS = AX;
+            CX = 0x8000;
+            DX = DI;
+            AH = 0x3F;
+            Interrupt(0x21);
+            DS = Stack.Pop16();
+            if (!CarryFlag)
+            {
+                if (CarryFlag || ZeroFlag)
+                {
+                    AX = ES;
+                    AX = Alu.Add16(AX, 0x800);
+                    ES = AX;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            else
+            {
+                goto label_4;
+            }
         }
-        // CMP CX,AX (1000_10AB / 0x110AB)
-        Alu.Sub16(CX, AX);
-        // JA 0x1000:10b8 (1000_10AD / 0x110AD)
-        if (!CarryFlag && !ZeroFlag)
-        {
-            goto label_1000_10B8_110B8;
-        }
-        // MOV AX,ES (1000_10AF / 0x110AF)
-        AX = ES;
-        // ADD AX,0x800 (1000_10B1 / 0x110B1)
-        // AX += 0x800;
-        AX = Alu.Add16(AX, 0x800);
-        // MOV ES,AX (1000_10B4 / 0x110B4)
-        ES = AX;
-        // JMP 0x1000:109a (1000_10B6 / 0x110B6)
-        goto label_1000_109A_1109A;
-    label_1000_10B8_110B8:
-        // MOV CX,AX (1000_10B8 / 0x110B8)
         CX = AX;
-        // CLC  (1000_10BA / 0x110BA)
         CarryFlag = false;
-    label_1000_10BB_110BB:
-        // PUSHF  (1000_10BB / 0x110BB)
+    label_4:
         Stack.Push16(FlagRegister16);
-        // MOV AH,0x3e (1000_10BC / 0x110BC)
         AH = 0x3E;
-        // INT 0x21 (1000_10BE / 0x110BE)
         Interrupt(0x21);
-        // POPF  (1000_10C0 / 0x110C0)
         FlagRegister16 = Stack.Pop16();
-        // RET  (1000_10C1 / 0x110C1)
         return NearRet();
     }
 
