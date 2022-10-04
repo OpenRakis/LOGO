@@ -1,4 +1,4 @@
-namespace logo;
+﻿namespace logo;
 
 public partial class GeneratedOverrides : CSharpOverrideHelper
 {
@@ -2660,30 +2660,16 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_11BD_111BD(int loadOffset)
     {
-        // CMP AL,0x61 (1000_11BD / 0x111BD)
-        Alu.Sub8(AL, 0x61);
-        // JC 0x1000:11c7 (1000_11BF / 0x111BF)
-        if (CarryFlag)
+        if (CarryFlag || (!CarryFlag && !ZeroFlag))
         {
-            // JC target is RET, inlining.
-            // RET  (1000_11C7 / 0x111C7)
             return NearRet();
         }
-        // CMP AL,0x7a (1000_11C1 / 0x111C1)
-        Alu.Sub8(AL, 0x7A);
-        // JA 0x1000:11c7 (1000_11C3 / 0x111C3)
-        if (!CarryFlag && !ZeroFlag)
-        {
-            // JA target is RET, inlining.
-            // RET  (1000_11C7 / 0x111C7)
-            return NearRet();
-        }
-        // AND AL,0xdf (1000_11C5 / 0x111C5)
-        // AL &= 0xDF;
         AL = Alu.And8(AL, 0xDF);
-        // RET  (1000_11C7 / 0x111C7)
         return NearRet();
     }
 }
