@@ -74,136 +74,68 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
 
     public virtual Action entry_1000_0000_10000(int loadOffset)
     {
-        // MOV AX,0x111c (1000_0000 / 0x10000)
         AX = 0x111C;
-        // MOV DS,AX (1000_0003 / 0x10003)
         DS = AX;
-        // MOV AX,ES:[0x2] (1000_0005 / 0x10005)
-        AX = UInt16[ES, 0x2];
-        // MOV [0x50],AX (1000_0009 / 0x10009)
+        AX = UInt16[ES, 2];
         UInt16[DS, 0x50] = AX;
-        // MOV BX,0x8 (1000_000C / 0x1000C)
-        BX = 0x8;
-        // CALL 0x1000:10f4 (1000_000F / 0x1000F)
-        NearCall(cs1, 0x12, unknown_1000_10F4_110F4);
-        // MOV AX,0xc (1000_0012 / 0x10012)
+        BX = 8;
+        NearCall(cs1, 0x12, new Func<int, Action>(unknown_1000_10F4_110F4));
         AX = 0xC;
-        // MOV SI,0x8e (1000_0015 / 0x10015)
         SI = 0x8E;
-        // CMP byte ptr [SI],0x0 (1000_0018 / 0x10018)
-        Alu.Sub8(UInt8[DS, SI], 0x0);
-        // JZ 0x1000:0023 (1000_001B / 0x1001B)
-        if (ZeroFlag)
-        {
-            goto label_1000_0023_10023;
-        }
-    label_1000_0023_10023:
-        // MOV [0x52],AX (1000_0023 / 0x10023)
+        int num1 = Alu.Sub8(UInt8[DS, SI], 0);
+        int num2 = ZeroFlag ? 1 : 0;
         UInt16[DS, 0x52] = AX;
-        // MOV DX,0x5a (1000_0026 / 0x10026)
         DX = 0x5A;
-        // CALL 0x1000:105f (1000_0029 / 0x10029)
-        NearCall(cs1, 0x2C, unknown_1000_105F_1105F);
-        // CMP byte ptr [DI],0x2e (1000_002C / 0x1002C)
-        Alu.Sub8(UInt8[DS, DI], 0x2E);
-        // JZ 0x1000:003e (1000_002F / 0x1002F)
-        if (ZeroFlag)
+        NearCall(cs1, 0x2C, new Func<int, Action>(unknown_1000_105F_1105F));
+        int num3 = Alu.Sub8(UInt8[DS, DI], 46);
+        if (!ZeroFlag)
         {
-            goto label_1000_003E_1003E;
+            UInt16[DS, DI] = 0x482E;
+            UInt16[DS, (ushort)(DI + 2U)] = 0x4D4E;
+            UInt8[DS, (ushort)(DI + 4U)] = 0;
         }
-        // MOV word ptr [DI],0x482e (1000_0031 / 0x10031)
-        UInt16[DS, DI] = 0x482E;
-        // MOV word ptr [DI + 0x2],0x4d4e (1000_0035 / 0x10035)
-        UInt16[DS, (ushort)(DI + 0x2)] = 0x4D4E;
-        // MOV byte ptr [DI + 0x4],0x0 (1000_003A / 0x1003A)
-        UInt8[DS, (ushort)(DI + 0x4)] = 0x0;
-    label_1000_003E_1003E:
-        // MOV AX,0x3d00 (1000_003E / 0x1003E)
         AX = 0x3D00;
-        // INT 0x21 (1000_0041 / 0x10041)
         Interrupt(0x21);
-        // MOV DX,0x2e (1000_0043 / 0x10043)
         DX = 0x2E;
-        // JC 0x1000:0061 (1000_0046 / 0x10046)
-        if (CarryFlag)
+        if (!CarryFlag)
         {
-            goto label_1000_0061_10061;
+            Stack.Push16(AX);
+            NearCall(cs1, 0x4C, new Func<int, Action>(unknown_1000_0970_10970));
+            NearCall(cs1, 0x4F, new Func<int, Action>(unknown_1000_1019_11019));
+            BX = Stack.Pop16();
+            AX = UInt16[DS, 0x52];
+            NearCall(cs1, 0x56, new Func<int, Action>(unknown_1000_0DDE_10DDE));
+            NearCall(cs1, 0x59, new Func<int, Action>(unknown_1000_0A51_10A51));
+            DX = 0;
+            AL = 0;
+            AH = 0x4C;
+            Interrupt(0x21);
         }
-        // PUSH AX (1000_0048 / 0x10048)
-        Stack.Push16(AX);
-        // CALL 0x1000:0970 (1000_0049 / 0x10049)
-        NearCall(cs1, 0x4C, unknown_1000_0970_10970);
-        // CALL 0x1000:1019 (1000_004C / 0x1004C)
-        NearCall(cs1, 0x4F, unknown_1000_1019_11019);
-        // POP BX (1000_004F / 0x1004F)
-        BX = Stack.Pop16();
-        // MOV AX,[0x52] (1000_0050 / 0x10050)
-        AX = UInt16[DS, 0x52];
-        // CALL 0x1000:0dde (1000_0053 / 0x10053)
-        NearCall(cs1, 0x56, unknown_1000_0DDE_10DDE);
-        // CALL 0x1000:0a51 (1000_0056 / 0x10056)
-        NearCall(cs1, 0x59, unknown_1000_0A51_10A51);
-        // XOR DX,DX (1000_0059 / 0x10059)
-        DX = 0;
-        // XOR AL,AL (1000_005B / 0x1005B)
-        AL = 0;
-        // MOV AH,0x4c (1000_005D / 0x1005D)
-        AH = 0x4C;
-        // INT 0x21 (1000_005F / 0x1005F)
-        Interrupt(0x21);
-    label_1000_0061_10061:
-        // MOV AH,0x9 (1000_0061 / 0x10061)
         AH = 0x9;
-        // INT 0x21 (1000_0063 / 0x10063)
         Interrupt(0x21);
-        // XOR AL,AL (1000_0065 / 0x10065)
         AL = 0;
-        // MOV AH,0x4c (1000_0067 / 0x10067)
         AH = 0x4C;
-        // INT 0x21 (1000_0069 / 0x10069)
         Interrupt(0x21);
         CheckExternalEvents(cs1, 0x6D);
-        // JO 0x1000:0047 (1000_006B / 0x1006B)
         if (OverflowFlag)
-        {
             throw FailAsUntested("Would have been a goto but label label_1000_0047_10047 does not exist because no instruction was found there that belongs to a function.");
-        }
-        // ADD DI,DI (1000_006D / 0x1006D)
         DI += DI;
-        // ADD byte ptr [BX + SI],AL (1000_006F / 0x1006F)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_0071 / 0x10071)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_0073 / 0x10073)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_0075 / 0x10075)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_0077 / 0x10077)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_0079 / 0x10079)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_007B / 0x1007B)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_007D / 0x1007D)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_007F / 0x1007F)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_0081 / 0x10081)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_0083 / 0x10083)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_0085 / 0x10085)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_0087 / 0x10087)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_0089 / 0x10089)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_008B / 0x1008B)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_008D / 0x1008D)
         UInt8[DS, (ushort)(BX + SI)] += AL;
-        // ADD byte ptr [BX + SI],AL (1000_008F / 0x1008F)
-        // UInt8[DS, (ushort)(BX + SI)] += AL;
         UInt8[DS, (ushort)(BX + SI)] = Alu.Add8(UInt8[DS, (ushort)(BX + SI)], AL);
         throw FailAsUntested("Function does not end with return and no instruction after the body ...");
     }
