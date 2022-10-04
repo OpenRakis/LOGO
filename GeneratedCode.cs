@@ -1315,40 +1315,64 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
-    /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
-    /// </summary>
     public virtual Action unknown_1000_0E59_10E59(int loadOffset)
     {
+        // PUSH DS (1000_0E59 / 0x10E59)
         Stack.Push16(DS);
+        // LDS SI,[0x56] (1000_0E5A / 0x10E5A)
         SI = UInt16[DS, 0x56];
         DS = UInt16[DS, 0x58];
-        SI = Alu.Add16(SI, 2);
+        // ADD SI,0x2 (1000_0E5E / 0x10E5E)
+        // SI += 0x2;
+        SI = Alu.Add16(SI, 0x2);
+        // LODSW SI (1000_0E61 / 0x10E61)
         AX = UInt16[DS, SI];
-        SI += (ushort)Direction16;
+        SI = (ushort)(SI + Direction16);
+        // MOV DI,AX (1000_0E62 / 0x10E62)
         DI = AX;
+        // LODSW SI (1000_0E64 / 0x10E64)
         AX = UInt16[DS, SI];
-        SI += (ushort)Direction16;
+        SI = (ushort)(SI + Direction16);
+        // MOV CX,AX (1000_0E65 / 0x10E65)
         CX = AX;
+        // OR CL,CL (1000_0E67 / 0x10E67)
+        // CL |= CL;
         CL = Alu.Or8(CL, CL);
-        if (!ZeroFlag)
+        // JZ 0x1000:0e84 (1000_0E69 / 0x10E69)
+        if (ZeroFlag)
         {
-            int num = Alu.And16(DI, 0xC8);
-            if (!ZeroFlag)
-            {
-                NearCall(cs1, 0xE74, new Func<int, Action>(unknown_1000_0EBD_10EBD));
-            }
-            AX = UInt16[DS, SI];
-            SI += (ushort)Direction16;
-            DX = AX;
-            AX = UInt16[DS, SI];
-            SI += (ushort)Direction16;
-            BX = AX;
-            AX = 0xA000;
-            ES = AX;
-            FarCall(cs1, 0xE84, new Func<int, Action>(unknown_1000_0B9A_10B9A));
+            goto label_1000_0E84_10E84;
         }
+        // TEST DI,0x200 (1000_0E6B / 0x10E6B)
+        Alu.And16(DI, 0x200);
+        // JZ 0x1000:0e74 (1000_0E6F / 0x10E6F)
+        if (ZeroFlag)
+        {
+            goto label_1000_0E74_10E74;
+        }
+        // CALL 0x1000:0ebd (1000_0E71 / 0x10E71)
+        NearCall(cs1, 0xE74, unknown_1000_0EBD_10EBD);
+    label_1000_0E74_10E74:
+        // LODSW SI (1000_0E74 / 0x10E74)
+        AX = UInt16[DS, SI];
+        SI = (ushort)(SI + Direction16);
+        // MOV DX,AX (1000_0E75 / 0x10E75)
+        DX = AX;
+        // LODSW SI (1000_0E77 / 0x10E77)
+        AX = UInt16[DS, SI];
+        SI = (ushort)(SI + Direction16);
+        // MOV BX,AX (1000_0E78 / 0x10E78)
+        BX = AX;
+        // MOV AX,0xa000 (1000_0E7A / 0x10E7A)
+        AX = 0xA000;
+        // MOV ES,AX (1000_0E7D / 0x10E7D)
+        ES = AX;
+        // CALLF 0x1000:0b9a (1000_0E7F / 0x10E7F)
+        FarCall(cs1, 0xE84, unknown_1000_0B9A_10B9A);
+    label_1000_0E84_10E84:
+        // POP DS (1000_0E84 / 0x10E84)
         DS = Stack.Pop16();
+        // RET  (1000_0E85 / 0x10E85)
         return NearRet();
     }
 
