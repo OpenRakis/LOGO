@@ -1079,79 +1079,51 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0D22_10D22(int loadOffset)
     {
-        // PUSH DS (1000_0D22 / 0x10D22)
         Stack.Push16(DS);
-        // PUSH ES (1000_0D23 / 0x10D23)
         Stack.Push16(ES);
-        // PUSH CS (1000_0D24 / 0x10D24)
         Stack.Push16(cs1);
-        // PUSH CS (1000_0D25 / 0x10D25)
         Stack.Push16(cs1);
-        // POP DS (1000_0D26 / 0x10D26)
         DS = Stack.Pop16();
-        // POP ES (1000_0D27 / 0x10D27)
         ES = Stack.Pop16();
-        // CMP word ptr CS:[0xcb6],0x0 (1000_0D28 / 0x10D28)
-        Alu.Sub16(UInt16[cs1, 0xCB6], 0x0);
-        // JS 0x1000:0d5c (1000_0D2E / 0x10D2E)
-        if (SignFlag)
+        int num1 = Alu.Sub16(UInt16[cs1, 0xCB6], 0);
+        if (!SignFlag)
         {
-            goto label_1000_0D5C_10D5C;
+            DI = 0x160;
+            SI = DI;
+            CX = 0xF0;
+            DX = UInt16[cs1, 0xCB8];
+            AX = DX;
+            AX <<= 1;
+            AX += DX;
+            SI += AX;
+            CX = Alu.Sub16(CX, AX);
+            while (CX != 0)
+            {
+                --CX;
+                UInt8[ES, DI] = UInt8[DS, SI];
+                SI += (ushort)Direction8;
+                DI += (ushort)Direction8;
+            }
+            CX = DX;
+            ushort num2;
+            do
+            {
+                NearCall(cs1, 0xD4E, new Func<int, Action>(unknown_1000_0D5F_10D5F));
+                num2 = --CX;
+            }
+            while (num2 != 0);
+            DX = 0x160;
+            BX = 0x50;
+            CX = 0x50;
+            NearCall(cs1, 0xD5C, new Func<int, Action>(unknown_1000_09D8_109D8));
         }
-        // MOV DI,0x160 (1000_0D30 / 0x10D30)
-        DI = 0x160;
-        // MOV SI,DI (1000_0D33 / 0x10D33)
-        SI = DI;
-        // MOV CX,0xf0 (1000_0D35 / 0x10D35)
-        CX = 0xF0;
-        // MOV DX,word ptr CS:[0xcb8] (1000_0D38 / 0x10D38)
-        DX = UInt16[cs1, 0xCB8];
-        // MOV AX,DX (1000_0D3D / 0x10D3D)
-        AX = DX;
-        // SHL AX,0x1 (1000_0D3F / 0x10D3F)
-        AX <<= 0x1;
-        // ADD AX,DX (1000_0D41 / 0x10D41)
-        AX += DX;
-        // ADD SI,AX (1000_0D43 / 0x10D43)
-        SI += AX;
-        // SUB CX,AX (1000_0D45 / 0x10D45)
-        // CX -= AX;
-        CX = Alu.Sub16(CX, AX);
-        // REP
-        while (CX != 0)
-        {
-            CX--;
-            // MOVSB ES:DI,SI (1000_0D47 / 0x10D47)
-            UInt8[ES, DI] = UInt8[DS, SI];
-            SI = (ushort)(SI + Direction8);
-            DI = (ushort)(DI + Direction8);
-        }
-        // MOV CX,DX (1000_0D49 / 0x10D49)
-        CX = DX;
-    label_1000_0D4B_10D4B:
-        // CALL 0x1000:0d5f (1000_0D4B / 0x10D4B)
-        NearCall(cs1, 0xD4E, unknown_1000_0D5F_10D5F);
-        // LOOP 0x1000:0d4b (1000_0D4E / 0x10D4E)
-        if (--CX != 0)
-        {
-            goto label_1000_0D4B_10D4B;
-        }
-        // MOV DX,0x160 (1000_0D50 / 0x10D50)
-        DX = 0x160;
-        // MOV BX,0x50 (1000_0D53 / 0x10D53)
-        BX = 0x50;
-        // MOV CX,0x50 (1000_0D56 / 0x10D56)
-        CX = 0x50;
-        // CALL 0x1000:09d8 (1000_0D59 / 0x10D59)
-        NearCall(cs1, 0xD5C, unknown_1000_09D8_109D8);
-    label_1000_0D5C_10D5C:
-        // POP ES (1000_0D5C / 0x10D5C)
         ES = Stack.Pop16();
-        // POP DS (1000_0D5D / 0x10D5D)
         DS = Stack.Pop16();
-        // RET  (1000_0D5E / 0x10D5E)
         return NearRet();
     }
 
