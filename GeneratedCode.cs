@@ -1301,21 +1301,17 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return unknown_1000_0E4C_10E4C(0);
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0E4C_10E4C(int loadOffset)
     {
-        // CALL 0x1000:0e86 (1000_0E4C / 0x10E4C)
-        NearCall(cs1, 0xE4F, unknown_1000_0E86_10E86);
-        // JZ 0x1000:0e52 (1000_0E4F / 0x10E4F)
-        if (ZeroFlag)
+        NearCall(cs1, 0xE4F, new Func<int, Action>(unknown_1000_0E86_10E86));
+        if (!ZeroFlag)
         {
-            goto label_1000_0E52_10E52;
+            return NearRet();
         }
-        // RET  (1000_0E51 / 0x10E51)
-        return NearRet();
-    label_1000_0E52_10E52:
-        // MOV word ptr [0x52],0x0 (1000_0E52 / 0x10E52)
-        UInt16[DS, 0x52] = 0x0;
-        // RET  (1000_0E58 / 0x10E58)
+        UInt16[DS, 0x52] = 0;
         return NearRet();
     }
 
