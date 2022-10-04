@@ -999,82 +999,55 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         }
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0C72_10C72(int loadOffset)
     {
-        // PUSH DS (1000_0C72 / 0x10C72)
         Stack.Push16(DS);
-        // MOV AX,0xa000 (1000_0C73 / 0x10C73)
         AX = 0xA000;
-        // MOV ES,AX (1000_0C76 / 0x10C76)
         ES = AX;
-        // MOV DS,AX (1000_0C78 / 0x10C78)
         DS = AX;
-        // XOR SI,SI (1000_0C7A / 0x10C7A)
         SI = 0;
-        // MOV DI,0x140 (1000_0C7C / 0x10C7C)
-        DI = 0x140;
-        // MOV DX,0x64 (1000_0C7F / 0x10C7F)
+        DI = 320;
         DX = 0x64;
-    label_1000_0C82_10C82:
-        // MOV CX,0x50 (1000_0C82 / 0x10C82)
-        CX = 0x50;
-    label_1000_0C85_10C85:
-        // LODSW SI (1000_0C85 / 0x10C85)
-        AX = UInt16[DS, SI];
-        SI = (ushort)(SI + Direction16);
-        // XCHG AH,AL (1000_0C86 / 0x10C86)
-        (AL, AH) = (AH, AL);
-        // SUB DI,0x2 (1000_0C88 / 0x10C88)
-        // DI -= 0x2;
-        DI = Alu.Sub16(DI, 0x2);
-        // MOV word ptr [DI],AX (1000_0C8B / 0x10C8B)
-        UInt16[DS, DI] = AX;
-        // LOOP 0x1000:0c85 (1000_0C8D / 0x10C8D)
-        if (--CX != 0)
+        do
         {
-            goto label_1000_0C85_10C85;
+            CX = 0x50;
+            ushort num;
+            do
+            {
+                AX = UInt16[DS, SI];
+                SI += (ushort)Direction16;
+                (AH, AL) = (AL, AH);
+                DI = Alu.Sub16(DI, 2);
+                UInt16[DS, DI] = AX;
+                num = --CX;
+            }
+            while (num != 0);
+            SI += 0xA0;
+            DI += 0x1E0;
+            DX = Alu.Dec16(DX);
         }
-        // ADD SI,0xa0 (1000_0C8F / 0x10C8F)
-        SI += 0xA0;
-        // ADD DI,0x1e0 (1000_0C93 / 0x10C93)
-        DI += 0x1E0;
-        // DEC DX (1000_0C97 / 0x10C97)
-        DX = Alu.Dec16(DX);
-        // JNZ 0x1000:0c82 (1000_0C98 / 0x10C98)
-        if (!ZeroFlag)
-        {
-            goto label_1000_0C82_10C82;
-        }
-        // XOR SI,SI (1000_0C9A / 0x10C9A)
+        while (!ZeroFlag);
         SI = 0;
-        // MOV DI,0xf8c0 (1000_0C9C / 0x10C9C)
         DI = 0xF8C0;
-        // MOV DX,0x64 (1000_0C9F / 0x10C9F)
         DX = 0x64;
-    label_1000_0CA2_10CA2:
-        // MOV CX,0xa0 (1000_0CA2 / 0x10CA2)
-        CX = 0xA0;
-        // REP
-        while (CX != 0)
+        do
         {
-            CX--;
-            // MOVSW ES:DI,SI (1000_0CA5 / 0x10CA5)
-            UInt16[ES, DI] = UInt16[DS, SI];
-            SI = (ushort)(SI + Direction16);
-            DI = (ushort)(DI + Direction16);
+            CX = 0xA0;
+            while (CX != 0)
+            {
+                --CX;
+                UInt16[ES, DI] = UInt16[DS, SI];
+                SI += (ushort)Direction16;
+                DI += (ushort)Direction16;
+            }
+            DI -= 0x280;
+            DX = Alu.Dec16(DX);
         }
-        // SUB DI,0x280 (1000_0CA7 / 0x10CA7)
-        DI -= 0x280;
-        // DEC DX (1000_0CAB / 0x10CAB)
-        DX = Alu.Dec16(DX);
-        // JNZ 0x1000:0ca2 (1000_0CAC / 0x10CAC)
-        if (!ZeroFlag)
-        {
-            goto label_1000_0CA2_10CA2;
-        }
-        // POP DS (1000_0CAE / 0x10CAE)
+        while (!ZeroFlag);
         DS = Stack.Pop16();
-        // RET  (1000_0CAF / 0x10CAF)
         return NearRet();
     }
 
