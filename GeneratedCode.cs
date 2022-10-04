@@ -72,6 +72,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DefineExecutableArea(0xF0020, 0xF0023);
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action entry_1000_0000_10000(int loadOffset)
     {
         AX = 0x111C;
@@ -140,75 +143,45 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         throw FailAsUntested("Function does not end with return and no instruction after the body ...");
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0970_10970(int loadOffset)
     {
-        // MOV AX,0x13 (1000_0970 / 0x10970)
         AX = 0x13;
-        // INT 0x10 (1000_0973 / 0x10973)
         Interrupt(0x10);
-        // PUSHF  (1000_0975 / 0x10975)
         Stack.Push16(FlagRegister16);
-        // STI  (1000_0976 / 0x10976)
         InterruptFlag = true;
-        // MOV AX,0x40 (1000_0977 / 0x10977)
         AX = 0x40;
-        // MOV ES,AX (1000_097A / 0x1097A)
         ES = AX;
-        // MOV DX,word ptr ES:[0x63] (1000_097C / 0x1097C)
         DX = UInt16[ES, 0x63];
-        // ADD DL,0x6 (1000_0981 / 0x10981)
-        // DL += 0x6;
-        DL = Alu.Add8(DL, 0x6);
-        // MOV word ptr CS:[0x6c],DX (1000_0984 / 0x10984)
+        DL = Alu.Add8(DL, 6);
         UInt16[cs1, 0x6C] = DX;
-        // MOV BP,0x6c (1000_0989 / 0x10989)
         BP = 0x6C;
-        CheckExternalEvents(cs1, 0x098C);
-        // IN AL,DX (1000_098C / 0x1098C)
+        CheckExternalEvents(cs1, 0x98C);
         AL = Cpu.In8(DX);
-        // AND AL,0x8 (1000_098D / 0x1098D)
-        // AL &= 0x8;
-        AL = Alu.And8(AL, 0x8);
-        // CALL 0x1000:09b5 (1000_098F / 0x1098F)
-        NearCall(cs1, 0x992, unknown_1000_09B5_109B5);
-        // JNC 0x1000:09b3 (1000_0992 / 0x10992)
-        if (!CarryFlag)
+        AL = Alu.And8(AL, 8);
+        NearCall(cs1, 0x992, new Func<int, Action>(unknown_1000_09B5_109B5));
+        if (CarryFlag)
         {
-            goto label_1000_09B3_109B3;
+            NearCall(cs1, 0x997, new Func<int, Action>(unknown_1000_09B5_109B5));
+            if (CarryFlag)
+            {
+                DI = SI;
+                UInt8[cs1, 0x6F] = AH;
+                NearCall(cs1, 0x9A3, new Func<int, Action>(unknown_1000_09B5_109B5));
+                if (CarryFlag)
+                {
+                    int num = Alu.Sub16(SI, DI);
+                    UInt8[cs1, 0x6E] = (byte)~UInt8[cs1, 0x6E];
+                    if (CarryFlag)
+                    {
+                        UInt8[cs1, 0x6F] = AH;
+                    }
+                }
+            }
         }
-        // CALL 0x1000:09b5 (1000_0994 / 0x10994)
-        NearCall(cs1, 0x997, unknown_1000_09B5_109B5);
-        // JNC 0x1000:09b3 (1000_0997 / 0x10997)
-        if (!CarryFlag)
-        {
-            goto label_1000_09B3_109B3;
-        }
-        // MOV DI,SI (1000_0999 / 0x10999)
-        DI = SI;
-        // MOV byte ptr CS:[0x6f],AH (1000_099B / 0x1099B)
-        UInt8[cs1, 0x6F] = AH;
-        // CALL 0x1000:09b5 (1000_09A0 / 0x109A0)
-        NearCall(cs1, 0x9A3, unknown_1000_09B5_109B5);
-        // JNC 0x1000:09b3 (1000_09A3 / 0x109A3)
-        if (!CarryFlag)
-        {
-            goto label_1000_09B3_109B3;
-        }
-        // CMP SI,DI (1000_09A5 / 0x109A5)
-        Alu.Sub16(SI, DI);
-        // NOT byte ptr CS:[0x6e] (1000_09A7 / 0x109A7)
-        UInt8[cs1, 0x6E] = (byte)~UInt8[cs1, 0x6E];
-        // JNC 0x1000:09b3 (1000_09AC / 0x109AC)
-        if (!CarryFlag)
-        {
-            goto label_1000_09B3_109B3;
-        }
-        // MOV byte ptr CS:[0x6f],AH (1000_09AE / 0x109AE)
-        UInt8[cs1, 0x6F] = AH;
-    label_1000_09B3_109B3:
-        // POPF  (1000_09B3 / 0x109B3)
         FlagRegister16 = Stack.Pop16();
-        // RET  (1000_09B4 / 0x109B4)
         return NearRet();
     }
 
