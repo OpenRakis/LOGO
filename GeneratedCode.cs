@@ -1210,129 +1210,78 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0DDE_10DDE(int loadOffset)
     {
-        // MOV [0x54],AX (1000_0DDE / 0x10DDE)
         UInt16[DS, 0x54] = AX;
-        // CALL 0x1000:0dbc (1000_0DE1 / 0x10DE1)
-        NearCall(cs1, 0xDE4, unknown_1000_0DBC_10DBC);
-        // JC 0x1000:0e45 (1000_0DE4 / 0x10DE4)
+        NearCall(cs1, 0xDE4, new Func<int, Action>(unknown_1000_0DBC_10DBC));
         if (CarryFlag)
-        {
-            // JC target is RET, inlining.
-            // RET  (1000_0E45 / 0x10E45)
             return NearRet();
-        }
-    label_1000_0DE6_10DE6:
-        // CALL 0x1000:0a3a (1000_0DE6 / 0x10DE6)
-        NearCall(cs1, 0xDE9, unknown_1000_0A3A_10A3A);
-        // MOV AX,[0x54] (1000_0DE9 / 0x10DE9)
-        AX = UInt16[DS, 0x54];
-        // MOV [0x52],AX (1000_0DEC / 0x10DEC)
-        UInt16[DS, 0x52] = AX;
-        // LES DI,[0x4c] (1000_0DEF / 0x10DEF)
-        DI = UInt16[DS, 0x4C];
-        ES = UInt16[DS, 0x4E];
-        // MOV word ptr [0x56],DI (1000_0DF3 / 0x10DF3)
-        UInt16[DS, 0x56] = DI;
-        // MOV word ptr [0x58],ES (1000_0DF7 / 0x10DF7)
-        UInt16[DS, 0x58] = ES;
-        // CALL 0x1000:0ead (1000_0DFB / 0x10DFB)
-        NearCall(cs1, 0xDFE, unknown_1000_0EAD_10EAD);
-        // JZ 0x1000:0e45 (1000_0DFE / 0x10DFE)
-        if (ZeroFlag)
+        do
         {
-            // JZ target is RET, inlining.
-            // RET  (1000_0E45 / 0x10E45)
-            return NearRet();
+            NearCall(cs1, 0xDE9, new Func<int, Action>(unknown_1000_0A3A_10A3A));
+            AX = UInt16[DS, 84];
+            UInt16[DS, 0x52] = AX;
+            DI = UInt16[DS, 76];
+            ES = UInt16[DS, 78];
+            UInt16[DS, 0x56] = DI;
+            UInt16[DS, 0x58] = ES;
+            NearCall(cs1, 0xDFE, new Func<int, Action>(unknown_1000_0EAD_10EAD));
+            if (ZeroFlag)
+                return NearRet();
+            NearCall(cs1, 0xE03, new Func<int, Action>(unknown_1000_0FA4_10FA4));
+            NearCall(cs1, 0xE06, new Func<int, Action>(unknown_1000_0E4C_10E4C));
+            CarryFlag = true;
+            if (ZeroFlag)
+                return NearRet();
+            NearCall(cs1, 0xE0C, new Func<int, Action>(unknown_1000_0E49_10E49));
+            NearCall(cs1, 0xE0F, new Func<int, Action>(unknown_1000_0CF4_10CF4));
+            CarryFlag = true;
+            if (!ZeroFlag)
+                return NearRet();
+            do
+            {
+                AX = UInt16[DS, 0x52];
+                BP = 0xE46;
+                NearCall(cs1, 0xE1B, new Func<int, Action>(unknown_1000_0FEA_10FEA));
+                CarryFlag = true;
+                if (!ZeroFlag)
+                    return NearRet();
+                int num = Alu.Sub16(UInt16[DS, 82], 0);
+            }
+            while (!ZeroFlag);
+            SI = 0xEE;
+            AX = UInt16[DS, SI];
+            SI += (ushort)Direction16;
+            NearCall(cs1, 0xE2C, new Func<int, Action>(unknown_1000_11BD_111BD));
+            byte ah1 = AH;
+            byte al1 = AL;
+            byte num1;
+            AL = num1 = ah1;
+            AH = num1 = al1;
+            NearCall(cs1, 0xE31, new Func<int, Action>(unknown_1000_11BD_111BD));
+            int num2 = Alu.Sub16(AX, 0x4C4F);
+            if (ZeroFlag)
+            {
+                AX = UInt16[DS, SI];
+                SI += (ushort)Direction16;
+                NearCall(cs1, 0xE3A, new Func<int, Action>(unknown_1000_11BD_111BD));
+                byte ah2 = AH;
+                byte al2 = AL;
+                AL = num1 = ah2;
+                AH = num1 = al2;
+                NearCall(cs1, 0xE3F, new Func<int, Action>(unknown_1000_11BD_111BD));
+                int num3 = Alu.Sub16(AX, 0x4F50);
+            }
+            else
+            {
+                break;
+            }
         }
-        // CALL 0x1000:0fa4 (1000_0E00 / 0x10E00)
-        NearCall(cs1, 0xE03, unknown_1000_0FA4_10FA4);
-        // CALL 0x1000:0e4c (1000_0E03 / 0x10E03)
-        NearCall(cs1, 0xE06, unknown_1000_0E4C_10E4C);
-        // STC  (1000_0E06 / 0x10E06)
-        CarryFlag = true;
-        // JZ 0x1000:0e45 (1000_0E07 / 0x10E07)
-        if (ZeroFlag)
-        {
-            // JZ target is RET, inlining.
-            // RET  (1000_0E45 / 0x10E45)
-            return NearRet();
-        }
-        // CALL 0x1000:0e49 (1000_0E09 / 0x10E09)
-        NearCall(cs1, 0xE0C, unknown_1000_0E49_10E49);
-        // CALL 0x1000:0cf4 (1000_0E0C / 0x10E0C)
-        NearCall(cs1, 0xE0F, unknown_1000_0CF4_10CF4);
-        // STC  (1000_0E0F / 0x10E0F)
-        CarryFlag = true;
-        // JNZ 0x1000:0e45 (1000_0E10 / 0x10E10)
-        if (!ZeroFlag)
-        {
-            // JNZ target is RET, inlining.
-            // RET  (1000_0E45 / 0x10E45)
-            return NearRet();
-        }
-    label_1000_0E12_10E12:
-        // MOV AX,[0x52] (1000_0E12 / 0x10E12)
-        AX = UInt16[DS, 0x52];
-        // MOV BP,0xe46 (1000_0E15 / 0x10E15)
-        BP = 0xE46;
-        // CALL 0x1000:0fea (1000_0E18 / 0x10E18)
-        NearCall(cs1, 0xE1B, unknown_1000_0FEA_10FEA);
-        // STC  (1000_0E1B / 0x10E1B)
-        CarryFlag = true;
-        // JNZ 0x1000:0e45 (1000_0E1C / 0x10E1C)
-        if (!ZeroFlag)
-        {
-            // JNZ target is RET, inlining.
-            // RET  (1000_0E45 / 0x10E45)
-            return NearRet();
-        }
-        // CMP word ptr [0x52],0x0 (1000_0E1E / 0x10E1E)
-        Alu.Sub16(UInt16[DS, 0x52], 0x0);
-        // JNZ 0x1000:0e12 (1000_0E23 / 0x10E23)
-        if (!ZeroFlag)
-        {
-            goto label_1000_0E12_10E12;
-        }
-        // MOV SI,0xee (1000_0E25 / 0x10E25)
-        SI = 0xEE;
-        // LODSW SI (1000_0E28 / 0x10E28)
-        AX = UInt16[DS, SI];
-        SI = (ushort)(SI + Direction16);
-        // CALL 0x1000:11bd (1000_0E29 / 0x10E29)
-        NearCall(cs1, 0xE2C, unknown_1000_11BD_111BD);
-        // XCHG AH,AL (1000_0E2C / 0x10E2C)
-        (AL, AH) = (AH, AL);
-        // CALL 0x1000:11bd (1000_0E2E / 0x10E2E)
-        NearCall(cs1, 0xE31, unknown_1000_11BD_111BD);
-        // CMP AX,0x4c4f (1000_0E31 / 0x10E31)
-        Alu.Sub16(AX, 0x4C4F);
-        // JNZ 0x1000:0e44 (1000_0E34 / 0x10E34)
-        if (!ZeroFlag)
-        {
-            goto label_1000_0E44_10E44;
-        }
-        // LODSW SI (1000_0E36 / 0x10E36)
-        AX = UInt16[DS, SI];
-        SI = (ushort)(SI + Direction16);
-        // CALL 0x1000:11bd (1000_0E37 / 0x10E37)
-        NearCall(cs1, 0xE3A, unknown_1000_11BD_111BD);
-        // XCHG AH,AL (1000_0E3A / 0x10E3A)
-        (AL, AH) = (AH, AL);
-        // CALL 0x1000:11bd (1000_0E3C / 0x10E3C)
-        NearCall(cs1, 0xE3F, unknown_1000_11BD_111BD);
-        // CMP AX,0x4f50 (1000_0E3F / 0x10E3F)
-        Alu.Sub16(AX, 0x4F50);
-        // JZ 0x1000:0de6 (1000_0E42 / 0x10E42)
-        if (ZeroFlag)
-        {
-            goto label_1000_0DE6_10DE6;
-        }
-    label_1000_0E44_10E44:
-        // CLC  (1000_0E44 / 0x10E44)
+        while (ZeroFlag);
         CarryFlag = false;
-        // RET  (1000_0E45 / 0x10E45)
         return NearRet();
     }
 
