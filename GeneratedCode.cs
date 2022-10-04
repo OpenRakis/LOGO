@@ -1051,43 +1051,31 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0CF4_10CF4(int loadOffset)
     {
-        // CALL 0x1000:0c72 (1000_0CF4 / 0x10CF4)
-        NearCall(cs1, 0xCF7, unknown_1000_0C72_10C72);
-        // MOV SI,0xcbc (1000_0CF7 / 0x10CF7)
+        NearCall(cs1, 0xCF7, new Func<int, Action>(unknown_1000_0C72_10C72));
         SI = 0xCBC;
-        // MOV AX,word ptr CS:[SI] (1000_0CFA / 0x10CFA)
         AX = UInt16[cs1, SI];
-        // MOV CS:[0xcb6],AX (1000_0CFD / 0x10CFD)
         UInt16[cs1, 0xCB6] = AX;
-        // MOV word ptr CS:[0xcba],SI (1000_0D01 / 0x10D01)
         UInt16[cs1, 0xCBA] = SI;
-        // XOR AX,AX (1000_0D06 / 0x10D06)
         AX = 0;
-        // MOV CS:[0xcb0],AX (1000_0D08 / 0x10D08)
         UInt16[cs1, 0xCB0] = AX;
-        // MOV CS:[0xcb2],AX (1000_0D0C / 0x10D0C)
         UInt16[cs1, 0xCB2] = AX;
-        // MOV CS:[0xcb4],AX (1000_0D10 / 0x10D10)
         UInt16[cs1, 0xCB4] = AX;
-        // MOV CX,0xfb (1000_0D14 / 0x10D14)
         CX = 0xFB;
-    label_1000_0D17_10D17:
-        // PUSH CX (1000_0D17 / 0x10D17)
-        Stack.Push16(CX);
-        // CALL 0x1000:0d22 (1000_0D18 / 0x10D18)
-        NearCall(cs1, 0xD1B, unknown_1000_0D22_10D22);
-        // POP CX (1000_0D1B / 0x10D1B)
-        CX = Stack.Pop16();
-        // CALL 0x1000:1085 (1000_0D1C / 0x10D1C)
-        NearCall(cs1, 0xD1F, unknown_1000_1085_11085);
-        // LOOPZ 0x1000:0d17 (1000_0D1F / 0x10D1F)
-        if (--CX != 0 && ZeroFlag)
+        ushort num;
+        do
         {
-            goto label_1000_0D17_10D17;
+            Stack.Push16(CX);
+            NearCall(cs1, 0xD1B, new Func<int, Action>(unknown_1000_0D22_10D22));
+            CX = Stack.Pop16();
+            NearCall(cs1, 0xD1F, new Func<int, Action>(unknown_1000_1085_11085));
+            num = --CX;
         }
-        // RET  (1000_0D21 / 0x10D21)
+        while (num != 0 && ZeroFlag);
         return NearRet();
     }
 
