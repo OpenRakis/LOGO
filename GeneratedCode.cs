@@ -1127,88 +1127,47 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0D5F_10D5F(int loadOffset)
     {
-        // MOV SI,word ptr CS:[0xcba] (1000_0D5F / 0x10D5F)
         SI = UInt16[cs1, 0xCBA];
-        // DEC word ptr CS:[0xcb6] (1000_0D64 / 0x10D64)
         UInt16[cs1, 0xCB6] = Alu.Dec16(UInt16[cs1, 0xCB6]);
-        // JNZ 0x1000:0d79 (1000_0D69 / 0x10D69)
-        if (!ZeroFlag)
+        if (ZeroFlag)
         {
-            goto label_1000_0D79_10D79;
+            SI = Alu.Add16(SI, 8);
+            UInt16[cs1, 0xCBA] = SI;
+            AX = UInt16[DS, SI];
+            UInt16[cs1, 0xCB6] = AX;
         }
-        // ADD SI,0x8 (1000_0D6B / 0x10D6B)
-        // SI += 0x8;
-        SI = Alu.Add16(SI, 0x8);
-        // MOV word ptr CS:[0xcba],SI (1000_0D6E / 0x10D6E)
-        UInt16[cs1, 0xCBA] = SI;
-        // MOV AX,word ptr [SI] (1000_0D73 / 0x10D73)
-        AX = UInt16[DS, SI];
-        // MOV CS:[0xcb6],AX (1000_0D75 / 0x10D75)
-        UInt16[cs1, 0xCB6] = AX;
-    label_1000_0D79_10D79:
-        // MOV AX,word ptr [SI + 0x2] (1000_0D79 / 0x10D79)
-        AX = UInt16[DS, (ushort)(SI + 0x2)];
-        // ADD AX,word ptr CS:[0xcb0] (1000_0D7C / 0x10D7C)
-        // AX += UInt16[cs1, 0xCB0];
+        AX = UInt16[DS, (ushort)(SI + 2U)];
         AX = Alu.Add16(AX, UInt16[cs1, 0xCB0]);
-        // MOV CS:[0xcb0],AX (1000_0D81 / 0x10D81)
         UInt16[cs1, 0xCB0] = AX;
-        // SHL AL,0x1 (1000_0D85 / 0x10D85)
-        // AL <<= 0x1;
-        AL = Alu.Shl8(AL, 0x1);
-        // ADC AH,0x0 (1000_0D87 / 0x10D87)
-        AH = Alu.Adc8(AH, 0x0);
-        // MOV AL,AH (1000_0D8A / 0x10D8A)
+        AL = Alu.Shl8(AL, 1);
+        AH = Alu.Adc8(AH, 0);
         AL = AH;
-        // AND AL,0x3f (1000_0D8C / 0x10D8C)
-        // AL &= 0x3F;
         AL = Alu.And8(AL, 0x3F);
-        // STOSB ES:DI (1000_0D8E / 0x10D8E)
         UInt8[ES, DI] = AL;
-        DI = (ushort)(DI + Direction8);
-        // MOV AX,word ptr [SI + 0x4] (1000_0D8F / 0x10D8F)
+        DI += (ushort)Direction8;
         AX = UInt16[DS, (ushort)(SI + 0x4)];
-        // ADD AX,word ptr CS:[0xcb2] (1000_0D92 / 0x10D92)
-        // AX += UInt16[cs1, 0xCB2];
         AX = Alu.Add16(AX, UInt16[cs1, 0xCB2]);
-        // MOV CS:[0xcb2],AX (1000_0D97 / 0x10D97)
         UInt16[cs1, 0xCB2] = AX;
-        // SHL AL,0x1 (1000_0D9B / 0x10D9B)
-        // AL <<= 0x1;
-        AL = Alu.Shl8(AL, 0x1);
-        // ADC AH,0x0 (1000_0D9D / 0x10D9D)
-        AH = Alu.Adc8(AH, 0x0);
-        // MOV AL,AH (1000_0DA0 / 0x10DA0)
+        AL = Alu.Shl8(AL, 1);
+        AH = Alu.Adc8(AH, 0);
         AL = AH;
-        // AND AL,0x3f (1000_0DA2 / 0x10DA2)
-        // AL &= 0x3F;
         AL = Alu.And8(AL, 0x3F);
-        // STOSB ES:DI (1000_0DA4 / 0x10DA4)
         UInt8[ES, DI] = AL;
-        DI = (ushort)(DI + Direction8);
-        // MOV AX,word ptr [SI + 0x6] (1000_0DA5 / 0x10DA5)
+        DI += (ushort)Direction8;
         AX = UInt16[DS, (ushort)(SI + 0x6)];
-        // ADD AX,word ptr CS:[0xcb4] (1000_0DA8 / 0x10DA8)
-        // AX += UInt16[cs1, 0xCB4];
         AX = Alu.Add16(AX, UInt16[cs1, 0xCB4]);
-        // MOV CS:[0xcb4],AX (1000_0DAD / 0x10DAD)
         UInt16[cs1, 0xCB4] = AX;
-        // SHL AL,0x1 (1000_0DB1 / 0x10DB1)
-        // AL <<= 0x1;
-        AL = Alu.Shl8(AL, 0x1);
-        // ADC AH,0x0 (1000_0DB3 / 0x10DB3)
-        AH = Alu.Adc8(AH, 0x0);
-        // MOV AL,AH (1000_0DB6 / 0x10DB6)
+        AL = Alu.Shl8(AL, 1);
+        AH = Alu.Adc8(AH, 0);
         AL = AH;
-        // AND AL,0x3f (1000_0DB8 / 0x10DB8)
-        // AL &= 0x3F;
         AL = Alu.And8(AL, 0x3F);
-        // STOSB ES:DI (1000_0DBA / 0x10DBA)
         UInt8[ES, DI] = AL;
-        DI = (ushort)(DI + Direction8);
-        // RET  (1000_0DBB / 0x10DBB)
+        DI += (ushort)Direction8;
         return NearRet();
     }
 
