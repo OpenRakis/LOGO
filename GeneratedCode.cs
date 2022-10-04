@@ -2553,110 +2553,84 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_10F4_110F4(int loadOffset)
     {
-        // PUSH DS (1000_10F4 / 0x110F4)
         Stack.Push16(DS);
-        // PUSH ES (1000_10F5 / 0x110F5)
         Stack.Push16(ES);
-        // POP DS (1000_10F6 / 0x110F6)
         DS = Stack.Pop16();
-        // POP ES (1000_10F7 / 0x110F7)
         ES = Stack.Pop16();
-        // CLD  (1000_10F8 / 0x110F8)
         DirectionFlag = false;
-        // MOV SI,0x80 (1000_10F9 / 0x110F9)
         SI = 0x80;
-        // LODSB SI (1000_10FC / 0x110FC)
         AL = UInt8[DS, SI];
-        SI = (ushort)(SI + Direction8);
-        // XOR CX,CX (1000_10FD / 0x110FD)
+        SI += (ushort)Direction8;
         CX = 0;
-        // MOV CL,AL (1000_10FF / 0x110FF)
         CL = AL;
-        // JCXZ 0x1000:1127 (1000_1101 / 0x11101)
-        if (CX == 0)
+        if (CX != 0)
         {
-            goto label_1000_1127_11127;
+            ushort num1;
+            do
+            {
+                DI = UInt16[ES, BX];
+                ++BX;
+                BX = Alu.Inc16(BX);
+                DI = Alu.Or16(DI, DI);
+                if (!ZeroFlag)
+                {
+                    ushort num2;
+                    do
+                    {
+                        if (ZeroFlag)
+                        {
+                            SI = Alu.Inc16(SI);
+                            num2 = --CX;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    while (num2 != 0);
+                    ushort num4;
+                    do
+                    {
+                        AL = UInt8[DS, SI];
+                        SI += (ushort)Direction8;
+                        if (!ZeroFlag)
+                        {
+                            UInt8[ES, DI] = AL;
+                            DI += (ushort)Direction8;
+                            num4 = --CX;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    while (num4 != 0);
+                    AL = 0;
+                    UInt8[ES, DI] = AL;
+                    DI += (ushort)Direction8;
+                    if (CX != 0)
+                    {
+                        num1 = --CX;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            while (num1 != 0);
         }
-    label_1000_1103_11103:
-        // MOV DI,word ptr ES:[BX] (1000_1103 / 0x11103)
-        DI = UInt16[ES, BX];
-        // INC BX (1000_1106 / 0x11106)
-        BX++;
-        // INC BX (1000_1107 / 0x11107)
-        BX = Alu.Inc16(BX);
-        // OR DI,DI (1000_1108 / 0x11108)
-        // DI |= DI;
-        DI = Alu.Or16(DI, DI);
-        // JZ 0x1000:1127 (1000_110A / 0x1110A)
-        if (ZeroFlag)
-        {
-            goto label_1000_1127_11127;
-        }
-    label_1000_110C_1110C:
-        // CMP byte ptr [SI],0x20 (1000_110C / 0x1110C)
-        Alu.Sub8(UInt8[DS, SI], 0x20);
-        // JNZ 0x1000:1114 (1000_110F / 0x1110F)
-        if (!ZeroFlag)
-        {
-            goto label_1000_1114_11114;
-        }
-        // INC SI (1000_1111 / 0x11111)
-        SI = Alu.Inc16(SI);
-        // LOOP 0x1000:110c (1000_1112 / 0x11112)
-        if (--CX != 0)
-        {
-            goto label_1000_110C_1110C;
-        }
-    label_1000_1114_11114:
-        // LODSB SI (1000_1114 / 0x11114)
-        AL = UInt8[DS, SI];
-        SI = (ushort)(SI + Direction8);
-        // CMP AL,0x20 (1000_1115 / 0x11115)
-        Alu.Sub8(AL, 0x20);
-        // JZ 0x1000:1120 (1000_1117 / 0x11117)
-        if (ZeroFlag)
-        {
-            goto label_1000_1120_11120;
-        }
-        // CMP AL,0xd (1000_1119 / 0x11119)
-        Alu.Sub8(AL, 0xD);
-        // JZ 0x1000:1120 (1000_111B / 0x1111B)
-        if (ZeroFlag)
-        {
-            goto label_1000_1120_11120;
-        }
-        // STOSB ES:DI (1000_111D / 0x1111D)
-        UInt8[ES, DI] = AL;
-        DI = (ushort)(DI + Direction8);
-        // LOOP 0x1000:1114 (1000_111E / 0x1111E)
-        if (--CX != 0)
-        {
-            goto label_1000_1114_11114;
-        }
-    label_1000_1120_11120:
-        // XOR AL,AL (1000_1120 / 0x11120)
-        AL = 0;
-        // STOSB ES:DI (1000_1122 / 0x11122)
-        UInt8[ES, DI] = AL;
-        DI = (ushort)(DI + Direction8);
-        // JCXZ 0x1000:1127 (1000_1123 / 0x11123)
-        if (CX == 0)
-        {
-            goto label_1000_1127_11127;
-        }
-        // LOOP 0x1000:1103 (1000_1125 / 0x11125)
-        if (--CX != 0)
-        {
-            goto label_1000_1103_11103;
-        }
-    label_1000_1127_11127:
-        // MOV AX,0x111c (1000_1127 / 0x11127)
         AX = 0x111C;
-        // MOV DS,AX (1000_112A / 0x1112A)
         DS = AX;
-        // RET  (1000_112C / 0x1112C)
         return NearRet();
     }
 
