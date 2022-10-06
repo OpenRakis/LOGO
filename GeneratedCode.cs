@@ -1589,52 +1589,39 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0FA4_10FA4(int loadOffset)
     {
-        // LES SI,[0x56] (1000_0FA4 / 0x10FA4)
         SI = UInt16[DS, 0x56];
         ES = UInt16[DS, 0x58];
-        // ADD SI,0x2 (1000_0FA8 / 0x10FA8)
-        // SI += 0x2;
-        SI = Alu.Add16(SI, 0x2);
-    label_1000_0FAB_10FAB:
-        // LODSW ES:SI (1000_0FAB / 0x10FAB)
-        AX = UInt16[ES, SI];
-        SI = (ushort)(SI + Direction16);
-        // CMP AL,0xff (1000_0FAD / 0x10FAD)
-        Alu.Sub8(AL, 0xFF);
-        // JZ 0x1000:0fcb (1000_0FAF / 0x10FAF)
-        if (ZeroFlag)
+        SI = Alu.Add16(SI, 2);
+        while (true)
         {
-            // JZ target is RET, inlining.
-            // RET  (1000_0FCB / 0x10FCB)
-            return NearRet();
+            AX = UInt16[ES, SI];
+            SI += (ushort)Direction16;
+            int num = Alu.Sub8(AL, byte.MaxValue);
+            if (!ZeroFlag)
+            {
+                CX = 0;
+                BX = 0;
+                BL = AL;
+                CL = AH;
+                DX = SI;
+                SI += CX;
+                SI += CX;
+                SI = Alu.Add16(SI, CX);
+                AX = 0x1012;
+                Interrupt(0x10);
+                NearCall(cs1, 0xFC9, unknown_1000_0FCC_10FCC);
+            }
+            else
+            {
+                break;
+            }
         }
-        // XOR CX,CX (1000_0FB1 / 0x10FB1)
-        CX = 0;
-        // XOR BX,BX (1000_0FB3 / 0x10FB3)
-        BX = 0;
-        // MOV BL,AL (1000_0FB5 / 0x10FB5)
-        BL = AL;
-        // MOV CL,AH (1000_0FB7 / 0x10FB7)
-        CL = AH;
-        // MOV DX,SI (1000_0FB9 / 0x10FB9)
-        DX = SI;
-        // ADD SI,CX (1000_0FBB / 0x10FBB)
-        SI += CX;
-        // ADD SI,CX (1000_0FBD / 0x10FBD)
-        SI += CX;
-        // ADD SI,CX (1000_0FBF / 0x10FBF)
-        // SI += CX;
-        SI = Alu.Add16(SI, CX);
-        // MOV AX,0x1012 (1000_0FC1 / 0x10FC1)
-        AX = 0x1012;
-        // INT 0x10 (1000_0FC4 / 0x10FC4)
-        Interrupt(0x10);
-        // CALL 0x1000:0fcc (1000_0FC6 / 0x10FC6)
-        NearCall(cs1, 0xFC9, unknown_1000_0FCC_10FCC);
-        // JMP 0x1000:0fab (1000_0FC9 / 0x10FC9)
-        goto label_1000_0FAB_10FAB;
+        return NearRet();
     }
 
     public virtual Action unknown_1000_0FCC_10FCC(int loadOffset)
