@@ -1654,66 +1654,40 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0FEA_10FEA(int loadOffset)
     {
-        // STI  (1000_0FEA / 0x10FEA)
         InterruptFlag = true;
-        // PUSH AX (1000_0FEB / 0x10FEB)
         Stack.Push16(AX);
-        // XOR AX,AX (1000_0FEC / 0x10FEC)
         AX = 0;
-        // MOV ES,AX (1000_0FEE / 0x10FEE)
         ES = AX;
-        // PUSH word ptr ES:[0x46c] (1000_0FF0 / 0x10FF0)
         Stack.Push16(UInt16[ES, 0x46C]);
-        // CALL BP (1000_0FF5 / 0x10FF5)
-        // Indirect call to BP, generating possible targets from emulator records
-        uint targetAddress_1000_0FF5 = (uint)(BP);
-        switch (targetAddress_1000_0FF5)
-        {
-            case 0xE46: NearCall(cs1, 0xFF7, unknown_1000_0E46_10E46); break;
-            default:
-                throw FailAsUntested("Error: Function not registered at address " + ConvertUtils.ToHex32WithoutX(targetAddress_1000_0FF5));
-        }
-        // POP BX (1000_0FF7 / 0x10FF7)
+        uint bp = BP;
+        if (bp != 0xE46)
+            throw FailAsUntested("Error: Function not registered at address " + ConvertUtils.ToHex32WithoutX(bp));
+        NearCall(cs1, 0xFF7, new Func<int, Action>(unknown_1000_0E46_10E46));
         BX = Stack.Pop16();
-        // POP BP (1000_0FF8 / 0x10FF8)
         BP = Stack.Pop16();
-        // SHR BP,0x1 (1000_0FF9 / 0x10FF9)
-        BP >>= 0x1;
-        // SHR BP,0x1 (1000_0FFB / 0x10FFB)
-        BP >>= 0x1;
-        // SHR BP,0x1 (1000_0FFD / 0x10FFD)
-        // BP >>= 0x1;
-        BP = Alu.Shr16(BP, 0x1);
-        // MOV AX,BP (1000_0FFF / 0x10FFF)
+        BP >>= 1;
+        BP >>= 1;
+        BP = Alu.Shr16(BP, 1);
         AX = BP;
-        // SHR AX,0x1 (1000_1001 / 0x11001)
-        AX >>= 0x1;
-        // SHR AX,0x1 (1000_1003 / 0x11003)
-        AX >>= 0x1;
-        // SUB BP,AX (1000_1005 / 0x11005)
+        AX >>= 1;
+        AX >>= 1;
         BP -= AX;
-    label_1000_1007_11007:
-        // XOR AX,AX (1000_1007 / 0x11007)
-        AX = 0;
-        // MOV ES,AX (1000_1009 / 0x11009)
-        ES = AX;
-        CheckExternalEvents(cs1, 0x100F);
-        // MOV AX,ES:[0x46c] (1000_100B / 0x1100B)
-        AX = UInt16[ES, 0x46C];
-        // SUB AX,BX (1000_100F / 0x1100F)
-        AX -= BX;
-        // CMP AX,BP (1000_1011 / 0x11011)
-        Alu.Sub16(AX, BP);
-        // JC 0x1000:1007 (1000_1013 / 0x11013)
-        if (CarryFlag)
+        do
         {
-            goto label_1000_1007_11007;
+            AX = 0;
+            ES = AX;
+            CheckExternalEvents(cs1, 0x100F);
+            AX = UInt16[ES, 0x46C];
+            AX -= BX;
+            int num = Alu.Sub16(AX, BP);
         }
-        // CALL 0x1000:1085 (1000_1015 / 0x11015)
-        NearCall(cs1, 0x1018, unknown_1000_1085_11085);
-        // RET  (1000_1018 / 0x11018)
+        while (CarryFlag);
+        NearCall(cs1, 0x1018, new Func<int, Action>(unknown_1000_1085_11085));
         return NearRet();
     }
 
