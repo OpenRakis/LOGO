@@ -1696,26 +1696,27 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// </summary>
     public virtual Action unknown_1000_1019_11019(int loadOffset)
     {
-        Stack.Push16(FlagRegister16);
-        Stack.Push16(FlagRegister16);
-        AX = 0;
-        Stack.Push16(AX);
-        FlagRegister16 = Stack.Pop16();
-        Stack.Push16(FlagRegister16);
-        AX = Stack.Pop16();
-        FlagRegister16 = Stack.Pop16();
-        AX &= 0xF000;
-        if (!ZeroFlag)
+        DI = DX;
+        while (true)
         {
-            AX = 0x7000;
-            Stack.Push16(AX);
-            FlagRegister16 = Stack.Pop16();
-            Stack.Push16(FlagRegister16);
-            AX = Stack.Pop16();
-            AX = Alu.And16(AX, 0x7000);
-            UInt8[cs1, 0x6B] = AH;
+            AL = UInt8[DS, DI];
+            if (!ZeroFlag)
+            {
+                AL = Alu.Or8(AL, AL);
+                if (!ZeroFlag)
+                {
+                    DI = Alu.Inc16(DI);
+                }
+                else
+                {
+                    return NearRet();
+                }
+            }
+            else
+            {
+                break;
+            }
         }
-        FlagRegister16 = Stack.Pop16();
         return NearRet();
     }
 
