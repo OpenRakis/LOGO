@@ -1373,7 +1373,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         SI = Alu.And16(SI, 0xF);
         UInt16[DS, 0x56] = SI;
         UInt16[DS, 0x58] = ES;
-        if (!JumpDispatcher?.Jump(split_1000_0EB2_10EB2, 0) is false)
+        if (JumpDispatcher?.Jump(split_1000_0EB2_10EB2, 0) is true)
         {
             return JumpDispatcher?.JumpAsmReturn;
         }
@@ -1445,29 +1445,17 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
 
     public virtual Action unknown_1000_0EFE_10EFE(int loadOffset)
     {
-    entrydispatcher:
-        if (loadOffset != 0)
-        {
-            throw FailAsUntested("External goto not supported for this function.");
-        }
-        // PUSH CX (1000_0EFE / 0x10EFE)
         Stack.Push16(CX);
-        // PUSH DI (1000_0EFF / 0x10EFF)
         Stack.Push16(DI);
-        // PUSH DS (1000_0F00 / 0x10F00)
         Stack.Push16(DS);
-        // ADD SI,0x6 (1000_0F01 / 0x10F01)
-        SI += 0x6;
-        // XOR BP,BP (1000_0F04 / 0x10F04)
+        SI += 6;
         BP = 0;
-        // JMP 0x1000:0f30 (1000_0F06 / 0x10F06)
-        // Jump converted to entry function call
-        if (JumpDispatcher.Jump(split_1000_0F30_10F30, 0))
+        if (JumpDispatcher?.Jump(split_1000_0F30_10F30, 0) is true)
         {
-            loadOffset = JumpDispatcher.NextEntryAddress;
-            goto entrydispatcher;
+            return JumpDispatcher?.JumpAsmReturn;
         }
-        return JumpDispatcher.JumpAsmReturn!;
+        return JumpDispatcher?.JumpAsmReturn;
+        //throw FailAsUntested("External goto not supported for this function.");
     }
 
     public virtual Action split_1000_0F30_10F30(int loadOffset)
