@@ -1691,52 +1691,31 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_1019_11019(int loadOffset)
     {
-        // PUSHF  (1000_1019 / 0x11019)
         Stack.Push16(FlagRegister16);
-        // PUSHF  (1000_101A / 0x1101A)
         Stack.Push16(FlagRegister16);
-        // XOR AX,AX (1000_101B / 0x1101B)
         AX = 0;
-        // PUSH AX (1000_101D / 0x1101D)
         Stack.Push16(AX);
-        // POPF  (1000_101E / 0x1101E)
         FlagRegister16 = Stack.Pop16();
-        // PUSHF  (1000_101F / 0x1101F)
         Stack.Push16(FlagRegister16);
-        // POP AX (1000_1020 / 0x11020)
         AX = Stack.Pop16();
-        // POPF  (1000_1021 / 0x11021)
         FlagRegister16 = Stack.Pop16();
-        // AND AX,0xf000 (1000_1022 / 0x11022)
         AX &= 0xF000;
-        // CMP AX,0xf000 (1000_1025 / 0x11025)
-        Alu.Sub16(AX, 0xF000);
-        // JZ 0x1000:1039 (1000_1028 / 0x11028)
-        if (ZeroFlag)
+        if (!ZeroFlag)
         {
-            goto label_1000_1039_11039;
+            AX = 0x7000;
+            Stack.Push16(AX);
+            FlagRegister16 = Stack.Pop16();
+            Stack.Push16(FlagRegister16);
+            AX = Stack.Pop16();
+            AX = Alu.And16(AX, 0x7000);
+            UInt8[cs1, 0x6B] = AH;
         }
-        // MOV AX,0x7000 (1000_102A / 0x1102A)
-        AX = 0x7000;
-        // PUSH AX (1000_102D / 0x1102D)
-        Stack.Push16(AX);
-        // POPF  (1000_102E / 0x1102E)
         FlagRegister16 = Stack.Pop16();
-        // PUSHF  (1000_102F / 0x1102F)
-        Stack.Push16(FlagRegister16);
-        // POP AX (1000_1030 / 0x11030)
-        AX = Stack.Pop16();
-        // AND AX,0x7000 (1000_1031 / 0x11031)
-        // AX &= 0x7000;
-        AX = Alu.And16(AX, 0x7000);
-        // MOV byte ptr CS:[0x6b],AH (1000_1034 / 0x11034)
-        UInt8[cs1, 0x6B] = AH;
-    label_1000_1039_11039:
-        // POPF  (1000_1039 / 0x11039)
-        FlagRegister16 = Stack.Pop16();
-        // RET  (1000_103A / 0x1103A)
         return NearRet();
     }
 
