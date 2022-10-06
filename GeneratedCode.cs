@@ -1724,33 +1724,33 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     {
         // MOV DI,DX (1000_105F / 0x1105F)
         DI = DX;
-    label_1000_1061_11061:
-        // MOV AL,byte ptr [DI] (1000_1061 / 0x11061)
-        AL = UInt8[DS, DI];
-        // CMP AL,0x2e (1000_1063 / 0x11063)
-        Alu.Sub8(AL, 0x2E);
-        // JZ 0x1000:106e (1000_1065 / 0x11065)
-        if (ZeroFlag)
+        while (true)
         {
-            // JZ target is RET, inlining.
-            // RET  (1000_106E / 0x1106E)
-            return NearRet();
+            // MOV AL,byte ptr [DI] (1000_1061 / 0x11061)
+            AL = UInt8[DS, DI];
+            // CMP AL,0x2e (1000_1063 / 0x11063)
+            Alu.Sub8(AL, 0x2E);
+            // JZ 0x1000:106e (1000_1065 / 0x11065)
+            if (ZeroFlag)
+            {
+                // JZ target is RET, inlining.
+                // RET  (1000_106E / 0x1106E)
+                return NearRet();
+            }
+            // OR AL,AL (1000_1067 / 0x11067)
+            // AL |= AL;
+            AL = Alu.Or8(AL, AL);
+            // JZ 0x1000:106e (1000_1069 / 0x11069)
+            if (ZeroFlag)
+            {
+                // JZ target is RET, inlining.
+                // RET  (1000_106E / 0x1106E)
+                return NearRet();
+            }
+            // INC DI (1000_106B / 0x1106B)
+            DI = Alu.Inc16(DI);
+            // JMP 0x1000:1061 (1000_106C / 0x1106C)
         }
-        // OR AL,AL (1000_1067 / 0x11067)
-        // AL |= AL;
-        AL = Alu.Or8(AL, AL);
-        // JZ 0x1000:106e (1000_1069 / 0x11069)
-        if (ZeroFlag)
-        {
-            // JZ target is RET, inlining.
-            // RET  (1000_106E / 0x1106E)
-            return NearRet();
-        }
-        // INC DI (1000_106B / 0x1106B)
-        DI = Alu.Inc16(DI);
-        // JMP 0x1000:1061 (1000_106C / 0x1106C)
-        goto label_1000_1061_11061;
-        // RET  (1000_106E / 0x1106E)
     }
 
     public virtual Action unknown_1000_1085_11085(int loadOffset)
