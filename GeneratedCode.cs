@@ -185,6 +185,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_09B5_109B5(int loadOffset)
     {
         // MOV AH,AL (1000_09B5 / 0x109B5)
@@ -341,6 +344,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0A22_10A22(int loadOffset)
     {
         // CMP BX,0xc8 (1000_0A22 / 0x10A22)
@@ -348,27 +354,23 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         // JC 0x1000:0a2b (1000_0A26 / 0x10A26)
         if (CarryFlag)
         {
-            goto label_1000_0A2B_10A2B;
+            // XCHG BL,BH (1000_0A2B / 0x10A2B)
+            (BH, BL) = (BL, BH);
+            // MOV DI,BX (1000_0A2D / 0x10A2D)
+            DI = BX;
+            // SHR DI,0x1 (1000_0A2F / 0x10A2F)
+            DI >>= 0x1;
+            // SHR DI,0x1 (1000_0A31 / 0x10A31)
+            DI >>= 0x1;
+            // ADD DI,BX (1000_0A33 / 0x10A33)
+            // DI += BX;
+            DI = Alu.Add16(DI, BX);
+            // XCHG BL,BH (1000_0A35 / 0x10A35)
+            (BH, BL) = (BL, BH);
+            // ADD DI,DX (1000_0A37 / 0x10A37)
+            // DI += DX;
+            DI = Alu.Add16(DI, DX);
         }
-        // MOV BX,0xc7 (1000_0A28 / 0x10A28)
-        BX = 0xC7;
-    label_1000_0A2B_10A2B:
-        // XCHG BL,BH (1000_0A2B / 0x10A2B)
-        (BH, BL) = (BL, BH);
-        // MOV DI,BX (1000_0A2D / 0x10A2D)
-        DI = BX;
-        // SHR DI,0x1 (1000_0A2F / 0x10A2F)
-        DI >>= 0x1;
-        // SHR DI,0x1 (1000_0A31 / 0x10A31)
-        DI >>= 0x1;
-        // ADD DI,BX (1000_0A33 / 0x10A33)
-        // DI += BX;
-        DI = Alu.Add16(DI, BX);
-        // XCHG BL,BH (1000_0A35 / 0x10A35)
-        (BH, BL) = (BL, BH);
-        // ADD DI,DX (1000_0A37 / 0x10A37)
-        // DI += DX;
-        DI = Alu.Add16(DI, DX);
         // RET  (1000_0A39 / 0x10A39)
         return NearRet();
     }
