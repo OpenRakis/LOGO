@@ -1624,48 +1624,33 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0FCC_10FCC(int loadOffset)
     {
-        // PUSH SI (1000_0FCC / 0x10FCC)
         Stack.Push16(SI);
-        // PUSH DI (1000_0FCD / 0x10FCD)
         Stack.Push16(DI);
-        // MOV SI,DX (1000_0FCE / 0x10FCE)
         SI = DX;
-        // MOV DI,0x70 (1000_0FD0 / 0x10FD0)
         DI = 0x70;
-        // ADD DI,BX (1000_0FD3 / 0x10FD3)
         DI += BX;
-        // ADD DI,BX (1000_0FD5 / 0x10FD5)
         DI += BX;
-        // ADD DI,BX (1000_0FD7 / 0x10FD7)
-        // DI += BX;
         DI = Alu.Add16(DI, BX);
-        // MOV AX,CX (1000_0FD9 / 0x10FD9)
         AX = CX;
-        // SHL CX,0x1 (1000_0FDB / 0x10FDB)
-        CX <<= 0x1;
-        // ADD CX,AX (1000_0FDD / 0x10FDD)
-        // CX += AX;
+        CX <<= 1;
         CX = Alu.Add16(CX, AX);
-    label_1000_0FDF_10FDF:
-        // LODSB ES:SI (1000_0FDF / 0x10FDF)
-        AL = UInt8[ES, SI];
-        SI = (ushort)(SI + Direction8);
-        // MOV byte ptr CS:[DI],AL (1000_0FE1 / 0x10FE1)
-        UInt8[cs1, DI] = AL;
-        // INC DI (1000_0FE4 / 0x10FE4)
-        DI = Alu.Inc16(DI);
-        // LOOP 0x1000:0fdf (1000_0FE5 / 0x10FE5)
-        if (--CX != 0)
+        ushort num;
+        do
         {
-            goto label_1000_0FDF_10FDF;
+            AL = UInt8[ES, SI];
+            SI += (ushort)Direction8;
+            UInt8[cs1, DI] = AL;
+            DI = Alu.Inc16(DI);
+            num = --CX;
         }
-        // POP DI (1000_0FE7 / 0x10FE7)
+        while (num != 0);
         DI = Stack.Pop16();
-        // POP SI (1000_0FE8 / 0x10FE8)
         SI = Stack.Pop16();
-        // RET  (1000_0FE9 / 0x10FE9)
         return NearRet();
     }
 
