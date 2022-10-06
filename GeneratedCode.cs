@@ -193,50 +193,45 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         SI = 0;
         // MOV BX,word ptr ES:[BP + 0x0] (1000_09B9 / 0x109B9)
         BX = UInt16[ES, BP];
-    label_1000_09BD_109BD:
-        // INC SI (1000_09BD / 0x109BD)
-        SI = Alu.Inc16(SI);
-        // JNZ 0x1000:09c1 (1000_09BE / 0x109BE)
-        if (!ZeroFlag)
+        do
         {
-            goto label_1000_09C1_109C1;
+            // INC SI (1000_09BD / 0x109BD)
+            SI = Alu.Inc16(SI);
+            // JNZ 0x1000:09c1 (1000_09BE / 0x109BE)
+            if (!ZeroFlag)
+            {
+                // IN AL,DX (1000_09C1 / 0x109C1)
+                CheckExternalEvents(cs1, 0x9c2);
+                AL = Cpu.In8(DX);
+                // AND AL,0x8 (1000_09C2 / 0x109C2)
+                AL &= 0x8;
+                // CMP AL,AH (1000_09C4 / 0x109C4)
+                Alu.Sub8(AL, AH);
+                // JNZ 0x1000:09d6 (1000_09C6 / 0x109C6)
+                if (!ZeroFlag)
+                {
+                    // STC  (1000_09D6 / 0x109D6)
+                    CarryFlag = true;
+                    // RET  (1000_09D7 / 0x109D7)
+                    return NearRet();
+                }
+            }
+            // DEC SI (1000_09C0 / 0x109C0)
+            SI = Alu.Dec16(SI);
+            // PUSH AX (1000_09C8 / 0x109C8)
+            Stack.Push16(AX);
+            // MOV AX,word ptr ES:[BP + 0x0] (1000_09C9 / 0x109C9)
+            AX = UInt16[ES, BP];
+            // SUB AX,BX (1000_09CD / 0x109CD)
+            AX -= BX;
+            // CMP AX,0x64 (1000_09CF / 0x109CF)
+            Alu.Sub16(AX, 0x64);
+            // POP AX (1000_09D2 / 0x109D2)
+            AX = Stack.Pop16();
+            // JC 0x1000:09bd (1000_09D3 / 0x109D3)
         }
-        // DEC SI (1000_09C0 / 0x109C0)
-        SI = Alu.Dec16(SI);
-    label_1000_09C1_109C1:
-        // IN AL,DX (1000_09C1 / 0x109C1)
-        CheckExternalEvents(cs1, 0x9c2);
-        AL = Cpu.In8(DX);
-        // AND AL,0x8 (1000_09C2 / 0x109C2)
-        AL &= 0x8;
-        // CMP AL,AH (1000_09C4 / 0x109C4)
-        Alu.Sub8(AL, AH);
-        // JNZ 0x1000:09d6 (1000_09C6 / 0x109C6)
-        if (!ZeroFlag)
-        {
-            goto label_1000_09D6_109D6;
-        }
-        // PUSH AX (1000_09C8 / 0x109C8)
-        Stack.Push16(AX);
-        // MOV AX,word ptr ES:[BP + 0x0] (1000_09C9 / 0x109C9)
-        AX = UInt16[ES, BP];
-        // SUB AX,BX (1000_09CD / 0x109CD)
-        AX -= BX;
-        // CMP AX,0x64 (1000_09CF / 0x109CF)
-        Alu.Sub16(AX, 0x64);
-        // POP AX (1000_09D2 / 0x109D2)
-        AX = Stack.Pop16();
-        // JC 0x1000:09bd (1000_09D3 / 0x109D3)
-        if (CarryFlag)
-        {
-            goto label_1000_09BD_109BD;
-        }
+        while (CarryFlag);
         // RET  (1000_09D5 / 0x109D5)
-        return NearRet();
-    label_1000_09D6_109D6:
-        // STC  (1000_09D6 / 0x109D6)
-        CarryFlag = true;
-        // RET  (1000_09D7 / 0x109D7)
         return NearRet();
     }
 
