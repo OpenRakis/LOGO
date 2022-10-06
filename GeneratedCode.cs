@@ -1458,200 +1458,134 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         //throw FailAsUntested("External goto not supported for this function.");
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action split_1000_0F30_10F30(int loadOffset)
     {
-    label_1000_0F30_10F30:
-        // SHR BP,0x1 (1000_0F30 / 0x10F30)
-        // BP >>= 0x1;
-        BP = Alu.Shr16(BP, 0x1);
-        // JZ 0x1000:0f39 (1000_0F32 / 0x10F32)
-        if (ZeroFlag)
+        while (true)
         {
-            goto label_1000_0F39_10F39;
-        }
-        // JNC 0x1000:0f41 (1000_0F34 / 0x10F34)
-        if (!CarryFlag)
-        {
-            goto label_1000_0F41_10F41;
-        }
-    label_1000_0F36_10F36:
-        // MOVSB ES:DI,SI (1000_0F36 / 0x10F36)
-        UInt8[ES, DI] = UInt8[DS, SI];
-        SI = (ushort)(SI + Direction8);
-        DI = (ushort)(DI + Direction8);
-        // JMP 0x1000:0f30 (1000_0F37 / 0x10F37)
-        goto label_1000_0F30_10F30;
-    label_1000_0F39_10F39:
-        // LODSW SI (1000_0F39 / 0x10F39)
-        AX = UInt16[DS, SI];
-        SI = (ushort)(SI + Direction16);
-        // MOV BP,AX (1000_0F3A / 0x10F3A)
-        BP = AX;
-        // STC  (1000_0F3C / 0x10F3C)
-        CarryFlag = true;
-        // RCR BP,0x1 (1000_0F3D / 0x10F3D)
-        BP = Alu.Rcr16(BP, 0x1);
-        // JC 0x1000:0f36 (1000_0F3F / 0x10F3F)
-        if (CarryFlag)
-        {
-            goto label_1000_0F36_10F36;
-        }
-    label_1000_0F41_10F41:
-        // XOR CX,CX (1000_0F41 / 0x10F41)
-        CX = 0;
-        // SHR BP,0x1 (1000_0F43 / 0x10F43)
-        // BP >>= 0x1;
-        BP = Alu.Shr16(BP, 0x1);
-        // JNZ 0x1000:0f4d (1000_0F45 / 0x10F45)
-        if (!ZeroFlag)
-        {
-            goto label_1000_0F4D_10F4D;
-        }
-        // LODSW SI (1000_0F47 / 0x10F47)
-        AX = UInt16[DS, SI];
-        SI = (ushort)(SI + Direction16);
-        // MOV BP,AX (1000_0F48 / 0x10F48)
-        BP = AX;
-        // STC  (1000_0F4A / 0x10F4A)
-        CarryFlag = true;
-        // RCR BP,0x1 (1000_0F4B / 0x10F4B)
-        BP = Alu.Rcr16(BP, 0x1);
-    label_1000_0F4D_10F4D:
-        // JC 0x1000:0f7d (1000_0F4D / 0x10F4D)
-        if (CarryFlag)
-        {
-            goto label_1000_0F7D_10F7D;
-        }
-        // SHR BP,0x1 (1000_0F4F / 0x10F4F)
-        // BP >>= 0x1;
-        BP = Alu.Shr16(BP, 0x1);
-        // JNZ 0x1000:0f59 (1000_0F51 / 0x10F51)
-        if (!ZeroFlag)
-        {
-            goto label_1000_0F59_10F59;
-        }
-        // LODSW SI (1000_0F53 / 0x10F53)
-        AX = UInt16[DS, SI];
-        SI = (ushort)(SI + Direction16);
-        // MOV BP,AX (1000_0F54 / 0x10F54)
-        BP = AX;
-        // STC  (1000_0F56 / 0x10F56)
-        CarryFlag = true;
-        // RCR BP,0x1 (1000_0F57 / 0x10F57)
-        BP = Alu.Rcr16(BP, 0x1);
-    label_1000_0F59_10F59:
-        // RCL CX,0x1 (1000_0F59 / 0x10F59)
-        CX = Alu.Rcl16(CX, 0x1);
-        // SHR BP,0x1 (1000_0F5B / 0x10F5B)
-        // BP >>= 0x1;
-        BP = Alu.Shr16(BP, 0x1);
-        // JNZ 0x1000:0f65 (1000_0F5D / 0x10F5D)
-        if (!ZeroFlag)
-        {
-            goto label_1000_0F65_10F65;
-        }
-        // LODSW SI (1000_0F5F / 0x10F5F)
-        AX = UInt16[DS, SI];
-        SI = (ushort)(SI + Direction16);
-        // MOV BP,AX (1000_0F60 / 0x10F60)
-        BP = AX;
-        // STC  (1000_0F62 / 0x10F62)
-        CarryFlag = true;
-        // RCR BP,0x1 (1000_0F63 / 0x10F63)
-        BP = Alu.Rcr16(BP, 0x1);
-    label_1000_0F65_10F65:
-        // RCL CX,0x1 (1000_0F65 / 0x10F65)
-        CX = Alu.Rcl16(CX, 0x1);
-        // LODSB SI (1000_0F67 / 0x10F67)
-        AL = UInt8[DS, SI];
-        SI = (ushort)(SI + Direction8);
-        // MOV AH,0xff (1000_0F68 / 0x10F68)
-        AH = 0xFF;
-    label_1000_0F6A_10F6A:
-        // ADD AX,DI (1000_0F6A / 0x10F6A)
-        // AX += DI;
-        AX = Alu.Add16(AX, DI);
-        // XCHG AX,SI (1000_0F6C / 0x10F6C)
-        (SI, AX) = (AX, SI);
-        // MOV BX,DS (1000_0F6D / 0x10F6D)
-        BX = DS;
-        // MOV DX,ES (1000_0F6F / 0x10F6F)
-        DX = ES;
-        // MOV DS,DX (1000_0F71 / 0x10F71)
-        DS = DX;
-        // INC CX (1000_0F73 / 0x10F73)
-        CX++;
-        // INC CX (1000_0F74 / 0x10F74)
-        CX = Alu.Inc16(CX);
-        // REP
-        while (CX != 0)
-        {
-            CX--;
-            // MOVSB ES:DI,SI (1000_0F75 / 0x10F75)
+            BP = Alu.Shr16(BP, 1);
+            if (!ZeroFlag)
+            {
+                if (!CarryFlag)
+                    goto label_4;
+            }
+            else
+            {
+                goto label_3;
+            }
+
+        label_2:
             UInt8[ES, DI] = UInt8[DS, SI];
-            SI = (ushort)(SI + Direction8);
-            DI = (ushort)(DI + Direction8);
+            SI += (ushort)Direction8;
+            DI += (ushort)Direction8;
+            continue;
+        label_3:
+            AX = UInt16[DS, SI];
+            SI += (ushort)Direction16;
+            BP = AX;
+            CarryFlag = true;
+            BP = Alu.Rcr16(BP, 1);
+            if (CarryFlag)
+                goto label_2;
+            label_4:
+            CX = 0;
+            BP = Alu.Shr16(BP, 1);
+            if (ZeroFlag)
+            {
+                AX = UInt16[DS, SI];
+                SI += (ushort)Direction16;
+                BP = AX;
+                CarryFlag = true;
+                BP = Alu.Rcr16(BP, 1);
+            }
+            if (!CarryFlag)
+            {
+                BP = Alu.Shr16(BP, 1);
+                if (ZeroFlag)
+                {
+                    AX = UInt16[DS, SI];
+                    SI += (ushort)Direction16;
+                    BP = AX;
+                    CarryFlag = true;
+                    BP = Alu.Rcr16(BP, 1);
+                }
+                CX = Alu.Rcl16(CX, 1);
+                BP = Alu.Shr16(BP, 1);
+                if (ZeroFlag)
+                {
+                    AX = UInt16[DS, SI];
+                    SI += (ushort)Direction16;
+                    BP = AX;
+                    CarryFlag = true;
+                    BP = Alu.Rcr16(BP, 1);
+                }
+                CX = Alu.Rcl16(CX, 1);
+                AL = UInt8[DS, SI];
+                SI += (ushort)Direction8;
+                AH = byte.MaxValue;
+            }
+            else
+            {
+                goto label_16;
+            }
+
+        label_12:
+            AX = Alu.Add16(AX, DI);
+            (SI, AX) = (AX, SI);
+            BX = DS;
+            DX = ES;
+            DS = DX;
+            ++CX;
+            CX = Alu.Inc16(CX);
+            while (CX != 0)
+            {
+                --CX;
+                UInt8[ES, DI] = UInt8[DS, SI];
+                SI += (ushort)Direction8;
+                DI += (ushort)Direction8;
+            }
+            DS = BX;
+            SI = AX;
+            continue;
+        label_16:
+            AX = UInt16[DS, SI];
+            SI += (ushort)Direction16;
+            CL = AL;
+            AX >>= 1;
+            AX >>= 1;
+            AX = Alu.Shr16(AX, 1);
+            AH |= 0xE0;
+            CL = Alu.And8(CL, 7);
+            if (ZeroFlag)
+            {
+                BX = AX;
+                AL = UInt8[DS, SI];
+                SI += (ushort)Direction8;
+                CL = AL;
+                AX = BX;
+                CL = Alu.Or8(CL, CL);
+                if (!ZeroFlag)
+                {
+                    goto label_12;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            else
+            {
+                goto label_12;
+            }
         }
-        // MOV DS,BX (1000_0F77 / 0x10F77)
-        DS = BX;
-        // MOV SI,AX (1000_0F79 / 0x10F79)
-        SI = AX;
-        // JMP 0x1000:0f30 (1000_0F7B / 0x10F7B)
-        goto label_1000_0F30_10F30;
-    label_1000_0F7D_10F7D:
-        // LODSW SI (1000_0F7D / 0x10F7D)
-        AX = UInt16[DS, SI];
-        SI = (ushort)(SI + Direction16);
-        // MOV CL,AL (1000_0F7E / 0x10F7E)
-        CL = AL;
-        // SHR AX,0x1 (1000_0F80 / 0x10F80)
-        AX >>= 0x1;
-        // SHR AX,0x1 (1000_0F82 / 0x10F82)
-        AX >>= 0x1;
-        // SHR AX,0x1 (1000_0F84 / 0x10F84)
-        // AX >>= 0x1;
-        AX = Alu.Shr16(AX, 0x1);
-        // OR AH,0xe0 (1000_0F86 / 0x10F86)
-        AH |= 0xE0;
-        // AND CL,0x7 (1000_0F89 / 0x10F89)
-        // CL &= 0x7;
-        CL = Alu.And8(CL, 0x7);
-        // JNZ 0x1000:0f6a (1000_0F8C / 0x10F8C)
-        if (!ZeroFlag)
-        {
-            goto label_1000_0F6A_10F6A;
-        }
-        // MOV BX,AX (1000_0F8E / 0x10F8E)
-        BX = AX;
-        // LODSB SI (1000_0F90 / 0x10F90)
-        AL = UInt8[DS, SI];
-        SI = (ushort)(SI + Direction8);
-        // MOV CL,AL (1000_0F91 / 0x10F91)
-        CL = AL;
-        // MOV AX,BX (1000_0F93 / 0x10F93)
-        AX = BX;
-        // OR CL,CL (1000_0F95 / 0x10F95)
-        // CL |= CL;
-        CL = Alu.Or8(CL, CL);
-        // JNZ 0x1000:0f6a (1000_0F97 / 0x10F97)
-        if (!ZeroFlag)
-        {
-            goto label_1000_0F6A_10F6A;
-        }
-        // STC  (1000_0F99 / 0x10F99)
         CarryFlag = true;
-        // MOV CX,DI (1000_0F9A / 0x10F9A)
         CX = DI;
-        // POP DS (1000_0F9C / 0x10F9C)
         DS = Stack.Pop16();
-        // POP DI (1000_0F9D / 0x10F9D)
         DI = Stack.Pop16();
-        // ADD SP,0x2 (1000_0F9E / 0x10F9E)
-        SP += 0x2;
-        // SUB CX,DI (1000_0FA1 / 0x10FA1)
-        // CX -= DI;
+        SP += 2;
         CX = Alu.Sub16(CX, DI);
-        // RET  (1000_0FA3 / 0x10FA3)
         return NearRet();
     }
 
