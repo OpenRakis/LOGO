@@ -238,109 +238,67 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_09D8_109D8(int loadOffset)
     {
-        // PUSH SI (1000_09D8 / 0x109D8)
         Stack.Push16(SI);
-        // PUSH DS (1000_09D9 / 0x109D9)
         Stack.Push16(DS);
-        // PUSH ES (1000_09DA / 0x109DA)
         Stack.Push16(ES);
-        // POP DS (1000_09DB / 0x109DB)
         DS = Stack.Pop16();
-        // MOV SI,DX (1000_09DC / 0x109DC)
         SI = DX;
-        // PUSHF  (1000_09DE / 0x109DE)
         Stack.Push16(FlagRegister16);
         // CMP byte ptr CS:[0x6e],0x0 (1000_09DF / 0x109DF)
         Alu.Sub8(UInt8[cs1, 0x6E], 0x0);
-        // JZ 0x1000:09f6 (1000_09E5 / 0x109E5)
-        if (ZeroFlag)
-        {
-            goto label_1000_09F6_109F6;
-        }
-        // MOV DX,word ptr CS:[0x6c] (1000_09E7 / 0x109E7)
-        DX = UInt16[cs1, 0x6C];
-    label_1000_09EC_109EC:
-        CheckExternalEvents(cs1, 0x09EC);
-        // IN AL,DX (1000_09EC / 0x109EC)
-        AL = Cpu.In8(DX);
-        // AND AL,0x8 (1000_09ED / 0x109ED)
-        AL &= 0x8;
-        // CMP AL,byte ptr CS:[0x6f] (1000_09EF / 0x109EF)
-        Alu.Sub8(AL, UInt8[cs1, 0x6F]);
-        // JNZ 0x1000:09ec (1000_09F4 / 0x109F4)
         if (!ZeroFlag)
         {
-            goto label_1000_09EC_109EC;
+            DX = UInt16[cs1, 0x6C];
+            do
+            {
+                CheckExternalEvents(cs1, 0x9EC);
+                AL = Cpu.In8(DX);
+                AL &= 8;
+                // CMP AL,byte ptr CS:[0x6f] (1000_09EF / 0x109EF)
+                Alu.Sub8(AL, UInt8[cs1, 0x6F]);
+            }
+            while (!ZeroFlag);
         }
-    label_1000_09F6_109F6:
-        // CLI  (1000_09F6 / 0x109F6)
         InterruptFlag = false;
-        // MOV DX,0x3c8 (1000_09F7 / 0x109F7)
         DX = 0x3C8;
-        // MOV AL,BL (1000_09FA / 0x109FA)
         AL = BL;
-        // OUT DX,AL (1000_09FC / 0x109FC)
         Cpu.Out8(DX, AL);
-        // JMP 0x1000:09ff (1000_09FD / 0x109FD)
-        // JMP target is JMP, inlining.
-        // JMP 0x1000:0a01 (1000_09FF / 0x109FF)
-        // JMP target is JMP, inlining.
-        // JMP 0x1000:0a03 (1000_0A01 / 0x10A01)
-        // JMP target is JMP, inlining.
-        // JMP 0x1000:0a05 (1000_0A03 / 0x10A03)
-        goto label_1000_0A05_10A05;
-    label_1000_0A05_10A05:
-        // INC DX (1000_0A05 / 0x10A05)
         DX = Alu.Inc16(DX);
-        // MOV AX,CX (1000_0A06 / 0x10A06)
         AX = CX;
-        // ADD CX,CX (1000_0A08 / 0x10A08)
         CX += CX;
-        // ADD CX,AX (1000_0A0A / 0x10A0A)
         CX += AX;
         // CMP byte ptr CS:[0x6b],0x0 (1000_0A0C / 0x10A0C)
         Alu.Sub8(UInt8[cs1, 0x6B], 0x0);
-        // JZ 0x1000:0a1a (1000_0A12 / 0x10A12)
-        if (ZeroFlag)
+        if (!ZeroFlag)
         {
-            goto label_1000_0A1A_10A1A;
+            while (CX != 0)
+            {
+                CX--;
+                Cpu.Out8(DX, UInt8[DS, SI]);
+                SI = (ushort)(SI + Direction8);
+            }
+            FlagRegister16 = Stack.Pop16();
+            DS = Stack.Pop16();
+            SI = Stack.Pop16();
+            return NearRet();
         }
-        // REP
-        while (CX != 0)
+        ushort num4;
+        do
         {
-            CX--;
-            // OUTSB DX,SI (1000_0A14 / 0x10A14)
-            Cpu.Out8(DX, UInt8[DS, SI]);
+            AL = UInt8[DS, SI];
             SI = (ushort)(SI + Direction8);
+            Cpu.Out8(DX, AL);
+            num4 = --CX;
         }
-        // POPF  (1000_0A16 / 0x10A16)
+        while (num4 != 0);
         FlagRegister16 = Stack.Pop16();
-        // POP DS (1000_0A17 / 0x10A17)
         DS = Stack.Pop16();
-        // POP SI (1000_0A18 / 0x10A18)
         SI = Stack.Pop16();
-        // RET  (1000_0A19 / 0x10A19)
-        return NearRet();
-    label_1000_0A1A_10A1A:
-        // LODSB SI (1000_0A1A / 0x10A1A)
-        AL = UInt8[DS, SI];
-        SI = (ushort)(SI + Direction8);
-        // OUT DX,AL (1000_0A1B / 0x10A1B)
-        Cpu.Out8(DX, AL);
-        // LOOP 0x1000:0a1a (1000_0A1C / 0x10A1C)
-        if (--CX != 0)
-        {
-            goto label_1000_0A1A_10A1A;
-        }
-        // POPF  (1000_0A1E / 0x10A1E)
-        FlagRegister16 = Stack.Pop16();
-        // POP DS (1000_0A1F / 0x10A1F)
-        DS = Stack.Pop16();
-        // POP SI (1000_0A20 / 0x10A20)
-        SI = Stack.Pop16();
-        // RET  (1000_0A21 / 0x10A21)
         return NearRet();
     }
 
