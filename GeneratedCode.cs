@@ -1352,56 +1352,32 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// </summary>
     public virtual Action unknown_1000_0E86_10E86(int loadOffset)
     {
-    entrydispatcher:
-        if (loadOffset != 0)
-        {
-            throw FailAsUntested("External goto not supported for this function.");
-        }
-        // PUSH SI (1000_0E86 / 0x10E86)
         Stack.Push16(SI);
-        // LES SI,[0x56] (1000_0E87 / 0x10E87)
         SI = UInt16[DS, 0x56];
         ES = UInt16[DS, 0x58];
-        // MOV AX,word ptr ES:[SI] (1000_0E8B / 0x10E8B)
         AX = UInt16[ES, SI];
-        // ADD SI,AX (1000_0E8E / 0x10E8E)
-        // SI += AX;
         SI = Alu.Add16(SI, AX);
-        // MOV AX,SI (1000_0E90 / 0x10E90)
         AX = SI;
-        // SHR AX,0x1 (1000_0E92 / 0x10E92)
-        AX >>= 0x1;
-        // SHR AX,0x1 (1000_0E94 / 0x10E94)
-        AX >>= 0x1;
-        // SHR AX,0x1 (1000_0E96 / 0x10E96)
-        AX >>= 0x1;
-        // SHR AX,0x1 (1000_0E98 / 0x10E98)
-        // AX >>= 0x1;
-        AX = Alu.Shr16(AX, 0x1);
-        // MOV CX,ES (1000_0E9A / 0x10E9A)
+        AX >>= 1;
+        AX >>= 1;
+        AX >>= 1;
+        AX = Alu.Shr16(AX, 1);
         CX = ES;
-        // ADD AX,CX (1000_0E9C / 0x10E9C)
-        // AX += CX;
         AX = Alu.Add16(AX, CX);
-        // MOV ES,AX (1000_0E9E / 0x10E9E)
         ES = AX;
-        // AND SI,0xf (1000_0EA0 / 0x10EA0)
-        // SI &= 0xF;
         SI = Alu.And16(SI, 0xF);
-        // MOV word ptr [0x56],SI (1000_0EA3 / 0x10EA3)
         UInt16[DS, 0x56] = SI;
-        // MOV word ptr [0x58],ES (1000_0EA7 / 0x10EA7)
         UInt16[DS, 0x58] = ES;
-        // JMP 0x1000:0eb2 (1000_0EAB / 0x10EAB)
-        // Jump converted to entry function call
-        if (JumpDispatcher.Jump(split_1000_0EB2_10EB2, 0))
+        if (!JumpDispatcher?.Jump(split_1000_0EB2_10EB2, 0) is false)
         {
-            loadOffset = JumpDispatcher.NextEntryAddress;
-            goto entrydispatcher;
+            return JumpDispatcher?.JumpAsmReturn;
         }
-        return JumpDispatcher.JumpAsmReturn!;
+        return JumpDispatcher?.JumpAsmReturn;
     }
 
     public virtual Action unknown_1000_0EAD_10EAD(int loadOffset)
