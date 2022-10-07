@@ -293,7 +293,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             AL = UInt8[DS, SI];
             SI = (ushort)(SI + Direction8);
             Cpu.Out8(DX, AL);
-            num4 = --CX;
+            num4 = CX--;
         }
         while (num4 != 0);
         FlagRegister16 = Stack.Pop16();
@@ -397,7 +397,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 AL = 0;
             UInt8[ES, DI] = AL;
             DI += (ushort)Direction8;
-            num1 = --CX;
+            num1 = CX--;
         }
         while (num1 != 0);
         DS = Stack.Pop16();
@@ -1807,7 +1807,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                         if (ZeroFlag)
                         {
                             SI = Alu.Inc16(SI);
-                            num2 = --CX;
+                            num2 = CX--;
                         }
                         else
                         {
@@ -1824,7 +1824,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                         {
                             UInt8[ES, DI] = AL;
                             DI += (ushort)Direction8;
-                            num4 = --CX;
+                            num4 = CX--;
                         }
                         else
                         {
@@ -1837,7 +1837,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                     DI += (ushort)Direction8;
                     if (CX != 0)
                     {
-                        num1 = --CX;
+                        num1 = CX--;
                     }
                     else
                     {
