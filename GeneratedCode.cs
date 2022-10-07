@@ -21,14 +21,14 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     public void DefineGeneratedCodeOverrides()
     {
         // 0x1000
-        DefineFunction(cs1, 0x0, entry_1000_0000_10000, false);
+        DefineFunction(cs1, 0x0, OpenLogoHnmFileAndRun_1000_0000_10000, false);
         DefineFunction(cs1, 0x970, unknown_1000_0970_10970, false);
         DefineFunction(cs1, 0x9B5, unknown_1000_09B5_109B5, false);
         DefineFunction(cs1, 0x9D8, unknown_1000_09D8_109D8, false);
         DefineFunction(cs1, 0xA22, unknown_1000_0A22_10A22, false);
         DefineFunction(cs1, 0xA3A, unknown_1000_0A3A_10A3A, false);
         DefineFunction(cs1, 0xA51, unknown_1000_0A51_10A51, false);
-        DefineFunction(cs1, 0xB9A, unknown_1000_0B9A_10B9A, false);
+        DefineFunction(cs1, 0xB9A, DisplayHNMVideoFrames_1000_0B9A_10B9A, false);
         DefineFunction(cs1, 0xC72, unknown_1000_0C72_10C72, false);
         DefineFunction(cs1, 0xCF4, unknown_1000_0CF4_10CF4, false);
         DefineFunction(cs1, 0xD22, unknown_1000_0D22_10D22, false);
@@ -75,7 +75,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action entry_1000_0000_10000(int loadOffset)
+    public virtual Action OpenLogoHnmFileAndRun_1000_0000_10000(int loadOffset)
     {
         AX = 0x111C;
         DS = AX;
@@ -97,6 +97,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             UInt16[DS, (ushort)(DI + 2U)] = 0x4D4E;
             UInt8[DS, (ushort)(DI + 4U)] = 0;
         }
+        // Open file handle
         AX = 0x3D00;
         Interrupt(0x21);
         DX = 0x2E;
@@ -116,31 +117,12 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         }
         AH = 0x9;
         Interrupt(0x21);
+        // Quit to DOS
         AL = 0;
         AH = 0x4C;
         Interrupt(0x21);
         CheckExternalEvents(cs1, 0x6D);
-        if (OverflowFlag)
-            throw FailAsUntested("Would have been a goto but label label_1000_0047_10047 does not exist because no instruction was found there that belongs to a function.");
-        DI += DI;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] = Alu.Add8(UInt8[DS, (ushort)(BX + SI)], AL);
-        throw FailAsUntested("Function does not end with return and no instruction after the body ...");
+        throw new NotImplementedException("You should not be here...");
     }
 
     /// <summary>
@@ -407,7 +389,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_1000_0B9A_10B9A(int loadOffset)
+    public virtual Action DisplayHNMVideoFrames_1000_0B9A_10B9A(int loadOffset)
     {
         if (loadOffset == 0)
         {
@@ -1301,7 +1283,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             BX = AX;
             AX = 0xA000;
             ES = AX;
-            FarCall(cs1, 0xE84, unknown_1000_0B9A_10B9A);
+            FarCall(cs1, 0xE84, DisplayHNMVideoFrames_1000_0B9A_10B9A);
         }
         DS = Stack.Pop16();
         return NearRet();
