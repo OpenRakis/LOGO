@@ -8,8 +8,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     public GeneratedOverrides(Dictionary<SegmentedAddress, FunctionInformation> functionInformations, Machine machine, ushort entrySegment = 0x1000) : base(functionInformations, machine)
     {
         // Observed cs1 address at generation time is 0x1000. Do not set entrySegment to something else if the program is not relocatable.
-        this.cs1 = (ushort)(entrySegment + 0x0);
-        this.cs2 = (ushort)(entrySegment + 0xE000);
+        cs1 = (ushort)(entrySegment + 0x0);
+        cs2 = (ushort)(entrySegment + 0xE000);
 
         DefineGeneratedCodeOverrides();
         DetectCodeRewrites();
@@ -82,14 +82,14 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AX = UInt16[ES, 2];
         UInt16[DS, 0x50] = AX;
         BX = 8;
-        NearCall(cs1, 0x12, new Func<int, Action>(unknown_1000_10F4_110F4));
+        NearCall(cs1, 0x12, unknown_1000_10F4_110F4);
         AX = 0xC;
         SI = 0x8E;
         int num1 = Alu.Sub8(UInt8[DS, SI], 0);
         int num2 = ZeroFlag ? 1 : 0;
         UInt16[DS, 0x52] = AX;
         DX = 0x5A;
-        NearCall(cs1, 0x2C, new Func<int, Action>(unknown_1000_105F_1105F));
+        NearCall(cs1, 0x2C, unknown_1000_105F_1105F);
         int num3 = Alu.Sub8(UInt8[DS, DI], 46);
         if (!ZeroFlag)
         {
@@ -103,12 +103,12 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         if (!CarryFlag)
         {
             Stack.Push16(AX);
-            NearCall(cs1, 0x4C, new Func<int, Action>(unknown_1000_0970_10970));
-            NearCall(cs1, 0x4F, new Func<int, Action>(unknown_1000_1019_11019));
+            NearCall(cs1, 0x4C, unknown_1000_0970_10970);
+            NearCall(cs1, 0x4F, unknown_1000_1019_11019);
             BX = Stack.Pop16();
             AX = UInt16[DS, 0x52];
-            NearCall(cs1, 0x56, new Func<int, Action>(unknown_1000_0DDE_10DDE));
-            NearCall(cs1, 0x59, new Func<int, Action>(unknown_1000_0A51_10A51));
+            NearCall(cs1, 0x56, unknown_1000_0DDE_10DDE);
+            NearCall(cs1, 0x59, unknown_1000_0A51_10A51);
             DX = 0;
             AL = 0;
             AH = 0x4C;
@@ -161,15 +161,15 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         CheckExternalEvents(cs1, 0x98C);
         AL = Cpu.In8(DX);
         AL = Alu.And8(AL, 8);
-        NearCall(cs1, 0x992, new Func<int, Action>(unknown_1000_09B5_109B5));
+        NearCall(cs1, 0x992, unknown_1000_09B5_109B5);
         if (CarryFlag)
         {
-            NearCall(cs1, 0x997, new Func<int, Action>(unknown_1000_09B5_109B5));
+            NearCall(cs1, 0x997, unknown_1000_09B5_109B5);
             if (CarryFlag)
             {
                 DI = SI;
                 UInt8[cs1, 0x6F] = AH;
-                NearCall(cs1, 0x9A3, new Func<int, Action>(unknown_1000_09B5_109B5));
+                NearCall(cs1, 0x9A3, unknown_1000_09B5_109B5);
                 if (CarryFlag)
                 {
                     int num = Alu.Sub16(SI, DI);
@@ -415,40 +415,40 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         }
 
     label_2:
-        this.BP = this.DX;
-        this.DI -= (ushort)(uint)this.BP;
-        this.DI = this.Alu.Add16(this.DI, (ushort)320);
+        BP = DX;
+        DI -= (ushort)(uint)BP;
+        DI = Alu.Add16(DI, 320);
     label_3:
         do
         {
             do
             {
-                this.AL = this.UInt8[this.DS, this.SI];
-                this.SI += (ushort)(uint)this.Direction8;
-                this.AL = this.Alu.Or8(this.AL, this.AL);
-                if (!this.SignFlag)
+                AL = UInt8[DS, SI];
+                SI += (ushort)(uint)Direction8;
+                AL = Alu.Or8(AL, AL);
+                if (!SignFlag)
                 {
-                    this.CX = this.AX;
-                    this.CH = (byte)0;
-                    ++this.CX;
-                    this.BP = this.Alu.Sub16(this.BP, this.CX);
+                    CX = AX;
+                    CH = 0;
+                    ++CX;
+                    BP = Alu.Sub16(BP, CX);
                     ushort num = 1;
                     do
                     {
-                        this.AL = this.UInt8[this.DS, this.SI];
-                        this.SI += (ushort)(uint)this.Direction8;
-                        this.AL = this.Alu.Or8(this.AL, this.AL);
-                        if (!this.ZeroFlag)
+                        AL = UInt8[DS, SI];
+                        SI += (ushort)(uint)Direction8;
+                        AL = Alu.Or8(AL, AL);
+                        if (!ZeroFlag)
                         {
-                            this.UInt8[this.ES, this.DI] = this.AL;
-                            this.DI += (ushort)(uint)this.Direction8;
-                            if (--this.CX == (ushort)0)
+                            UInt8[ES, DI] = AL;
+                            DI += (ushort)(uint)Direction8;
+                            if (--CX == 0)
                             {
-                                this.BP = this.Alu.Or16(this.BP, this.BP);
-                                if (this.CarryFlag || this.ZeroFlag)
+                                BP = Alu.Or16(BP, BP);
+                                if (CarryFlag || ZeroFlag)
                                 {
-                                    this.BX = this.Alu.Dec16(this.BX);
-                                    if (!this.ZeroFlag)
+                                    BX = Alu.Dec16(BX);
+                                    if (!ZeroFlag)
                                     {
                                         goto label_2;
                                     }
@@ -465,16 +465,16 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                         }
                         else
                         {
-                            this.DI = this.Alu.Inc16(this.DI);
-                            num = --this.CX;
+                            DI = Alu.Inc16(DI);
+                            num = CX--;
                         }
                     }
-                    while (num != (ushort)0);
-                    this.BP = this.Alu.Or16(this.BP, this.BP);
-                    if (this.CarryFlag || this.ZeroFlag)
+                    while (num != 0);
+                    BP = Alu.Or16(BP, BP);
+                    if (CarryFlag || ZeroFlag)
                     {
-                        this.BX = this.Alu.Dec16(this.BX);
-                        if (this.ZeroFlag)
+                        BX = Alu.Dec16(BX);
+                        if (ZeroFlag)
                             goto label_9;
                         else
                             goto label_2;
@@ -482,22 +482,22 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 }
                 else
                 {
-                    this.CX = (ushort)0x101;
-                    this.AH = (byte)0;
-                    this.CX -= (ushort)(uint)this.AX;
-                    this.BP = this.Alu.Sub16(this.BP, this.CX);
-                    this.AL = this.UInt8[this.DS, this.SI];
-                    this.SI += (ushort)(uint)this.Direction8;
-                    this.AL = this.Alu.Or8(this.AL, this.AL);
-                    if (!this.ZeroFlag)
+                    CX = 0x101;
+                    AH = 0;
+                    CX -= (ushort)(uint)AX;
+                    BP = Alu.Sub16(BP, CX);
+                    AL = UInt8[DS, SI];
+                    SI += (ushort)(uint)Direction8;
+                    AL = Alu.Or8(AL, AL);
+                    if (!ZeroFlag)
                     {
-                        while (this.CX != (ushort)0)
+                        while (CX != 0)
                         {
-                            --this.CX;
-                            this.UInt8[this.ES, this.DI] = this.AL;
-                            this.DI += (ushort)(uint)this.Direction8;
+                            CX--;
+                            UInt8[ES, DI] = AL;
+                            DI += (ushort)(uint)Direction8;
                         }
-                        this.BP = this.Alu.Or16(this.BP, this.BP);
+                        BP = Alu.Or16(BP, BP);
                     }
                     else
                     {
@@ -505,9 +505,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                     }
                 }
             }
-            while (!this.CarryFlag && !this.ZeroFlag);
-            this.BX = this.Alu.Dec16(this.BX);
-            if (this.ZeroFlag)
+            while (!CarryFlag && !ZeroFlag);
+            BX = Alu.Dec16(BX);
+            if (ZeroFlag)
             {
                 goto label_9;
             }
@@ -517,165 +517,165 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             }
 
         label_18:
-            this.DI = this.Alu.Add16(this.DI, this.CX);
-            this.BP = this.Alu.Or16(this.BP, this.BP);
+            DI = Alu.Add16(DI, CX);
+            BP = Alu.Or16(BP, BP);
         }
-        while (!this.CarryFlag && !this.ZeroFlag);
-        this.BX = this.Alu.Dec16(this.BX);
-        if (!this.ZeroFlag)
+        while (!CarryFlag && !ZeroFlag);
+        BX = Alu.Dec16(BX);
+        if (!ZeroFlag)
             goto label_2;
         label_9:
-        this.DirectionFlag = false;
-        this.UInt8[this.cs1, (ushort)0xA71] = (byte)0xC7;
-        this.UInt8[this.cs1, (ushort)0xB2F] = (byte)0xC7;
-        return this.FarRet();
+        DirectionFlag = false;
+        UInt8[cs1, 0xA71] = 0xC7;
+        UInt8[cs1, 0xB2F] = 0xC7;
+        return FarRet();
     label_60:
-        int num1 = (int)this.Alu.Sub8(this.CH, (byte)0xFE);
-        if (this.CarryFlag)
-            return this.FarRet();
-        this.DI = this.Alu.Or16(this.DI, this.DI);
-        if (!this.SignFlag)
+        int num1 = (int)Alu.Sub8(CH, 0xFE);
+        if (CarryFlag)
+            return FarRet();
+        DI = Alu.Or16(DI, DI);
+        if (!SignFlag)
         {
-            this.BP = this.DI;
-            this.BP = this.Alu.And16(this.BP, (ushort)511);
-            this.AX = this.DI;
-            this.NearCall(this.cs1, (ushort)0xBAF, new Func<int, Action>(this.unknown_1000_0A22_10A22));
-            this.BX = this.CX;
-            this.BH = (byte)0;
-            int num2 = (int)this.Alu.Sub8(this.CH, byte.MaxValue);
-            if (!this.ZeroFlag)
+            BP = DI;
+            BP = Alu.And16(BP, 511);
+            AX = DI;
+            NearCall(cs1, 0xBAF, unknown_1000_0A22_10A22);
+            BX = CX;
+            BH = 0;
+            int num2 = Alu.Sub8(CH, byte.MaxValue);
+            if (!ZeroFlag)
             {
-                this.BP = this.Alu.Shr16(this.BP, 1);
-                this.AX = this.DI;
-                if (!this.CarryFlag)
+                BP = Alu.Shr16(BP, 1);
+                AX = DI;
+                if (!CarryFlag)
                 {
                     do
                     {
-                        this.CX = this.BP;
-                        this.DI = this.AX;
-                        while (this.CX != (ushort)0)
+                        CX = BP;
+                        DI = AX;
+                        while (CX != 0)
                         {
-                            --this.CX;
-                            this.UInt16[this.ES, this.DI] = this.UInt16[this.DS, this.SI];
-                            this.SI += (ushort)(uint)this.Direction16;
-                            this.DI += (ushort)(uint)this.Direction16;
+                            --CX;
+                            UInt16[ES, DI] = UInt16[DS, SI];
+                            SI += (ushort)(uint)Direction16;
+                            DI += (ushort)(uint)Direction16;
                         }
-                        this.AX += (ushort)320;
-                        this.BX = this.Alu.Dec16(this.BX);
+                        AX += 320;
+                        BX = Alu.Dec16(BX);
                     }
-                    while (!this.ZeroFlag);
-                    return this.FarRet();
+                    while (!ZeroFlag);
+                    return FarRet();
                 }
                 do
                 {
-                    this.CX = this.BP;
-                    this.DI = this.AX;
-                    while (this.CX != (ushort)0)
+                    CX = BP;
+                    DI = AX;
+                    while (CX != 0)
                     {
-                        --this.CX;
-                        this.UInt16[this.ES, this.DI] = this.UInt16[this.DS, this.SI];
-                        this.SI += (ushort)(uint)this.Direction16;
-                        this.DI += (ushort)(uint)this.Direction16;
+                        --CX;
+                        UInt16[ES, DI] = UInt16[DS, SI];
+                        SI += (ushort)(uint)Direction16;
+                        DI += (ushort)(uint)Direction16;
                     }
-                    this.UInt8[this.ES, this.DI] = this.UInt8[this.DS, this.SI];
-                    this.SI += (ushort)(uint)this.Direction8;
-                    this.DI += (ushort)(uint)this.Direction8;
-                    this.AX += (ushort)320;
-                    this.BX = this.Alu.Dec16(this.BX);
+                    UInt8[ES, DI] = UInt8[DS, SI];
+                    SI += (ushort)(uint)Direction8;
+                    DI += (ushort)(uint)Direction8;
+                    AX += 320;
+                    BX = Alu.Dec16(BX);
                 }
-                while (!this.ZeroFlag);
-                return this.FarRet();
+                while (!ZeroFlag);
+                return FarRet();
             }
-            this.DX = this.DI;
+            DX = DI;
         label_76:
             do
             {
-                this.CX = this.BP;
-                this.DI = this.DX;
+                CX = BP;
+                DI = DX;
                 ushort num3 = 1;
                 do
                 {
-                    this.AL = this.UInt8[this.DS, this.SI];
-                    this.SI += (ushort)(uint)this.Direction8;
-                    this.AL = this.Alu.Or8(this.AL, this.AL);
-                    if (!this.ZeroFlag)
+                    AL = UInt8[DS, SI];
+                    SI += (ushort)(uint)Direction8;
+                    AL = Alu.Or8(AL, AL);
+                    if (!ZeroFlag)
                     {
-                        this.UInt8[this.ES, this.DI] = this.AL;
-                        this.DI += (ushort)(uint)this.Direction8;
-                        if (--this.CX == (ushort)0)
+                        UInt8[ES, DI] = AL;
+                        DI += (ushort)(uint)Direction8;
+                        if (--CX == 0)
                         {
-                            this.DX += (ushort)320;
-                            this.BX = this.Alu.Dec16(this.BX);
-                            if (this.ZeroFlag)
-                                return this.FarRet();
+                            DX += 320;
+                            BX = Alu.Dec16(BX);
+                            if (ZeroFlag)
+                                return FarRet();
                             goto label_76;
                         }
                     }
                     else
                     {
-                        this.DI = this.Alu.Inc16(this.DI);
-                        num3 = --this.CX;
+                        DI = Alu.Inc16(DI);
+                        num3 = --CX;
                     }
                 }
-                while (num3 != (ushort)0);
-                this.DX += (ushort)320;
-                this.BX = this.Alu.Dec16(this.BX);
+                while (num3 != 0);
+                DX += 320;
+                BX = Alu.Dec16(BX);
             }
-            while (!this.ZeroFlag);
-            return this.FarRet();
+            while (!ZeroFlag);
+            return FarRet();
         }
-        this.BP = this.DI;
-        this.BP = this.Alu.And16(this.BP, (ushort)511);
-        this.AX = this.DI;
-        this.NearCall(this.cs1, (ushort)0xC05, new Func<int, Action>(this.unknown_1000_0A22_10A22));
-        this.BX = this.CX;
-        this.BH = (byte)0;
-        int num4 = (int)this.Alu.And16(this.AX, (ushort)16384);
-        if (this.ZeroFlag)
+        BP = DI;
+        BP = Alu.And16(BP, 511);
+        AX = DI;
+        NearCall(cs1, 0xC05, unknown_1000_0A22_10A22);
+        BX = CX;
+        BH = 0;
+        int num4 = Alu.And16(AX, 16384);
+        if (ZeroFlag)
         {
-            int num5 = (int)this.Alu.And16(this.AX, (ushort)8192);
-            if (!this.ZeroFlag)
+            int num5 = Alu.And16(AX, 8192);
+            if (!ZeroFlag)
             {
-                this.UInt8[this.cs1, (ushort)0xA71] = (byte)0xEF;
-                this.UInt8[this.cs1, (ushort)0xB2F] = (byte)0xEF;
-                this.AH = this.BL;
-                this.AH = this.Alu.Dec8(this.AH);
-                this.DH = this.AH;
-                this.DL = (byte)0;
-                this.AL = this.DL;
-                this.DX >>= 1;
-                this.DX >>= 1;
-                this.DI += (ushort)(uint)this.AX;
-                this.DI = this.Alu.Add16(this.DI, this.DX);
+                UInt8[cs1, 0xA71] = 0xEF;
+                UInt8[cs1, 0xB2F] = 0xEF;
+                AH = BL;
+                AH = Alu.Dec8(AH);
+                DH = AH;
+                DL = (byte)0;
+                AL = DL;
+                DX >>= 1;
+                DX >>= 1;
+                DI += (ushort)(uint)AX;
+                DI = Alu.Add16(DI, DX);
             }
-            this.DX = this.BP;
-            int num6 = (int)this.Alu.Sub8(this.CH, byte.MaxValue);
-            if (!this.ZeroFlag)
+            DX = BP;
+            int num6 = Alu.Sub8(CH, byte.MaxValue);
+            if (!ZeroFlag)
             {
                 while (true)
                 {
                     do
                     {
-                        this.AL = this.UInt8[this.DS, this.SI];
-                        this.SI += (ushort)(uint)this.Direction8;
-                        this.AL = this.Alu.Or8(this.AL, this.AL);
-                        if (!this.SignFlag)
+                        AL = UInt8[DS, SI];
+                        SI += (ushort)(uint)Direction8;
+                        AL = Alu.Or8(AL, AL);
+                        if (!SignFlag)
                         {
-                            this.CX = this.AX;
-                            this.CH = (byte)0;
-                            ++this.CX;
-                            this.BP = this.Alu.Sub16(this.BP, this.CX);
-                            while (this.CX != (ushort)0)
+                            CX = AX;
+                            CH = 0;
+                            ++CX;
+                            BP = Alu.Sub16(BP, CX);
+                            while (CX != 0)
                             {
-                                --this.CX;
-                                this.UInt8[this.ES, this.DI] = this.UInt8[this.DS, this.SI];
-                                this.SI += (ushort)(uint)this.Direction8;
-                                this.DI += (ushort)(uint)this.Direction8;
+                                --CX;
+                                UInt8[ES, DI] = UInt8[DS, SI];
+                                SI += (ushort)(uint)Direction8;
+                                DI += (ushort)(uint)Direction8;
                             }
-                            if (this.CarryFlag || this.ZeroFlag)
+                            if (CarryFlag || ZeroFlag)
                             {
-                                this.BX = this.Alu.Dec16(this.BX);
-                                if (this.ZeroFlag)
+                                BX = Alu.Dec16(BX);
+                                if (ZeroFlag)
                                 {
                                     goto label_9;
                                 }
@@ -687,30 +687,30 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                         }
                         else
                         {
-                            this.CX = (ushort)0x101;
-                            this.AH = (byte)0;
-                            this.CX -= (ushort)(uint)this.AX;
-                            this.BP = this.Alu.Sub16(this.BP, this.CX);
-                            this.AL = this.UInt8[this.DS, this.SI];
-                            this.SI += (ushort)(uint)this.Direction8;
-                            while (this.CX != (ushort)0)
+                            CX = 0x101;
+                            AH = 0;
+                            CX -= (ushort)(uint)AX;
+                            BP = Alu.Sub16(BP, CX);
+                            AL = UInt8[DS, SI];
+                            SI += (ushort)(uint)Direction8;
+                            while (CX != 0)
                             {
-                                --this.CX;
-                                this.UInt8[this.ES, this.DI] = this.AL;
-                                this.DI += (ushort)(uint)this.Direction8;
+                                --CX;
+                                UInt8[ES, DI] = AL;
+                                DI += (ushort)(uint)Direction8;
                             }
                         }
                     }
-                    while (!this.CarryFlag && !this.ZeroFlag);
+                    while (!CarryFlag && !ZeroFlag);
                     goto label_48;
                 label_37:
-                    this.BP = this.DX;
-                    this.DI -= (ushort)(uint)this.BP;
-                    this.DI = this.Alu.Add16(this.DI, (ushort)320);
+                    BP = DX;
+                    DI -= (ushort)(uint)BP;
+                    DI = Alu.Add16(DI, 320);
                     continue;
                 label_48:
-                    this.BX = this.Alu.Dec16(this.BX);
-                    if (this.ZeroFlag)
+                    BX = Alu.Dec16(BX);
+                    if (ZeroFlag)
                     {
                         goto label_9;
                     }
@@ -727,27 +727,27 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         }
         else
         {
-            int num7 = (int)this.Alu.And16(this.AX, (ushort)8192);
-            if (!this.ZeroFlag)
+            int num7 = Alu.And16(AX, 8192);
+            if (!ZeroFlag)
             {
-                this.UInt8[this.cs1, (ushort)0xAD2] = (byte)0xEF;
-                this.UInt8[this.cs1, (ushort)0xB61] = (byte)0xEF;
-                this.AH = this.BL;
-                this.AH = this.Alu.Dec8(this.AH);
-                this.DH = this.AH;
-                this.DL = (byte)0;
-                this.AL = this.DL;
-                this.DX >>= 1;
-                this.DX >>= 1;
-                this.DI += (ushort)(uint)this.AX;
-                this.DI += (ushort)(uint)this.DX;
+                UInt8[cs1, 0xAD2] = 0xEF;
+                UInt8[cs1, 0xB61] = 0xEF;
+                AH = BL;
+                AH = Alu.Dec8(AH);
+                DH = AH;
+                DL = 0;
+                AL = DL;
+                DX >>= 1;
+                DX >>= 1;
+                DI += (ushort)(uint)AX;
+                DI += (ushort)(uint)DX;
             }
-            this.DI += (ushort)(uint)this.BP;
-            this.DI = this.Alu.Dec16(this.DI);
-            this.DirectionFlag = true;
-            this.DX = this.BP;
-            int num8 = (int)this.Alu.Sub8(this.CH, byte.MaxValue);
-            if (this.ZeroFlag)
+            DI += (ushort)(uint)BP;
+            DI = Alu.Dec16(DI);
+            DirectionFlag = true;
+            DX = BP;
+            int num8 = Alu.Sub8(CH, byte.MaxValue);
+            if (ZeroFlag)
             {
             label_21:
                 while (true)
@@ -756,32 +756,32 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                     {
                         do
                         {
-                            this.AL = this.UInt8[this.DS, this.SI];
-                            this.SI = this.Alu.Inc16(this.SI);
-                            this.AL = this.Alu.Or8(this.AL, this.AL);
-                            if (!this.ZeroFlag)
+                            AL = UInt8[DS, SI];
+                            SI = Alu.Inc16(SI);
+                            AL = Alu.Or8(AL, AL);
+                            if (!ZeroFlag)
                             {
-                                this.CX = this.AX;
-                                this.CH = (byte)0;
-                                ++this.CX;
-                                this.BP = this.Alu.Sub16(this.BP, this.CX);
+                                CX = AX;
+                                CH = 0;
+                                ++CX;
+                                BP = Alu.Sub16(BP, CX);
                                 ushort num9 = 1;
                                 do
                                 {
-                                    this.AL = this.UInt8[this.DS, this.SI];
-                                    this.SI = this.Alu.Inc16(this.SI);
-                                    this.AL = this.Alu.Or8(this.AL, this.AL);
-                                    if (!this.ZeroFlag)
+                                    AL = UInt8[DS, SI];
+                                    SI = Alu.Inc16(SI);
+                                    AL = Alu.Or8(AL, AL);
+                                    if (!ZeroFlag)
                                     {
-                                        this.UInt8[this.ES, this.DI] = this.AL;
-                                        this.DI += (ushort)(uint)this.Direction8;
-                                        if (--this.CX == (ushort)0)
+                                        UInt8[ES, DI] = AL;
+                                        DI += (ushort)(uint)Direction8;
+                                        if (--CX == 0)
                                         {
-                                            this.BP = this.Alu.Or16(this.BP, this.BP);
-                                            if (this.CarryFlag || this.ZeroFlag)
+                                            BP = Alu.Or16(BP, BP);
+                                            if (CarryFlag || ZeroFlag)
                                             {
-                                                this.BX = this.Alu.Dec16(this.BX);
-                                                if (this.ZeroFlag)
+                                                BX = Alu.Dec16(BX);
+                                                if (ZeroFlag)
                                                 {
                                                     goto label_9;
                                                 }
@@ -798,16 +798,16 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                                     }
                                     else
                                     {
-                                        this.DI = this.Alu.Dec16(this.DI);
-                                        num9 = --this.CX;
+                                        DI = Alu.Dec16(DI);
+                                        num9 = --CX;
                                     }
                                 }
-                                while (num9 != (ushort)0);
-                                this.BP = this.Alu.Or16(this.BP, this.BP);
-                                if (this.CarryFlag || this.ZeroFlag)
+                                while (num9 != 0);
+                                BP = Alu.Or16(BP, BP);
+                                if (CarryFlag || ZeroFlag)
                                 {
-                                    this.BX = this.Alu.Dec16(this.BX);
-                                    if (this.ZeroFlag)
+                                    BX = Alu.Dec16(BX);
+                                    if (ZeroFlag)
                                     {
                                         goto label_9;
                                     }
@@ -819,22 +819,22 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                             }
                             else
                             {
-                                this.CX = (ushort)0x101;
-                                this.AH = (byte)0;
-                                this.CX -= (ushort)(uint)this.AX;
-                                this.BP = this.Alu.Sub16(this.BP, this.CX);
-                                this.AL = this.UInt8[this.DS, this.SI];
-                                this.SI = this.Alu.Inc16(this.SI);
-                                this.AL = this.Alu.Or8(this.AL, this.AL);
-                                if (!this.ZeroFlag)
+                                CX = 0x101;
+                                AH = 0;
+                                CX -= (ushort)(uint)AX;
+                                BP = Alu.Sub16(BP, CX);
+                                AL = UInt8[DS, SI];
+                                SI = Alu.Inc16(SI);
+                                AL = Alu.Or8(AL, AL);
+                                if (!ZeroFlag)
                                 {
-                                    while (this.CX != (ushort)0)
+                                    while (CX != 0)
                                     {
-                                        --this.CX;
-                                        this.UInt8[this.ES, this.DI] = this.AL;
-                                        this.DI += (ushort)(uint)this.Direction8;
+                                        CX--;
+                                        UInt8[ES, DI] = AL;
+                                        DI += (ushort)(uint)Direction8;
                                     }
-                                    this.BP = this.Alu.Or16(this.BP, this.BP);
+                                    BP = Alu.Or16(BP, BP);
                                 }
                                 else
                                 {
@@ -842,9 +842,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                                 }
                             }
                         }
-                        while (!this.CarryFlag && !this.ZeroFlag);
-                        this.BX = this.Alu.Dec16(this.BX);
-                        if (this.ZeroFlag)
+                        while (!CarryFlag && !ZeroFlag);
+                        BX = Alu.Dec16(BX);
+                        if (ZeroFlag)
                         {
                             goto label_9;
                         }
@@ -854,19 +854,19 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                         }
 
                     label_35:
-                        this.DI = this.Alu.Sub16(this.DI, this.CX);
-                        this.BP = this.Alu.Or16(this.BP, this.BP);
+                        DI = Alu.Sub16(DI, CX);
+                        BP = Alu.Or16(BP, BP);
                     }
-                    while (!this.CarryFlag && !this.ZeroFlag);
+                    while (!CarryFlag && !ZeroFlag);
                     goto label_36;
                 label_20:
-                    this.BP = this.DX;
-                    this.DI += (ushort)(uint)this.BP;
-                    this.DI = this.Alu.Add16(this.DI, (ushort)320);
+                    BP = DX;
+                    DI += (ushort)(uint)BP;
+                    DI = Alu.Add16(DI, 320);
                     continue;
                 label_36:
-                    this.BX = this.Alu.Dec16(this.BX);
-                    if (this.ZeroFlag)
+                    BX = Alu.Dec16(BX);
+                    if (ZeroFlag)
                     {
                         goto label_9;
                     }
@@ -882,30 +882,30 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 {
                     do
                     {
-                        this.AL = this.UInt8[this.DS, this.SI];
-                        this.SI = this.Alu.Inc16(this.SI);
-                        this.AL = this.Alu.Or8(this.AL, this.AL);
-                        if (!this.ZeroFlag)
+                        AL = UInt8[DS, SI];
+                        SI = Alu.Inc16(SI);
+                        AL = Alu.Or8(AL, AL);
+                        if (!ZeroFlag)
                         {
-                            this.CX = this.AX;
-                            this.CH = (byte)0;
-                            ++this.CX;
-                            this.BP = this.Alu.Sub16(this.BP, this.CX);
+                            CX = AX;
+                            CH = 0;
+                            ++CX;
+                            BP = Alu.Sub16(BP, CX);
                             ushort num10;
                             do
                             {
-                                this.AL = this.UInt8[this.DS, this.SI];
-                                this.SI = this.Alu.Inc16(this.SI);
-                                this.UInt8[this.ES, this.DI] = this.AL;
-                                this.DI += (ushort)(uint)this.Direction8;
-                                num10 = --this.CX;
+                                AL = UInt8[DS, SI];
+                                SI = Alu.Inc16(SI);
+                                UInt8[ES, DI] = AL;
+                                DI += (ushort)(uint)Direction8;
+                                num10 = --CX;
                             }
-                            while (num10 != (ushort)0);
-                            this.BP = this.Alu.Or16(this.BP, this.BP);
-                            if (this.CarryFlag || this.ZeroFlag)
+                            while (num10 != 0);
+                            BP = Alu.Or16(BP, BP);
+                            if (CarryFlag || ZeroFlag)
                             {
-                                this.BX = this.Alu.Dec16(this.BX);
-                                if (this.ZeroFlag)
+                                BX = Alu.Dec16(BX);
+                                if (ZeroFlag)
                                 {
                                     goto label_9;
                                 }
@@ -917,31 +917,31 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                         }
                         else
                         {
-                            this.CX = 0x101;
-                            this.AH = 0;
-                            this.CX -= (ushort)(uint)this.AX;
-                            this.BP = this.Alu.Sub16(this.BP, this.CX);
-                            this.AL = this.UInt8[this.DS, this.SI];
-                            this.SI = this.Alu.Inc16(this.SI);
-                            while (this.CX != (ushort)0)
+                            CX = 0x101;
+                            AH = 0;
+                            CX -= (ushort)(uint)AX;
+                            BP = Alu.Sub16(BP, CX);
+                            AL = UInt8[DS, SI];
+                            SI = Alu.Inc16(SI);
+                            while (CX != 0)
                             {
-                                --this.CX;
-                                this.UInt8[this.ES, this.DI] = this.AL;
-                                this.DI += (ushort)(uint)this.Direction8;
+                                --CX;
+                                UInt8[ES, DI] = AL;
+                                DI += (ushort)(uint)Direction8;
                             }
-                            this.BP = this.Alu.Or16(this.BP, this.BP);
+                            BP = Alu.Or16(BP, BP);
                         }
                     }
-                    while (!this.CarryFlag && !this.ZeroFlag);
+                    while (!CarryFlag && !ZeroFlag);
                     goto label_59;
                 label_49:
-                    this.BP = this.DX;
-                    this.DI += (ushort)(uint)this.BP;
-                    this.DI = this.Alu.Add16(this.DI, (ushort)320);
+                    BP = DX;
+                    DI += (ushort)(uint)BP;
+                    DI = Alu.Add16(DI, 320);
                     continue;
                 label_59:
-                    this.BX = this.Alu.Dec16(this.BX);
-                    if (this.ZeroFlag)
+                    BX = Alu.Dec16(BX);
+                    if (ZeroFlag)
                     {
                         goto label_9;
                     }
@@ -1011,7 +1011,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// </summary>
     public virtual Action unknown_1000_0CF4_10CF4(int loadOffset)
     {
-        NearCall(cs1, 0xCF7, new Func<int, Action>(unknown_1000_0C72_10C72));
+        NearCall(cs1, 0xCF7, unknown_1000_0C72_10C72);
         SI = 0xCBC;
         AX = UInt16[cs1, SI];
         UInt16[cs1, 0xCB6] = AX;
@@ -1025,9 +1025,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         do
         {
             Stack.Push16(CX);
-            NearCall(cs1, 0xD1B, new Func<int, Action>(unknown_1000_0D22_10D22));
+            NearCall(cs1, 0xD1B, unknown_1000_0D22_10D22);
             CX = Stack.Pop16();
-            NearCall(cs1, 0xD1F, new Func<int, Action>(unknown_1000_1085_11085));
+            NearCall(cs1, 0xD1F, unknown_1000_1085_11085);
             num = --CX;
         }
         while (num != 0 && ZeroFlag);
@@ -1068,14 +1068,14 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             ushort num2;
             do
             {
-                NearCall(cs1, 0xD4E, new Func<int, Action>(unknown_1000_0D5F_10D5F));
+                NearCall(cs1, 0xD4E, unknown_1000_0D5F_10D5F);
                 num2 = --CX;
             }
             while (num2 != 0);
             DX = 0x160;
             BX = 0x50;
             CX = 0x50;
-            NearCall(cs1, 0xD5C, new Func<int, Action>(unknown_1000_09D8_109D8));
+            NearCall(cs1, 0xD5C, unknown_1000_09D8_109D8);
         }
         ES = Stack.Pop16();
         DS = Stack.Pop16();
@@ -1171,28 +1171,28 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     public virtual Action unknown_1000_0DDE_10DDE(int loadOffset)
     {
         UInt16[DS, 0x54] = AX;
-        NearCall(cs1, 0xDE4, new Func<int, Action>(unknown_1000_0DBC_10DBC));
+        NearCall(cs1, 0xDE4, unknown_1000_0DBC_10DBC);
         if (CarryFlag)
             return NearRet();
         do
         {
-            NearCall(cs1, 0xDE9, new Func<int, Action>(unknown_1000_0A3A_10A3A));
+            NearCall(cs1, 0xDE9, unknown_1000_0A3A_10A3A);
             AX = UInt16[DS, 84];
             UInt16[DS, 0x52] = AX;
             DI = UInt16[DS, 76];
             ES = UInt16[DS, 78];
             UInt16[DS, 0x56] = DI;
             UInt16[DS, 0x58] = ES;
-            NearCall(cs1, 0xDFE, new Func<int, Action>(unknown_1000_0EAD_10EAD));
+            NearCall(cs1, 0xDFE, unknown_1000_0EAD_10EAD);
             if (ZeroFlag)
                 return NearRet();
-            NearCall(cs1, 0xE03, new Func<int, Action>(unknown_1000_0FA4_10FA4));
-            NearCall(cs1, 0xE06, new Func<int, Action>(unknown_1000_0E4C_10E4C));
+            NearCall(cs1, 0xE03, unknown_1000_0FA4_10FA4);
+            NearCall(cs1, 0xE06, unknown_1000_0E4C_10E4C);
             CarryFlag = true;
             if (ZeroFlag)
                 return NearRet();
-            NearCall(cs1, 0xE0C, new Func<int, Action>(unknown_1000_0E49_10E49));
-            NearCall(cs1, 0xE0F, new Func<int, Action>(unknown_1000_0CF4_10CF4));
+            NearCall(cs1, 0xE0C, unknown_1000_0E49_10E49);
+            NearCall(cs1, 0xE0F, unknown_1000_0CF4_10CF4);
             CarryFlag = true;
             if (!ZeroFlag)
                 return NearRet();
@@ -1200,7 +1200,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             {
                 AX = UInt16[DS, 0x52];
                 BP = 0xE46;
-                NearCall(cs1, 0xE1B, new Func<int, Action>(unknown_1000_0FEA_10FEA));
+                NearCall(cs1, 0xE1B, unknown_1000_0FEA_10FEA);
                 CarryFlag = true;
                 if (!ZeroFlag)
                     return NearRet();
@@ -1210,24 +1210,24 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             SI = 0xEE;
             AX = UInt16[DS, SI];
             SI += (ushort)Direction16;
-            NearCall(cs1, 0xE2C, new Func<int, Action>(unknown_1000_11BD_111BD));
+            NearCall(cs1, 0xE2C, unknown_1000_11BD_111BD);
             byte ah1 = AH;
             byte al1 = AL;
             byte num1;
             AL = num1 = ah1;
             AH = num1 = al1;
-            NearCall(cs1, 0xE31, new Func<int, Action>(unknown_1000_11BD_111BD));
+            NearCall(cs1, 0xE31, unknown_1000_11BD_111BD);
             int num2 = Alu.Sub16(AX, 0x4C4F);
             if (ZeroFlag)
             {
                 AX = UInt16[DS, SI];
                 SI += (ushort)Direction16;
-                NearCall(cs1, 0xE3A, new Func<int, Action>(unknown_1000_11BD_111BD));
+                NearCall(cs1, 0xE3A, unknown_1000_11BD_111BD);
                 byte ah2 = AH;
                 byte al2 = AL;
                 AL = num1 = ah2;
                 AH = num1 = al2;
-                NearCall(cs1, 0xE3F, new Func<int, Action>(unknown_1000_11BD_111BD));
+                NearCall(cs1, 0xE3F, unknown_1000_11BD_111BD);
                 int num3 = Alu.Sub16(AX, 0x4F50);
             }
             else
@@ -1261,7 +1261,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// </summary>
     public virtual Action unknown_1000_0E4C_10E4C(int loadOffset)
     {
-        NearCall(cs1, 0xE4F, new Func<int, Action>(unknown_1000_0E86_10E86));
+        NearCall(cs1, 0xE4F, unknown_1000_0E86_10E86);
         if (!ZeroFlag)
         {
             return NearRet();
@@ -1291,7 +1291,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             int num = Alu.And16(DI, 0x200);
             if (!ZeroFlag)
             {
-                NearCall(cs1, 0xE74, new Func<int, Action>(unknown_1000_0EBD_10EBD));
+                NearCall(cs1, 0xE74, unknown_1000_0EBD_10EBD);
             }
             AX = UInt16[DS, SI];
             SI += (ushort)Direction16;
@@ -1301,7 +1301,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             BX = AX;
             AX = 0xA000;
             ES = AX;
-            FarCall(cs1, 0xE84, new Func<int, Action>(unknown_1000_0B9A_10B9A));
+            FarCall(cs1, 0xE84, unknown_1000_0B9A_10B9A);
         }
         DS = Stack.Pop16();
         return NearRet();
@@ -1622,7 +1622,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         uint bp = BP;
         if (bp != 0xE46)
             throw FailAsUntested("Error: Function not registered at address " + ConvertUtils.ToHex32WithoutX(bp));
-        NearCall(cs1, 0xFF7, new Func<int, Action>(unknown_1000_0E46_10E46));
+        NearCall(cs1, 0xFF7, unknown_1000_0E46_10E46);
         BX = Stack.Pop16();
         BP = Stack.Pop16();
         BP >>= 1;
@@ -1642,7 +1642,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             int num = Alu.Sub16(AX, BP);
         }
         while (CarryFlag);
-        NearCall(cs1, 0x1018, new Func<int, Action>(unknown_1000_1085_11085));
+        NearCall(cs1, 0x1018, unknown_1000_1085_11085);
         return NearRet();
     }
 
