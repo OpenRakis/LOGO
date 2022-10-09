@@ -1,5 +1,5 @@
 # LOGO
-A fully reverse-engineered real DOS app exemple (WIP), from the floppy version of DUNE.
+A fully reverse-engineered real DOS app exemple, from the floppy version of DUNE.
 
 <div style="height: 25px; width: 160px; border: 1px solid red; white-space: nowrap; text-align: center; margin: 1em 0;">
     <span style="display: inline-block; height: 100%; vertical-align: middle;"></span><img src="logo.gif" style="vertical-align: middle; max-height: 400px; max-width: 640px;" height="400" />
@@ -29,3 +29,7 @@ This repository serves as an example in order to document and show case the usag
 
 
 LOGO.EXE and LOGO.HNM only exist in the PC Floppy version of DUNE.
+
+## Current state
+
+Work in progress. Expect broken glass.
