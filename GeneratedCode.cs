@@ -1603,14 +1603,18 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         }
     }
 
+    /// <summary>
+    /// Checks 288 times during the whole program runtime if any key from the keyboard was received.
+    /// If any, exit to DOS immediatly.
+    /// </summary>
     public virtual Action CheckForAnyKeyStroke_1000_1085_11085(int loadOffset)
     {
-        Console.WriteLine("Keystroke reading...");
         // Bios Interrupt: GetKeystrokeStatus
         // MOV AH,0x1 (1000_1085 / 0x11085)
         AH = 0x1;
         // INT 0x16 (1000_1087 / 0x11087)
         Interrupt(0x16);
+        // If not keystroke at all, return.
         // JZ 0x1000:1091 (1000_1089 / 0x11089)
         if (ZeroFlag)
         {
@@ -1623,7 +1627,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AH = 0;
         // INT 0x16 (1000_108D / 0x1108D)
         Interrupt(0x16);
-        // OR AX,AX (1000_108F / 0x1108F)
+        // OR AX,AX (1000_108F / 0x1108F)j
         // AX |= AX;
         AX = Alu.Or16(AX, AX);
         // RET  (1000_1091 / 0x11091)
