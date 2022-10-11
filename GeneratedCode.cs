@@ -233,6 +233,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         Thread.Sleep(17);
         Machine.VgaCard.SetVgaWriteIndex(BL);
         for (int i = 0; i < colors * 3; i++) {
+            CheckExternalEvents(cs1, 0x09D9);
             Machine.VgaCard.RgbDataWrite(UInt8[DS, (ushort)(colorOffset + i)]);
         }
         return NearRet();

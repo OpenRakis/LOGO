@@ -1,7 +1,7 @@
 {
     "Namespace":"logo",
     "CodeToInject": {
-        "CheckExternalEvents({nextSegment}, {nextOffset});": ["CS1:100B", "CS1:09C1", "CS1:09EC", "CS1:098C"]
+        "CheckExternalEvents({nextSegment}, {nextOffset});": ["CS1:100B", "CS1:09C1", "CS1:09EC", "CS1:098C", "CS1:09D9"]
     },
     "GenerateCheckExternalEventsBeforeInstruction":false
 }
