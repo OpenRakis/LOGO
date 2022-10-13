@@ -18,6 +18,10 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DefineGeneratedCodeOverrides();
         DetectCodeRewrites();
         SetProvidedInterruptHandlersAsOverridden();
+        if(this.Machine.Gui is not null)
+        {
+            this.Machine.Gui.KeyDown += OnKeyDown;
+        }
     }
 
     public Dictionary<SegmentedAddress, FunctionInformation> FunctionInformations => _functionInformations;
@@ -1261,7 +1265,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         ushort value = UInt16[segment, offset];
         CX = (ushort)(value - 2);
         ZeroFlag = value == 0;
-        return NearRet((ushort)0);
+        return NearRet(0);
     }
 
     public virtual Action unknown_1000_0EBD_10EBD(int loadOffset)
@@ -1520,8 +1524,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         ES = AX;
         Stack.Push16(UInt16[ES, 0x46C]);
         uint bp = BP;
-        if (bp != 0xE46)
-            throw FailAsUntested("Error: Function not registered at address " + ConvertUtils.ToHex32WithoutX(bp));
         NearCall(cs1, 0xFF7, unknown_1000_0E46_10E46);
         BX = Stack.Pop16();
         BP = Stack.Pop16();
@@ -1542,7 +1544,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             Alu.Sub16(AX, BP);
         }
         while (CarryFlag);
-        NearCall(cs1, 0x1018, CheckForAnyKeyStroke_1000_1085_11085);
+        //NearCall(cs1, 0x1018, CheckForAnyKeyStroke_1000_1085_11085);
         return NearRet();
     }
 
@@ -1609,8 +1611,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// Checks 288 times during the whole program runtime if any key from the keyboard was received.
-    /// If any, exit to DOS immediatly.
+    /// NOP
     /// </summary>
     public virtual Action CheckForAnyKeyStroke_1000_1085_11085(int loadOffset)
     {
@@ -1637,6 +1638,16 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AX = Alu.Or16(AX, AX);
         // RET  (1000_1091 / 0x11091)
         return NearRet();
+    }
+
+    /// <summary>
+    /// High level code equivalent to CheckForAnyKeyStroke_1000_1085_11085 -> event handler
+    /// </summary>
+    /// <param name="sender">The GUI</param>
+    /// <param name="e">Don"t care</param>
+    private void OnKeyDown(object? sender, EventArgs e)
+    {
+        Hlt();
     }
 
     /// <summary>
@@ -1770,10 +1781,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// </summary>
     public virtual Action unknown_1000_11BD_111BD(int loadOffset)
     {
-        if (CarryFlag || (!CarryFlag && !ZeroFlag))
-        {
-            return NearRet();
-        }
         AL = Alu.And8(AL, 0xDF);
         return NearRet();
     }
