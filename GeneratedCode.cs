@@ -1,4 +1,6 @@
-﻿namespace logo;
+﻿using System.Diagnostics;
+
+namespace logo;
 
 /// <summary>
 /// This is the resulting conversion by hand to high level code.
@@ -38,7 +40,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DefineFunction(cs1, 0xD22, ChangeVgaPalette_1000_0D22_10D22, false);
         DefineFunction(cs1, 0xD5F, ComputeNextVgaPalette_1000_0D5F_10D5F, false);
         DefineFunction(cs1, 0xDBC, unknown_1000_0DBC_10DBC, false);
-        DefineFunction(cs1, 0xDDE, unknown_1000_0DDE_10DDE, false);
+        DefineFunction(cs1, 0xDDE, CirclesAnimation_1000_0DDE_10DDE, false);
         DefineFunction(cs1, 0xE46, unknown_1000_0E46_10E46, false);
         DefineFunction(cs1, 0xE49, unknown_1000_0E49_10E49, false);
         DefineFunction(cs1, 0xE4C, unknown_1000_0E4C_10E4C, false);
@@ -54,8 +56,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DefineFunction(cs1, 0x1019, unknown_1000_1019_11019, false);
         DefineFunction(cs1, 0x105F, unknown_1000_105F_1105F, false);
         DefineFunction(cs1, 0x1085, CheckForAnyKeyStroke_1000_1085_11085, false);
-        DefineFunction(cs1, 0x109A, unknown_1000_109A_1109A, false);
-        DefineFunction(cs1, 0x10F4, unknown_1000_10F4_110F4, false);
+        DefineFunction(cs1, 0x109A, ReadFile_AdvancePointer_CloseFile_1000_109A_1109A, false);
+        DefineFunction(cs1, 0x10F4, ChangesNothingInTheEnd_DeletableFunction_1000_10F4_110F4, false);
         DefineFunction(cs1, 0x11BD, unknown_1000_11BD_111BD, false);
     }
 
@@ -85,7 +87,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AX = UInt16[ES, 2];
         UInt16[DS, 0x50] = AX;
         BX = 8;
-        NearCall(cs1, 0x12, unknown_1000_10F4_110F4);
+        NearCall(cs1, 0x12, ChangesNothingInTheEnd_DeletableFunction_1000_10F4_110F4);
         AX = 0xC;
         SI = 0x8E;
         int num1 = Alu.Sub8(UInt8[DS, SI], 0);
@@ -111,7 +113,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             NearCall(cs1, 0x4F, unknown_1000_1019_11019);
             BX = Stack.Pop16();
             AX = UInt16[DS, 0x52];
-            NearCall(cs1, 0x56, unknown_1000_0DDE_10DDE);
+            NearCall(cs1, 0x56, CirclesAnimation_1000_0DDE_10DDE);
             NearCall(cs1, 0x59, unknown_1000_0A51_10A51);
             DX = 0;
             AL = 0;
@@ -1086,7 +1088,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             return NearRet();
         }
         // CALL 0x1000:109a (1000_0DD4 / 0x10DD4)
-        NearCall(cs1, 0xDD7, unknown_1000_109A_1109A);
+        NearCall(cs1, 0xDD7, ReadFile_AdvancePointer_CloseFile_1000_109A_1109A);
         // ADD DI,CX (1000_0DD7 / 0x10DD7)
         DI += CX;
         // XOR AX,AX (1000_0DD9 / 0x10DD9)
@@ -1103,7 +1105,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_1000_0DDE_10DDE(int loadOffset)
+    public virtual Action CirclesAnimation_1000_0DDE_10DDE(int loadOffset)
     {
         // Read File
         UInt16[DS, 0x54] = AX;
@@ -1131,7 +1133,10 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             NearCall(cs1, 0xE0F, unknown_1000_0CF4_10CF4);
             CarryFlag = true;
             if (!ZeroFlag)
+            {
                 return NearRet();
+            }
+
             do
             {
                 AX = UInt16[DS, 0x52];
@@ -1642,7 +1647,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_1000_109A_1109A(int loadOffset)
+    public virtual Action ReadFile_AdvancePointer_CloseFile_1000_109A_1109A(int loadOffset)
     {
         while (true)
         {
@@ -1687,7 +1692,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_1000_10F4_110F4(int loadOffset)
+    public virtual Action ChangesNothingInTheEnd_DeletableFunction_1000_10F4_110F4(int loadOffset)
     {
         Stack.Push16(DS);
         Stack.Push16(ES);
