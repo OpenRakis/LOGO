@@ -39,7 +39,7 @@ sha256 checksum:
     896a55f02555f708b57c6fd7576c8404aa479c1ec6e90fbbb230130bc7a31921
 Then:
 
-    dotnet run -e /home/max/Jeux/Dune/LOGO.EXE -d false
+    dotnet run -e /path/to/LOGO.EXE -d false
 
 ## Main files of interest
 
