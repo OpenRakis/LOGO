@@ -87,14 +87,14 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AX = UInt16[ES, 2];
         UInt16[DS, 0x50] = AX;
         BX = 8;
-        NearCall(cs1, 0x12, ChangesNothingInTheEnd_DeletableFunction_1000_10F4_110F4);
+        ChangesNothingInTheEnd_DeletableFunction_1000_10F4_110F4(0);
         AX = 0xC;
         SI = 0x8E;
         int num1 = Alu.Sub8(UInt8[DS, SI], 0);
         int num2 = ZeroFlag ? 1 : 0;
         UInt16[DS, 0x52] = AX;
         DX = 0x5A;
-        NearCall(cs1, 0x2C, unknown_1000_105F_1105F);
+        unknown_1000_105F_1105F(0);
         int num3 = Alu.Sub8(UInt8[DS, DI], 46);
         if (!ZeroFlag)
         {
@@ -109,12 +109,12 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         if (!CarryFlag)
         {
             Stack.Push16(AX);
-            NearCall(cs1, 0x4C, unknown_1000_0970_10970);
-            NearCall(cs1, 0x4F, unknown_1000_1019_11019);
+            unknown_1000_0970_10970(0);
+            unknown_1000_1019_11019(0);
             BX = Stack.Pop16();
             AX = UInt16[DS, 0x52];
-            NearCall(cs1, 0x56, CirclesAnimation_1000_0DDE_10DDE);
-            NearCall(cs1, 0x59, unknown_1000_0A51_10A51);
+            CirclesAnimation_1000_0DDE_10DDE(0);
+            unknown_1000_0A51_10A51(0);
             DX = 0;
             AL = 0;
             // End of LOGO.EXE
@@ -154,15 +154,15 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         CheckExternalEvents(cs1, 0x98C);
         AL = Cpu.In8(DX);
         AL = Alu.And8(AL, 8);
-        NearCall(cs1, 0x992, unknown_1000_09B5_109B5);
+        unknown_1000_09B5_109B5(0);
         if (CarryFlag)
         {
-            NearCall(cs1, 0x997, unknown_1000_09B5_109B5);
+            unknown_1000_09B5_109B5(0);
             if (CarryFlag)
             {
                 DI = SI;
                 UInt8[cs1, 0x6F] = AH;
-                NearCall(cs1, 0x9A3, unknown_1000_09B5_109B5);
+                unknown_1000_09B5_109B5(0);
                 if (CarryFlag)
                 {
                     int num = Alu.Sub16(SI, DI);
@@ -482,7 +482,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             BP = DI;
             BP = Alu.And16(BP, 511);
             AX = DI;
-            NearCall(cs1, 0xBAF, unknown_1000_0A22_10A22);
+            unknown_1000_0A22_10A22(0);
             BX = CX;
             BH = 0;
             int num2 = Alu.Sub8(CH, byte.MaxValue);
@@ -570,7 +570,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         BP = DI;
         BP = Alu.And16(BP, 511);
         AX = DI;
-        NearCall(cs1, 0xC05, unknown_1000_0A22_10A22);
+        unknown_1000_0A22_10A22(0);
         BX = CX;
         BH = 0;
         int num4 = Alu.And16(AX, 16384);
@@ -954,7 +954,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// </summary>
     public virtual Action unknown_1000_0CF4_10CF4(int loadOffset)
     {
-        NearCall(cs1, 0xCF7, unknown_1000_0C72_10C72);
+        unknown_1000_0C72_10C72(0);
         SI = 0xCBC;
         AX = UInt16[cs1, SI];
         UInt16[cs1, 0xCB6] = AX;
@@ -968,9 +968,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         do
         {
             Stack.Push16(CX);
-            NearCall(cs1, 0xD1B, ChangeVgaPalette_1000_0D22_10D22);
+            ChangeVgaPalette_1000_0D22_10D22(0);
             CX = Stack.Pop16();
-            NearCall(cs1, 0xD1F, CheckForAnyKeyStroke_1000_1085_11085);
+            CheckForAnyKeyStroke_1000_1085_11085(0);
             num = --CX;
         }
         while (num != 0 && ZeroFlag);
@@ -1008,11 +1008,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 DI += (ushort)Direction8;
             }
             CX = DX;
-            NearCall(cs1, 0xD4E, ComputeNextVgaPalette_1000_0D5F_10D5F);
+            ComputeNextVgaPalette_1000_0D5F_10D5F(0);
             DX = 0x160;
             BX = 0x50;
             CX = 0x50;
-            NearCall(cs1, 0xD5C, WaitFrameAndWriteNextPaletteData_1000_09D8_109D8);
+            WaitFrameAndWriteNextPaletteData_1000_09D8_109D8(0);
         }
         ES = Stack.Pop16();
         DS = Stack.Pop16();
@@ -1088,7 +1088,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             return NearRet();
         }
         // CALL 0x1000:109a (1000_0DD4 / 0x10DD4)
-        NearCall(cs1, 0xDD7, ReadFile_AdvancePointer_CloseFile_1000_109A_1109A);
+        ReadFile_AdvancePointer_CloseFile_1000_109A_1109A(0);
         // ADD DI,CX (1000_0DD7 / 0x10DD7)
         DI += CX;
         // XOR AX,AX (1000_0DD9 / 0x10DD9)
@@ -1109,28 +1109,28 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     {
         // Read File
         UInt16[DS, 0x54] = AX;
-        NearCall(cs1, 0xDE4, unknown_1000_0DBC_10DBC);
+        unknown_1000_0DBC_10DBC(0);
         if (CarryFlag)
             return NearRet();
         do
         {
-            NearCall(cs1, 0xDE9, unknown_1000_0A3A_10A3A);
+            unknown_1000_0A3A_10A3A(0);
             AX = UInt16[DS, 84];
             UInt16[DS, 0x52] = AX;
             DI = UInt16[DS, 76];
             ES = UInt16[DS, 78];
             UInt16[DS, 0x56] = DI;
             UInt16[DS, 0x58] = ES;
-            NearCall(cs1, 0xDFE, unknown_1000_0EAD_10EAD);
+            unknown_1000_0EAD_10EAD(0);
             if (ZeroFlag)
                 return NearRet();
-            NearCall(cs1, 0xE03, ChangeVgaPaletteLoop_1000_0FA4_10FA4);
-            NearCall(cs1, 0xE06, unknown_1000_0E4C_10E4C);
+            ChangeVgaPaletteLoop_1000_0FA4_10FA4(0);
+            unknown_1000_0E4C_10E4C(0);
             CarryFlag = true;
             if (ZeroFlag)
                 return NearRet();
-            NearCall(cs1, 0xE0C, unknown_1000_0E49_10E49);
-            NearCall(cs1, 0xE0F, unknown_1000_0CF4_10CF4);
+            unknown_1000_0E49_10E49(0);
+            unknown_1000_0CF4_10CF4(0);
             CarryFlag = true;
             if (!ZeroFlag)
             {
@@ -1141,7 +1141,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             {
                 AX = UInt16[DS, 0x52];
                 BP = 0xE46;
-                NearCall(cs1, 0xE1B, unknown_1000_0FEA_10FEA);
+                unknown_1000_0FEA_10FEA(0);
                 CarryFlag = true;
                 if (!ZeroFlag)
                     return NearRet();
@@ -1151,24 +1151,24 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             SI = 0xEE;
             AX = UInt16[DS, SI];
             SI += (ushort)Direction16;
-            NearCall(cs1, 0xE2C, unknown_1000_11BD_111BD);
+            unknown_1000_11BD_111BD(0);
             byte ah1 = AH;
             byte al1 = AL;
             byte num1;
             AL = num1 = ah1;
             AH = num1 = al1;
-            NearCall(cs1, 0xE31, unknown_1000_11BD_111BD);
+            unknown_1000_11BD_111BD(0);
             int num2 = Alu.Sub16(AX, 0x4C4F);
             if (ZeroFlag)
             {
                 AX = UInt16[DS, SI];
                 SI += (ushort)Direction16;
-                NearCall(cs1, 0xE3A, unknown_1000_11BD_111BD);
+                unknown_1000_11BD_111BD(0);
                 byte ah2 = AH;
                 byte al2 = AL;
                 AL = num1 = ah2;
                 AH = num1 = al2;
-                NearCall(cs1, 0xE3F, unknown_1000_11BD_111BD);
+                unknown_1000_11BD_111BD(0);
                 int num3 = Alu.Sub16(AX, 0x4F50);
             }
             else
@@ -1184,7 +1184,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     public virtual Action unknown_1000_0E46_10E46(int loadOffset)
     {
         // CALL 0x1000:0d22 (1000_0E46 / 0x10E46)
-        NearCall(cs1, 0xE49, ChangeVgaPalette_1000_0D22_10D22);
+        ChangeVgaPalette_1000_0D22_10D22(0);
         // Function call generated as ASM continues to next function entry point without return
         return unknown_1000_0E49_10E49(0);
     }
@@ -1192,7 +1192,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     public virtual Action unknown_1000_0E49_10E49(int loadOffset)
     {
         // CALL 0x1000:0e59 (1000_0E49 / 0x10E49)
-        NearCall(cs1, 0xE4C, unknown_1000_0E59_10E59);
+        unknown_1000_0E59_10E59(0);
         // Function call generated as ASM continues to next function entry point without return
         return unknown_1000_0E4C_10E4C(0);
     }
@@ -1202,7 +1202,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// </summary>
     public virtual Action unknown_1000_0E4C_10E4C(int loadOffset)
     {
-        NearCall(cs1, 0xE4F, unknown_1000_0E86_10E86);
+        unknown_1000_0E86_10E86(0);
         if (!ZeroFlag)
         {
             return NearRet();
@@ -1229,10 +1229,10 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         CL = Alu.Or8(CL, CL);
         if (!ZeroFlag)
         {
-            int num = Alu.And16(DI, 0x200);
+            Alu.And16(DI, 0x200);
             if (!ZeroFlag)
             {
-                NearCall(cs1, 0xE74, unknown_1000_0EBD_10EBD);
+                unknown_1000_0EBD_10EBD(0);
             }
             AX = UInt16[DS, SI];
             SI += (ushort)Direction16;
@@ -1242,7 +1242,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             BX = AX;
             AX = 0xA000;
             ES = AX;
-            FarCall(cs1, 0xE84, DisplayHNMVideoFrames_1000_0B9A_10B9A);
+            DisplayHNMVideoFrames_1000_0B9A_10B9A(0);
         }
         DS = Stack.Pop16();
         return NearRet();
@@ -1289,7 +1289,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         // PUSH ES (1000_0ECC / 0x10ECC)
         Stack.Push16(ES);
         // CALL 0x1000:0efe (1000_0ECD / 0x10ECD)
-        NearCall(cs1, 0xED0, unknown_1000_0EFE_10EFE);
+        unknown_1000_0EFE_10EFE(0);
         // POP DS (1000_0ED0 / 0x10ED0)
         DS = Stack.Pop16();
         // POP SI (1000_0ED1 / 0x10ED1)
@@ -1474,7 +1474,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 // Set VGA Palette
                 AX = 0x1012;
                 Interrupt(0x10);
-                NearCall(cs1, 0xFC9, unknown_1000_0FCC_10FCC);
+                unknown_1000_0FCC_10FCC(0);
             }
             else
             {
@@ -1527,7 +1527,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         uint bp = BP;
         if (bp != 0xE46)
             throw FailAsUntested("Error: Function not registered at address " + ConvertUtils.ToHex32WithoutX(bp));
-        NearCall(cs1, 0xFF7, unknown_1000_0E46_10E46);
+        unknown_1000_0E46_10E46(0);
         BX = Stack.Pop16();
         BP = Stack.Pop16();
         BP >>= 1;
@@ -1547,7 +1547,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             Alu.Sub16(AX, BP);
         }
         while (CarryFlag);
-        NearCall(cs1, 0x1018, CheckForAnyKeyStroke_1000_1085_11085);
+        CheckForAnyKeyStroke_1000_1085_11085(0);
         return NearRet();
     }
 
