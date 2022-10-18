@@ -58,7 +58,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DefineFunction(cs1, 0x1085, CheckForAnyKeyStroke_1000_1085_11085, false);
         DefineFunction(cs1, 0x109A, ReadFile_AdvancePointer_CloseFile_1000_109A_1109A, false);
         DefineFunction(cs1, 0x10F4, ChangesNothingInTheEnd_DeletableFunction_1000_10F4_110F4, false);
-        DefineFunction(cs1, 0x11BD, unknown_1000_11BD_111BD, false);
+        DefineFunction(cs1, 0x11BD, Nop_1000_11BD_111BD, false);
     }
 
     public void DetectCodeRewrites()
@@ -1119,7 +1119,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         UInt16[DS, 0x54] = AX;
         unknown_1000_0DBC_10DBC(0);
         if (CarryFlag)
+        {
             return NearRet();
+        }
         do
         {
             unknown_1000_0A3A_10A3A(0);
@@ -1159,23 +1161,23 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             SI = 0xEE;
             AX = UInt16[DS, SI];
             SI += (ushort)Direction16;
-            unknown_1000_11BD_111BD(0);
+            Nop_1000_11BD_111BD(0);
             byte ah1 = AH;
             byte al1 = AL;
             AL = ah1;
             AH = al1;
-            unknown_1000_11BD_111BD(0);
+            Nop_1000_11BD_111BD(0);
             Alu.Sub16(AX, 0x4C4F);
             if (ZeroFlag)
             {
                 AX = UInt16[DS, SI];
                 SI += (ushort)Direction16;
-                unknown_1000_11BD_111BD(0);
+                Nop_1000_11BD_111BD(0);
                 byte ah2 = AH;
                 byte al2 = AL;
                 AL = ah2;
                 AH = al2;
-                unknown_1000_11BD_111BD(0);
+                Nop_1000_11BD_111BD(0);
                 Alu.Sub16(AX, 0x4F50);
             }
             else
@@ -1644,9 +1646,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AH = 0;
         // INT 0x16 (1000_108D / 0x1108D)
         Interrupt(0x16);
-        // OR AX,AX (1000_108F / 0x1108F)j
-        // AX |= AX;
-        AX = Alu.Or16(AX, AX);
         // RET  (1000_1091 / 0x11091)
         return NearRet();
     }
@@ -1696,97 +1695,17 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
-    /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
-    /// </summary>
     public virtual Action ChangesNothingInTheEnd_DeletableFunction_1000_10F4_110F4(int loadOffset)
     {
-        Stack.Push16(DS);
-        Stack.Push16(ES);
-        DS = Stack.Pop16();
-        ES = Stack.Pop16();
-        DirectionFlag = false;
         SI = 0x80;
         AL = UInt8[DS, SI];
         SI += (ushort)Direction8;
-        CX = 0;
-        CL = AL;
-        if (CX != 0)
-        {
-            ushort num1;
-            do
-            {
-                DI = UInt16[ES, BX];
-                ++BX;
-                BX = Alu.Inc16(BX);
-                DI = Alu.Or16(DI, DI);
-                if (!ZeroFlag)
-                {
-                    ushort num2;
-                    do
-                    {
-                        if (ZeroFlag)
-                        {
-                            SI = Alu.Inc16(SI);
-                            num2 = CX--;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    while (num2 != 0);
-                    ushort num4;
-                    do
-                    {
-                        AL = UInt8[DS, SI];
-                        SI += (ushort)Direction8;
-                        if (!ZeroFlag)
-                        {
-                            UInt8[ES, DI] = AL;
-                            DI += (ushort)Direction8;
-                            num4 = CX--;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    while (num4 != 0);
-                    AL = 0;
-                    UInt8[ES, DI] = AL;
-                    DI += (ushort)Direction8;
-                    if (CX != 0)
-                    {
-                        num1 = CX--;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
-            while (num1 != 0);
-        }
         AX = 0x111C;
-        DS = AX;
         return NearRet();
     }
 
-    /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
-    /// </summary>
-    public virtual Action unknown_1000_11BD_111BD(int loadOffset)
+    public virtual Action Nop_1000_11BD_111BD(int loadOffset)
     {
-        if (CarryFlag || (!CarryFlag && !ZeroFlag))
-        {
-            return NearRet();
-        }
-        AL = Alu.And8(AL, 0xDF);
         return NearRet();
     }
 }
