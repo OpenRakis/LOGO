@@ -417,9 +417,13 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                     {
                         BX = Alu.Dec16(BX);
                         if (ZeroFlag)
+                        {
                             goto label_9;
+                        }
                         else
+                        {
                             goto label_2;
+                        }
                     }
                 }
                 else
@@ -465,8 +469,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         while (!CarryFlag && !ZeroFlag);
         BX = Alu.Dec16(BX);
         if (!ZeroFlag)
+        {
             goto label_2;
-        label_9:
+        }
+
+    label_9:
         DirectionFlag = false;
         UInt8[cs1, 0xA71] = 0xC7;
         UInt8[cs1, 0xB2F] = 0xC7;
@@ -499,7 +506,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                         DI = AX;
                         while (CX != 0)
                         {
-                            --CX;
+                            CX--;
                             UInt16[ES, DI] = UInt16[DS, SI];
                             SI += (ushort)(uint)Direction16;
                             DI += (ushort)(uint)Direction16;
@@ -1003,7 +1010,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             CX = Alu.Sub16(CX, AX);
             while (CX != 0)
             {
-                --CX;
+                CX--;
                 UInt8[ES, DI] = UInt8[DS, SI];
                 SI += (ushort)Direction8;
                 DI += (ushort)Direction8;
@@ -1400,7 +1407,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             CX = Alu.Inc16(CX);
             while (CX != 0)
             {
-                --CX;
+                CX--;
                 UInt8[ES, DI] = UInt8[DS, SI];
                 SI += (ushort)Direction8;
                 DI += (ushort)Direction8;
