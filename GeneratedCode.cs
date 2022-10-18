@@ -90,12 +90,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         ChangesNothingInTheEnd_DeletableFunction_1000_10F4_110F4(0);
         AX = 0xC;
         SI = 0x8E;
-        int num1 = Alu.Sub8(UInt8[DS, SI], 0);
-        int num2 = ZeroFlag ? 1 : 0;
+        Alu.Sub8(UInt8[DS, SI], 0);
         UInt16[DS, 0x52] = AX;
         DX = 0x5A;
         unknown_1000_105F_1105F(0);
-        int num3 = Alu.Sub8(UInt8[DS, DI], 46);
+        Alu.Sub8(UInt8[DS, DI], 46);
         if (!ZeroFlag)
         {
             UInt16[DS, DI] = 0x482E;
@@ -165,7 +164,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 unknown_1000_09B5_109B5(0);
                 if (CarryFlag)
                 {
-                    int num = Alu.Sub16(SI, DI);
+                    Alu.Sub16(SI, DI);
                     UInt8[cs1, 0x6E] = (byte)~UInt8[cs1, 0x6E];
                     if (CarryFlag)
                     {
@@ -473,9 +472,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         UInt8[cs1, 0xB2F] = 0xC7;
         return FarRet();
     label_60:
-        int num1 = (int)Alu.Sub8(CH, 0xFE);
+        Alu.Sub8(CH, 0xFE);
         if (CarryFlag)
+        {
             return FarRet();
+        }
         DI = Alu.Or16(DI, DI);
         if (!SignFlag)
         {
@@ -485,7 +486,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             unknown_1000_0A22_10A22(0);
             BX = CX;
             BH = 0;
-            int num2 = Alu.Sub8(CH, byte.MaxValue);
+            Alu.Sub8(CH, byte.MaxValue);
             if (!ZeroFlag)
             {
                 BP = Alu.Shr16(BP, 1);
@@ -573,10 +574,10 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         unknown_1000_0A22_10A22(0);
         BX = CX;
         BH = 0;
-        int num4 = Alu.And16(AX, 16384);
+        Alu.And16(AX, 16384);
         if (ZeroFlag)
         {
-            int num5 = Alu.And16(AX, 8192);
+            Alu.And16(AX, 8192);
             if (!ZeroFlag)
             {
                 UInt8[cs1, 0xA71] = 0xEF;
@@ -584,7 +585,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 AH = BL;
                 AH = Alu.Dec8(AH);
                 DH = AH;
-                DL = (byte)0;
+                DL = 0;
                 AL = DL;
                 DX >>= 1;
                 DX >>= 1;
@@ -592,7 +593,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 DI = Alu.Add16(DI, DX);
             }
             DX = BP;
-            int num6 = Alu.Sub8(CH, byte.MaxValue);
+            Alu.Sub8(CH, byte.MaxValue);
             if (!ZeroFlag)
             {
                 while (true)
@@ -670,7 +671,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         }
         else
         {
-            int num7 = Alu.And16(AX, 8192);
+            Alu.And16(AX, 8192);
             if (!ZeroFlag)
             {
                 UInt8[cs1, 0xAD2] = 0xEF;
@@ -689,7 +690,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             DI = Alu.Dec16(DI);
             DirectionFlag = true;
             DX = BP;
-            int num8 = Alu.Sub8(CH, byte.MaxValue);
+            Alu.Sub8(CH, byte.MaxValue);
             if (ZeroFlag)
             {
             label_21:
@@ -988,7 +989,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         Stack.Push16(cs1);
         DS = Stack.Pop16();
         ES = Stack.Pop16();
-        int offset = Alu.Sub16(UInt16[cs1, 0xCB6], 0);
+        Alu.Sub16(UInt16[cs1, 0xCB6], 0);
         if (!SignFlag)
         {
             DI = 0x160;
@@ -1145,7 +1146,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 CarryFlag = true;
                 if (!ZeroFlag)
                     return NearRet();
-                int num = Alu.Sub16(UInt16[DS, 82], 0);
+                Alu.Sub16(UInt16[DS, 82], 0);
             }
             while (!ZeroFlag);
             SI = 0xEE;
@@ -1154,11 +1155,10 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             unknown_1000_11BD_111BD(0);
             byte ah1 = AH;
             byte al1 = AL;
-            byte num1;
-            AL = num1 = ah1;
-            AH = num1 = al1;
+            AL = ah1;
+            AH = al1;
             unknown_1000_11BD_111BD(0);
-            int num2 = Alu.Sub16(AX, 0x4C4F);
+            Alu.Sub16(AX, 0x4C4F);
             if (ZeroFlag)
             {
                 AX = UInt16[DS, SI];
@@ -1166,10 +1166,10 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 unknown_1000_11BD_111BD(0);
                 byte ah2 = AH;
                 byte al2 = AL;
-                AL = num1 = ah2;
-                AH = num1 = al2;
+                AL = ah2;
+                AH = al2;
                 unknown_1000_11BD_111BD(0);
-                int num3 = Alu.Sub16(AX, 0x4F50);
+                Alu.Sub16(AX, 0x4F50);
             }
             else
             {
