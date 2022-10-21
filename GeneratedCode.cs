@@ -166,10 +166,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 {
                     Alu.Sub16(SI, DI);
                     UInt8[cs1, 0x6E] = (byte)~UInt8[cs1, 0x6E];
-                    if (CarryFlag)
-                    {
-                        UInt8[cs1, 0x6F] = AH;
-                    }
                 }
             }
         }
@@ -227,6 +223,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         }
         while (CarryFlag);
         // RET  (1000_09D5 / 0x109D5)
+        // Not Executed
         return NearRet();
     }
 
@@ -237,7 +234,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         Machine.VgaCard.UpdateScreen();
         Thread.Sleep(17);
         Machine.VgaCard.SetVgaWriteIndex(BL);
-        for (int i = 0; i < colors * 3; i++) {
+        for (int i = 0; i < colors * 3; i++)
+        {
             CheckExternalEvents(cs1, 0x09D9);
             Machine.VgaCard.RgbDataWrite(UInt8[DS, (ushort)(colorOffset + i)]);
         }
@@ -335,8 +333,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         {
             AL = UInt8[DS, SI];
             SI += (ushort)Direction8;
-            if (CarryFlag)
-                AL = 0;
             UInt8[ES, DI] = AL;
             DI += (ushort)Direction8;
             num1 = CX--;
@@ -363,105 +359,53 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     label_3:
         do
         {
-            do
+            AL = UInt8[DS, SI];
+            SI += (ushort)(uint)Direction8;
+            AL = Alu.Or8(AL, AL);
+            if (!SignFlag)
             {
-                AL = UInt8[DS, SI];
-                SI += (ushort)(uint)Direction8;
-                AL = Alu.Or8(AL, AL);
-                if (!SignFlag)
+                CX = AX;
+                CH = 0;
+                ++CX;
+                BP = Alu.Sub16(BP, CX);
+                ushort num = 1;
+                do
                 {
-                    CX = AX;
-                    CH = 0;
-                    ++CX;
-                    BP = Alu.Sub16(BP, CX);
-                    ushort num = 1;
-                    do
-                    {
-                        AL = UInt8[DS, SI];
-                        SI += (ushort)(uint)Direction8;
-                        AL = Alu.Or8(AL, AL);
-                        if (!ZeroFlag)
-                        {
-                            UInt8[ES, DI] = AL;
-                            DI += (ushort)(uint)Direction8;
-                            if (--CX == 0)
-                            {
-                                BP = Alu.Or16(BP, BP);
-                                if (CarryFlag || ZeroFlag)
-                                {
-                                    BX = Alu.Dec16(BX);
-                                    if (!ZeroFlag)
-                                    {
-                                        goto label_2;
-                                    }
-                                    else
-                                    {
-                                        goto label_9;
-                                    }
-                                }
-                                else
-                                {
-                                    goto label_3;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            DI = Alu.Inc16(DI);
-                            num = CX--;
-                        }
-                    }
-                    while (num != 0);
-                    BP = Alu.Or16(BP, BP);
-                    if (CarryFlag || ZeroFlag)
-                    {
-                        BX = Alu.Dec16(BX);
-                        if (ZeroFlag)
-                        {
-                            goto label_9;
-                        }
-                        else
-                        {
-                            goto label_2;
-                        }
-                    }
-                }
-                else
-                {
-                    CX = 0x101;
-                    AH = 0;
-                    CX -= (ushort)(uint)AX;
-                    BP = Alu.Sub16(BP, CX);
                     AL = UInt8[DS, SI];
                     SI += (ushort)(uint)Direction8;
                     AL = Alu.Or8(AL, AL);
                     if (!ZeroFlag)
                     {
-                        while (CX != 0)
+                        UInt8[ES, DI] = AL;
+                        DI += (ushort)(uint)Direction8;
+                        if (--CX == 0)
                         {
-                            CX--;
-                            UInt8[ES, DI] = AL;
-                            DI += (ushort)(uint)Direction8;
+                            BP = Alu.Or16(BP, BP);
+                            if (CarryFlag || ZeroFlag)
+                            {
+                                BX = Alu.Dec16(BX);
+                                goto label_2;
+                            }
+                            else
+                            {
+                                goto label_3;
+                            }
                         }
-                        BP = Alu.Or16(BP, BP);
-                    }
-                    else
-                    {
-                        goto label_18;
                     }
                 }
-            }
-            while (!CarryFlag && !ZeroFlag);
-            BX = Alu.Dec16(BX);
-            if (ZeroFlag)
-            {
-                goto label_9;
+                while (num != 0);
             }
             else
             {
-                goto label_2;
+                CX = 0x101;
+                AH = 0;
+                CX -= (ushort)(uint)AX;
+                BP = Alu.Sub16(BP, CX);
+                AL = UInt8[DS, SI];
+                SI += (ushort)(uint)Direction8;
+                AL = Alu.Or8(AL, AL);
+                goto label_18;
             }
-
         label_18:
             DI = Alu.Add16(DI, CX);
             BP = Alu.Or16(BP, BP);
@@ -472,18 +416,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         {
             goto label_2;
         }
-
-    label_9:
-        DirectionFlag = false;
         UInt8[cs1, 0xA71] = 0xC7;
         UInt8[cs1, 0xB2F] = 0xC7;
         return FarRet();
     label_60:
         Alu.Sub8(CH, 0xFE);
-        if (CarryFlag)
-        {
-            return FarRet();
-        }
         DI = Alu.Or16(DI, DI);
         if (!SignFlag)
         {
@@ -517,25 +454,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                     while (!ZeroFlag);
                     return FarRet();
                 }
-                do
-                {
-                    CX = BP;
-                    DI = AX;
-                    while (CX != 0)
-                    {
-                        --CX;
-                        UInt16[ES, DI] = UInt16[DS, SI];
-                        SI += (ushort)(uint)Direction16;
-                        DI += (ushort)(uint)Direction16;
-                    }
-                    UInt8[ES, DI] = UInt8[DS, SI];
-                    SI += (ushort)(uint)Direction8;
-                    DI += (ushort)(uint)Direction8;
-                    AX += 320;
-                    BX = Alu.Dec16(BX);
-                }
-                while (!ZeroFlag);
-                return FarRet();
             }
             DX = DI;
         label_76:
@@ -585,324 +503,12 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         if (ZeroFlag)
         {
             Alu.And16(AX, 8192);
-            if (!ZeroFlag)
-            {
-                UInt8[cs1, 0xA71] = 0xEF;
-                UInt8[cs1, 0xB2F] = 0xEF;
-                AH = BL;
-                AH = Alu.Dec8(AH);
-                DH = AH;
-                DL = 0;
-                AL = DL;
-                DX >>= 1;
-                DX >>= 1;
-                DI += (ushort)(uint)AX;
-                DI = Alu.Add16(DI, DX);
-            }
             DX = BP;
             Alu.Sub8(CH, byte.MaxValue);
-            if (!ZeroFlag)
-            {
-                while (true)
-                {
-                    do
-                    {
-                        AL = UInt8[DS, SI];
-                        SI += (ushort)(uint)Direction8;
-                        AL = Alu.Or8(AL, AL);
-                        if (!SignFlag)
-                        {
-                            CX = AX;
-                            CH = 0;
-                            ++CX;
-                            BP = Alu.Sub16(BP, CX);
-                            while (CX != 0)
-                            {
-                                --CX;
-                                UInt8[ES, DI] = UInt8[DS, SI];
-                                SI += (ushort)(uint)Direction8;
-                                DI += (ushort)(uint)Direction8;
-                            }
-                            if (CarryFlag || ZeroFlag)
-                            {
-                                BX = Alu.Dec16(BX);
-                                if (ZeroFlag)
-                                {
-                                    goto label_9;
-                                }
-                                else
-                                {
-                                    goto label_37;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            CX = 0x101;
-                            AH = 0;
-                            CX -= (ushort)(uint)AX;
-                            BP = Alu.Sub16(BP, CX);
-                            AL = UInt8[DS, SI];
-                            SI += (ushort)(uint)Direction8;
-                            while (CX != 0)
-                            {
-                                --CX;
-                                UInt8[ES, DI] = AL;
-                                DI += (ushort)(uint)Direction8;
-                            }
-                        }
-                    }
-                    while (!CarryFlag && !ZeroFlag);
-                    goto label_48;
-                label_37:
-                    BP = DX;
-                    DI -= (ushort)(uint)BP;
-                    DI = Alu.Add16(DI, 320);
-                    continue;
-                label_48:
-                    BX = Alu.Dec16(BX);
-                    if (ZeroFlag)
-                    {
-                        goto label_9;
-                    }
-                    else
-                    {
-                        goto label_37;
-                    }
-                }
-            }
-            else
-            {
-                goto label_3;
-            }
+            goto label_3;
         }
-        else
-        {
-            Alu.And16(AX, 8192);
-            if (!ZeroFlag)
-            {
-                UInt8[cs1, 0xAD2] = 0xEF;
-                UInt8[cs1, 0xB61] = 0xEF;
-                AH = BL;
-                AH = Alu.Dec8(AH);
-                DH = AH;
-                DL = 0;
-                AL = DL;
-                DX >>= 1;
-                DX >>= 1;
-                DI += (ushort)(uint)AX;
-                DI += (ushort)(uint)DX;
-            }
-            DI += (ushort)(uint)BP;
-            DI = Alu.Dec16(DI);
-            DirectionFlag = true;
-            DX = BP;
-            Alu.Sub8(CH, byte.MaxValue);
-            if (ZeroFlag)
-            {
-            label_21:
-                while (true)
-                {
-                    do
-                    {
-                        do
-                        {
-                            AL = UInt8[DS, SI];
-                            SI = Alu.Inc16(SI);
-                            AL = Alu.Or8(AL, AL);
-                            if (!ZeroFlag)
-                            {
-                                CX = AX;
-                                CH = 0;
-                                ++CX;
-                                BP = Alu.Sub16(BP, CX);
-                                ushort num9 = 1;
-                                do
-                                {
-                                    AL = UInt8[DS, SI];
-                                    SI = Alu.Inc16(SI);
-                                    AL = Alu.Or8(AL, AL);
-                                    if (!ZeroFlag)
-                                    {
-                                        UInt8[ES, DI] = AL;
-                                        DI += (ushort)(uint)Direction8;
-                                        if (--CX == 0)
-                                        {
-                                            BP = Alu.Or16(BP, BP);
-                                            if (CarryFlag || ZeroFlag)
-                                            {
-                                                BX = Alu.Dec16(BX);
-                                                if (ZeroFlag)
-                                                {
-                                                    goto label_9;
-                                                }
-                                                else
-                                                {
-                                                    goto label_20;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                goto label_21;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        DI = Alu.Dec16(DI);
-                                        num9 = --CX;
-                                    }
-                                }
-                                while (num9 != 0);
-                                BP = Alu.Or16(BP, BP);
-                                if (CarryFlag || ZeroFlag)
-                                {
-                                    BX = Alu.Dec16(BX);
-                                    if (ZeroFlag)
-                                    {
-                                        goto label_9;
-                                    }
-                                    else
-                                    {
-                                        goto label_20;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                CX = 0x101;
-                                AH = 0;
-                                CX -= (ushort)(uint)AX;
-                                BP = Alu.Sub16(BP, CX);
-                                AL = UInt8[DS, SI];
-                                SI = Alu.Inc16(SI);
-                                AL = Alu.Or8(AL, AL);
-                                if (!ZeroFlag)
-                                {
-                                    while (CX != 0)
-                                    {
-                                        CX--;
-                                        UInt8[ES, DI] = AL;
-                                        DI += (ushort)(uint)Direction8;
-                                    }
-                                    BP = Alu.Or16(BP, BP);
-                                }
-                                else
-                                {
-                                    goto label_35;
-                                }
-                            }
-                        }
-                        while (!CarryFlag && !ZeroFlag);
-                        BX = Alu.Dec16(BX);
-                        if (ZeroFlag)
-                        {
-                            goto label_9;
-                        }
-                        else
-                        {
-                            goto label_20;
-                        }
-
-                    label_35:
-                        DI = Alu.Sub16(DI, CX);
-                        BP = Alu.Or16(BP, BP);
-                    }
-                    while (!CarryFlag && !ZeroFlag);
-                    goto label_36;
-                label_20:
-                    BP = DX;
-                    DI += (ushort)(uint)BP;
-                    DI = Alu.Add16(DI, 320);
-                    continue;
-                label_36:
-                    BX = Alu.Dec16(BX);
-                    if (ZeroFlag)
-                    {
-                        goto label_9;
-                    }
-                    else
-                    {
-                        goto label_20;
-                    }
-                }
-            }
-            else
-            {
-                while (true)
-                {
-                    do
-                    {
-                        AL = UInt8[DS, SI];
-                        SI = Alu.Inc16(SI);
-                        AL = Alu.Or8(AL, AL);
-                        if (!ZeroFlag)
-                        {
-                            CX = AX;
-                            CH = 0;
-                            ++CX;
-                            BP = Alu.Sub16(BP, CX);
-                            ushort num10;
-                            do
-                            {
-                                AL = UInt8[DS, SI];
-                                SI = Alu.Inc16(SI);
-                                UInt8[ES, DI] = AL;
-                                DI += (ushort)(uint)Direction8;
-                                num10 = --CX;
-                            }
-                            while (num10 != 0);
-                            BP = Alu.Or16(BP, BP);
-                            if (CarryFlag || ZeroFlag)
-                            {
-                                BX = Alu.Dec16(BX);
-                                if (ZeroFlag)
-                                {
-                                    goto label_9;
-                                }
-                                else
-                                {
-                                    goto label_49;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            CX = 0x101;
-                            AH = 0;
-                            CX -= (ushort)(uint)AX;
-                            BP = Alu.Sub16(BP, CX);
-                            AL = UInt8[DS, SI];
-                            SI = Alu.Inc16(SI);
-                            while (CX != 0)
-                            {
-                                --CX;
-                                UInt8[ES, DI] = AL;
-                                DI += (ushort)(uint)Direction8;
-                            }
-                            BP = Alu.Or16(BP, BP);
-                        }
-                    }
-                    while (!CarryFlag && !ZeroFlag);
-                    goto label_59;
-                label_49:
-                    BP = DX;
-                    DI += (ushort)(uint)BP;
-                    DI = Alu.Add16(DI, 320);
-                    continue;
-                label_59:
-                    BX = Alu.Dec16(BX);
-                    if (ZeroFlag)
-                    {
-                        goto label_9;
-                    }
-                    else
-                    {
-                        goto label_49;
-                    }
-                }
-            }
-        }
+        // Not Executed
+        return NearRet();
     }
 
     /// <summary>
@@ -1088,13 +694,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AX -= CX;
         // CMP AX,0x3a02 (1000_0DCF / 0x10DCF)
         Alu.Sub16(AX, 0x3A02);
-        // JC 0x1000:0ddd (1000_0DD2 / 0x10DD2)
-        if (CarryFlag)
-        {
-            // JC target is RET, inlining.
-            // RET  (1000_0DDD / 0x10DDD)
-            return NearRet();
-        }
         // CALL 0x1000:109a (1000_0DD4 / 0x10DD4)
         ReadFile_AdvancePointer_CloseFile_1000_109A_1109A(0);
         // ADD DI,CX (1000_0DD7 / 0x10DD7)
@@ -1118,74 +717,40 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         // Read File
         UInt16[DS, 0x54] = AX;
         unknown_1000_0DBC_10DBC(0);
-        if (CarryFlag)
-        {
-            return NearRet();
-        }
+        unknown_1000_0A3A_10A3A(0);
+        AX = UInt16[DS, 84];
+        UInt16[DS, 0x52] = AX;
+        DI = UInt16[DS, 76];
+        ES = UInt16[DS, 78];
+        UInt16[DS, 0x56] = DI;
+        UInt16[DS, 0x58] = ES;
+        unknown_1000_0EAD_10EAD(0);
+        ChangeVgaPaletteLoop_1000_0FA4_10FA4(0);
+        unknown_1000_0E4C_10E4C(0);
+        CarryFlag = true;
+        unknown_1000_0E49_10E49(0);
+        unknown_1000_0CF4_10CF4(0);
+        CarryFlag = true;
+
         do
         {
-            unknown_1000_0A3A_10A3A(0);
-            AX = UInt16[DS, 84];
-            UInt16[DS, 0x52] = AX;
-            DI = UInt16[DS, 76];
-            ES = UInt16[DS, 78];
-            UInt16[DS, 0x56] = DI;
-            UInt16[DS, 0x58] = ES;
-            unknown_1000_0EAD_10EAD(0);
-            if (ZeroFlag)
-                return NearRet();
-            ChangeVgaPaletteLoop_1000_0FA4_10FA4(0);
-            unknown_1000_0E4C_10E4C(0);
+            AX = UInt16[DS, 0x52];
+            BP = 0xE46;
+            unknown_1000_0FEA_10FEA(0);
             CarryFlag = true;
-            if (ZeroFlag)
-                return NearRet();
-            unknown_1000_0E49_10E49(0);
-            unknown_1000_0CF4_10CF4(0);
-            CarryFlag = true;
-            if (!ZeroFlag)
-            {
-                return NearRet();
-            }
-
-            do
-            {
-                AX = UInt16[DS, 0x52];
-                BP = 0xE46;
-                unknown_1000_0FEA_10FEA(0);
-                CarryFlag = true;
-                if (!ZeroFlag)
-                    return NearRet();
-                Alu.Sub16(UInt16[DS, 82], 0);
-            }
-            while (!ZeroFlag);
-            SI = 0xEE;
-            AX = UInt16[DS, SI];
-            SI += (ushort)Direction16;
-            Nop_1000_11BD_111BD(0);
-            byte ah1 = AH;
-            byte al1 = AL;
-            AL = ah1;
-            AH = al1;
-            Nop_1000_11BD_111BD(0);
-            Alu.Sub16(AX, 0x4C4F);
-            if (ZeroFlag)
-            {
-                AX = UInt16[DS, SI];
-                SI += (ushort)Direction16;
-                Nop_1000_11BD_111BD(0);
-                byte ah2 = AH;
-                byte al2 = AL;
-                AL = ah2;
-                AH = al2;
-                Nop_1000_11BD_111BD(0);
-                Alu.Sub16(AX, 0x4F50);
-            }
-            else
-            {
-                break;
-            }
+            Alu.Sub16(UInt16[DS, 82], 0);
         }
-        while (ZeroFlag);
+        while (!ZeroFlag);
+        SI = 0xEE;
+        AX = UInt16[DS, SI];
+        SI += (ushort)Direction16;
+        Nop_1000_11BD_111BD(0);
+        byte ah1 = AH;
+        byte al1 = AL;
+        AL = ah1;
+        AH = al1;
+        Nop_1000_11BD_111BD(0);
+        Alu.Sub16(AX, 0x4C4F);
         CarryFlag = false;
         return NearRet();
     }
@@ -1257,7 +822,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0E86_10E86(int loadOffset) {
+    public virtual Action unknown_1000_0E86_10E86(int loadOffset)
+    {
         SegmentedAddress pointer = new SegmentedAddress(UInt16[DS, 0x58], UInt16[DS, 0x56]);
         ushort newSegmentOffset = (ushort)(UInt16[pointer.ToPhysical()] + pointer.Offset);
         ushort newSegment = (ushort)((newSegmentOffset >> 4) + pointer.Segment);
@@ -1267,11 +833,13 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return split_1000_0EB2_10EB2(newSegment, newOffset);
     }
 
-    public virtual Action unknown_1000_0EAD_10EAD(int loadOffset) {
+    public virtual Action unknown_1000_0EAD_10EAD(int loadOffset)
+    {
         return split_1000_0EB2_10EB2(UInt16[DS, 0x58], UInt16[DS, 0x56]);
     }
 
-    public Action split_1000_0EB2_10EB2(ushort segment, ushort offset) {
+    public Action split_1000_0EB2_10EB2(ushort segment, ushort offset)
+    {
         ushort value = UInt16[segment, offset];
         CX = (ushort)(value - 2);
         ZeroFlag = value == 0;
@@ -1318,12 +886,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         Stack.Push16(DS);
         SI += 6;
         BP = 0;
-        if (JumpDispatcher?.Jump(split_1000_0F30_10F30, 0) is true)
-        {
-            return JumpDispatcher?.JumpAsmReturn;
-        }
+        JumpDispatcher?.Jump(split_1000_0F30_10F30, 0);
         return JumpDispatcher?.JumpAsmReturn;
-        //throw FailAsUntested("External goto not supported for this function.");
     }
 
     /// <summary>
@@ -1534,8 +1098,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         ES = AX;
         Stack.Push16(UInt16[ES, 0x46C]);
         uint bp = BP;
-        if (bp != 0xE46)
-            throw FailAsUntested("Error: Function not registered at address " + ConvertUtils.ToHex32WithoutX(bp));
         unknown_1000_0E46_10E46(0);
         BX = Stack.Pop16();
         BP = Stack.Pop16();
@@ -1572,21 +1134,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             if (!ZeroFlag)
             {
                 AL = Alu.Or8(AL, AL);
-                if (!ZeroFlag)
-                {
-                    DI = Alu.Inc16(DI);
-                }
-                else
-                {
-                    return NearRet();
-                }
-            }
-            else
-            {
-                break;
+                return NearRet();
             }
         }
-        return NearRet();
     }
 
     public virtual Action unknown_1000_105F_1105F(int loadOffset)
@@ -1599,13 +1149,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             AL = UInt8[DS, DI];
             // CMP AL,0x2e (1000_1063 / 0x11063)
             Alu.Sub8(AL, 0x2E);
-            // JZ 0x1000:106e (1000_1065 / 0x11065)
-            if (ZeroFlag)
-            {
-                // JZ target is RET, inlining.
-                // RET  (1000_106E / 0x1106E)
-                return NearRet();
-            }
             // OR AL,AL (1000_1067 / 0x11067)
             // AL |= AL;
             AL = Alu.Or8(AL, AL);
@@ -1668,25 +1211,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             DS = Stack.Pop16();
             if (!CarryFlag)
             {
-                if (CarryFlag || ZeroFlag)
-                {
-                    AX = ES;
-                    AX = Alu.Add16(AX, 0x800);
-                    ES = AX;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            else
-            {
-                goto label_4;
+                break;
             }
         }
         CX = AX;
         CarryFlag = false;
-    label_4:
         Stack.Push16(FlagRegister16);
         // Close File
         AH = 0x3E;
