@@ -154,21 +154,12 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AL = Cpu.In8(DX);
         AL = Alu.And8(AL, 8);
         unknown_1000_09B5_109B5(0);
-        if (CarryFlag)
-        {
-            unknown_1000_09B5_109B5(0);
-            if (CarryFlag)
-            {
-                DI = SI;
-                UInt8[cs1, 0x6F] = AH;
-                unknown_1000_09B5_109B5(0);
-                if (CarryFlag)
-                {
-                    Alu.Sub16(SI, DI);
-                    UInt8[cs1, 0x6E] = (byte)~UInt8[cs1, 0x6E];
-                }
-            }
-        }
+        unknown_1000_09B5_109B5(0);
+        DI = SI;
+        UInt8[cs1, 0x6F] = AH;
+        unknown_1000_09B5_109B5(0);
+        Alu.Sub16(SI, DI);
+        UInt8[cs1, 0x6E] = (byte)~UInt8[cs1, 0x6E];
         FlagRegister16 = Stack.Pop16();
         return NearRet();
     }
@@ -1097,7 +1088,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AX = 0;
         ES = AX;
         Stack.Push16(UInt16[ES, 0x46C]);
-        uint bp = BP;
         unknown_1000_0E46_10E46(0);
         BX = Stack.Pop16();
         BP = Stack.Pop16();
@@ -1198,22 +1188,16 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// </summary>
     public virtual Action ReadFile_AdvancePointer_CloseFile_1000_109A_1109A(int loadOffset)
     {
-        while (true)
-        {
-            Stack.Push16(DS);
-            AX = ES;
-            DS = AX;
-            CX = 0x8000;
-            DX = DI;
-            // Read File
-            AH = 0x3F;
-            Interrupt(0x21);
-            DS = Stack.Pop16();
-            if (!CarryFlag)
-            {
-                break;
-            }
-        }
+        Stack.Push16(DS);
+        AX = ES;
+        DS = AX;
+        CX = 0x8000;
+        DX = DI;
+        // Read File
+        AH = 0x3F;
+        Interrupt(0x21);
+        DS = Stack.Pop16();
+        while (CarryFlag) ;
         CX = AX;
         CarryFlag = false;
         Stack.Push16(FlagRegister16);
