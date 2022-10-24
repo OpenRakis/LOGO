@@ -1073,6 +1073,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AX >>= 1;
         AX >>= 1;
         BP -= AX;
+        //Seems to be a delay loop
         do
         {
             AX = 0;
