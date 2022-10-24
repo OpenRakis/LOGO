@@ -51,7 +51,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DefineFunction(cs1, 0xEFE, unknown_1000_0EFE_10EFE, false);
         DefineFunction(cs1, 0xF30, split_1000_0F30_10F30, false);
         DefineFunction(cs1, 0xFA4, ChangeVgaPaletteLoop_1000_0FA4_10FA4, false);
-        DefineFunction(cs1, 0xFCC, unknown_1000_0FCC_10FCC, false);
+        DefineFunction(cs1, 0xFCC, nop_1000_0FCC_10FCC, false);
         DefineFunction(cs1, 0xFEA, unknown_1000_0FEA_10FEA, false);
         DefineFunction(cs1, 0x1019, unknown_1000_1019_11019, false);
         DefineFunction(cs1, 0x105F, unknown_1000_105F_1105F, false);
@@ -1038,7 +1038,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 // Set VGA Palette
                 AX = 0x1012;
                 Interrupt(0x10);
-                unknown_1000_0FCC_10FCC(0);
+                nop_1000_0FCC_10FCC(0);
             }
             else
             {
@@ -1048,33 +1048,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
-    /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
-    /// </summary>
-    public virtual Action unknown_1000_0FCC_10FCC(int loadOffset)
+    public virtual Action nop_1000_0FCC_10FCC(int loadOffset)
     {
-        Stack.Push16(SI);
-        Stack.Push16(DI);
-        SI = DX;
-        DI = 0x70;
-        DI += BX;
-        DI += BX;
-        DI = Alu.Add16(DI, BX);
-        AX = CX;
-        CX <<= 1;
-        CX = Alu.Add16(CX, AX);
-        ushort num;
-        do
-        {
-            AL = UInt8[ES, SI];
-            SI += (ushort)Direction8;
-            UInt8[cs1, DI] = AL;
-            DI = Alu.Inc16(DI);
-            num = --CX;
-        }
-        while (num != 0);
-        DI = Stack.Pop16();
-        SI = Stack.Pop16();
         return NearRet();
     }
 
