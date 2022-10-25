@@ -29,11 +29,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         // 0x1000
         DefineFunction(cs1, 0x0, EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000, false);
         DefineFunction(cs1, 0x970, unknown_1000_0970_10970, false);
-        DefineFunction(cs1, 0x9B5, unknown_1000_09B5_109B5, false);
+        DefineFunction(cs1, 0x9B5, Nop_1000_09B5_109B5, false);
         DefineFunction(cs1, 0x9D8, WaitFrameAndWriteNextPaletteData_1000_09D8_109D8, false);
         DefineFunction(cs1, 0xA22, unknown_1000_0A22_10A22, false);
-        DefineFunction(cs1, 0xA3A, unknown_1000_0A3A_10A3A, false);
-        DefineFunction(cs1, 0xA51, unknown_1000_0A51_10A51, false);
+        DefineFunction(cs1, 0xA3A, Nop_1000_0A3A_10A3A, false);
+        DefineFunction(cs1, 0xA51, Nop_1000_0A51_10A51, false);
         DefineFunction(cs1, 0xB9A, DisplayHNMVideoFrames_1000_0B9A_10B9A, false);
         DefineFunction(cs1, 0xC72, unknown_1000_0C72_10C72, false);
         DefineFunction(cs1, 0xCF4, unknown_1000_0CF4_10CF4, false);
@@ -57,7 +57,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DefineFunction(cs1, 0x105F, unknown_1000_105F_1105F, false);
         DefineFunction(cs1, 0x1085, CheckForAnyKeyStroke_1000_1085_11085, false);
         DefineFunction(cs1, 0x109A, ReadFile_AdvancePointer_CloseFile_1000_109A_1109A, false);
-        DefineFunction(cs1, 0x10F4, ChangesNothingInTheEnd_DeletableFunction_1000_10F4_110F4, false);
+        DefineFunction(cs1, 0x10F4, Nop_1000_10F4_110F4, false);
         DefineFunction(cs1, 0x11BD, Nop_1000_11BD_111BD, false);
     }
 
@@ -87,7 +87,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AX = UInt16[ES, 2];
         UInt16[DS, 0x50] = AX;
         BX = 8;
-        ChangesNothingInTheEnd_DeletableFunction_1000_10F4_110F4(0);
+        Nop_1000_10F4_110F4(0);
         AX = 0xC;
         SI = 0x8E;
         Alu.Sub8(UInt8[DS, SI], 0);
@@ -113,7 +113,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             BX = Stack.Pop16();
             AX = UInt16[DS, 0x52];
             CirclesAnimation_1000_0DDE_10DDE(0);
-            unknown_1000_0A51_10A51(0);
+            Nop_1000_0A51_10A51(0);
             DX = 0;
             AL = 0;
             // End of LOGO.EXE
@@ -153,68 +153,19 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         CheckExternalEvents(cs1, 0x98C);
         AL = Cpu.In8(DX);
         AL = Alu.And8(AL, 8);
-        unknown_1000_09B5_109B5(0);
-        unknown_1000_09B5_109B5(0);
+        Nop_1000_09B5_109B5(0);
+        Nop_1000_09B5_109B5(0);
         DI = SI;
         UInt8[cs1, 0x6F] = AH;
-        unknown_1000_09B5_109B5(0);
+        Nop_1000_09B5_109B5(0);
         Alu.Sub16(SI, DI);
         UInt8[cs1, 0x6E] = (byte)~UInt8[cs1, 0x6E];
         FlagRegister16 = Stack.Pop16();
         return NearRet();
     }
 
-    /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
-    /// </summary>
-    public virtual Action unknown_1000_09B5_109B5(int loadOffset)
+    public virtual Action Nop_1000_09B5_109B5(int loadOffset)
     {
-        // MOV AH,AL (1000_09B5 / 0x109B5)
-        AH = AL;
-        // XOR SI,SI (1000_09B7 / 0x109B7)
-        SI = 0;
-        // MOV BX,word ptr ES:[BP + 0x0] (1000_09B9 / 0x109B9)
-        BX = UInt16[ES, BP];
-        do
-        {
-            // INC SI (1000_09BD / 0x109BD)
-            SI = Alu.Inc16(SI);
-            // JNZ 0x1000:09c1 (1000_09BE / 0x109BE)
-            if (!ZeroFlag)
-            {
-                // IN AL,DX (1000_09C1 / 0x109C1)
-                CheckExternalEvents(cs1, 0x9c2);
-                AL = Cpu.In8(DX);
-                // AND AL,0x8 (1000_09C2 / 0x109C2)
-                AL &= 0x8;
-                // CMP AL,AH (1000_09C4 / 0x109C4)
-                Alu.Sub8(AL, AH);
-                // JNZ 0x1000:09d6 (1000_09C6 / 0x109C6)
-                if (!ZeroFlag)
-                {
-                    // STC  (1000_09D6 / 0x109D6)
-                    CarryFlag = true;
-                    // RET  (1000_09D7 / 0x109D7)
-                    return NearRet();
-                }
-            }
-            // DEC SI (1000_09C0 / 0x109C0)
-            SI = Alu.Dec16(SI);
-            // PUSH AX (1000_09C8 / 0x109C8)
-            Stack.Push16(AX);
-            // MOV AX,word ptr ES:[BP + 0x0] (1000_09C9 / 0x109C9)
-            AX = UInt16[ES, BP];
-            // SUB AX,BX (1000_09CD / 0x109CD)
-            AX -= BX;
-            // CMP AX,0x64 (1000_09CF / 0x109CF)
-            Alu.Sub16(AX, 0x64);
-            // POP AX (1000_09D2 / 0x109D2)
-            AX = Stack.Pop16();
-            // JC 0x1000:09bd (1000_09D3 / 0x109D3)
-        }
-        while (CarryFlag);
-        // RET  (1000_09D5 / 0x109D5)
-        // Not Executed
         return NearRet();
     }
 
@@ -240,96 +191,33 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     {
         // CMP BX,0xc8 (1000_0A22 / 0x10A22)
         Alu.Sub16(BX, 0xC8);
-        // JC 0x1000:0a2b (1000_0A26 / 0x10A26)
-        if (CarryFlag)
-        {
-            // XCHG BL,BH (1000_0A2B / 0x10A2B)
-            (BH, BL) = (BL, BH);
-            // MOV DI,BX (1000_0A2D / 0x10A2D)
-            DI = BX;
-            // SHR DI,0x1 (1000_0A2F / 0x10A2F)
-            DI >>= 0x1;
-            // SHR DI,0x1 (1000_0A31 / 0x10A31)
-            DI >>= 0x1;
-            // ADD DI,BX (1000_0A33 / 0x10A33)
-            // DI += BX;
-            DI = Alu.Add16(DI, BX);
-            // XCHG BL,BH (1000_0A35 / 0x10A35)
-            (BH, BL) = (BL, BH);
-            // ADD DI,DX (1000_0A37 / 0x10A37)
-            // DI += DX;
-            DI = Alu.Add16(DI, DX);
-        }
+        // XCHG BL,BH (1000_0A2B / 0x10A2B)
+        (BH, BL) = (BL, BH);
+        // MOV DI,BX (1000_0A2D / 0x10A2D)
+        DI = BX;
+        // SHR DI,0x1 (1000_0A2F / 0x10A2F)
+        DI >>= 0x1;
+        // SHR DI,0x1 (1000_0A31 / 0x10A31)
+        DI >>= 0x1;
+        // ADD DI,BX (1000_0A33 / 0x10A33)
+        // DI += BX;
+        DI = Alu.Add16(DI, BX);
+        // XCHG BL,BH (1000_0A35 / 0x10A35)
+        (BH, BL) = (BL, BH);
+        // ADD DI,DX (1000_0A37 / 0x10A37)
+        // DI += DX;
+        DI = Alu.Add16(DI, DX);
         // RET  (1000_0A39 / 0x10A39)
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0A3A_10A3A(int loadOffset)
+    public virtual Action Nop_1000_0A3A_10A3A(int loadOffset)
     {
-        // PUSH AX (1000_0A3A / 0x10A3A)
-        Stack.Push16(AX);
-        // PUSH CX (1000_0A3B / 0x10A3B)
-        Stack.Push16(CX);
-        // PUSH DI (1000_0A3C / 0x10A3C)
-        Stack.Push16(DI);
-        // PUSH ES (1000_0A3D / 0x10A3D)
-        Stack.Push16(ES);
-        // MOV AX,0xa000 (1000_0A3E / 0x10A3E)
-        AX = 0xA000;
-        // MOV ES,AX (1000_0A41 / 0x10A41)
-        ES = AX;
-        // XOR DI,DI (1000_0A43 / 0x10A43)
-        DI = 0;
-        // MOV CX,0x7d00 (1000_0A45 / 0x10A45)
-        CX = 0x7D00;
-        // XOR AX,AX (1000_0A48 / 0x10A48)
-        AX = 0;
-        // REP
-        while (CX != 0)
-        {
-            CX--;
-            // STOSW ES:DI (1000_0A4A / 0x10A4A)
-            UInt16[ES, DI] = AX;
-            DI = (ushort)(DI + Direction16);
-        }
-        // POP ES (1000_0A4C / 0x10A4C)
-        ES = Stack.Pop16();
-        // POP DI (1000_0A4D / 0x10A4D)
-        DI = Stack.Pop16();
-        // POP CX (1000_0A4E / 0x10A4E)
-        CX = Stack.Pop16();
-        // POP AX (1000_0A4F / 0x10A4F)
-        AX = Stack.Pop16();
-        // RET  (1000_0A50 / 0x10A50)
         return NearRet();
     }
 
-    /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
-    /// </summary>
-    public virtual Action unknown_1000_0A51_10A51(int loadOffset)
+    public virtual Action Nop_1000_0A51_10A51(int loadOffset)
     {
-        // PUSH DS (1000_0A51 / 0x10A51)
-        Stack.Push16(DS);
-        AX = 0xA000;
-        DS = AX;
-        ES = AX;
-        // XOR SI,SI
-        SI = 0;
-        // XOR DI,DI
-        DI = 0;
-        CX = 0xFA00;
-        ushort num1;
-        do
-        {
-            AL = UInt8[DS, SI];
-            SI += (ushort)Direction8;
-            UInt8[ES, DI] = AL;
-            DI += (ushort)Direction8;
-            num1 = CX--;
-        }
-        while (num1 != 0);
-        DS = Stack.Pop16();
         return NearRet();
     }
 
@@ -708,7 +596,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         // Read File
         UInt16[DS, 0x54] = AX;
         unknown_1000_0DBC_10DBC(0);
-        unknown_1000_0A3A_10A3A(0);
+        Nop_1000_0A3A_10A3A(0);
         AX = UInt16[DS, 84];
         UInt16[DS, 0x52] = AX;
         DI = UInt16[DS, 76];
@@ -1111,7 +999,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DI = DX;
         while (true)
         {
-            // MOV AL,byte ptr [DI] (1000_1061 / 0x11061)
             AL = UInt8[DS, DI];
             // CMP AL,0x2e (1000_1063 / 0x11063)
             Alu.Sub8(AL, 0x2E);
@@ -1184,12 +1071,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action ChangesNothingInTheEnd_DeletableFunction_1000_10F4_110F4(int loadOffset)
+    public virtual Action Nop_1000_10F4_110F4(int loadOffset)
     {
-        SI = 0x80;
-        AL = UInt8[DS, SI];
-        SI += (ushort)Direction8;
-        AX = 0x111C;
         return NearRet();
     }
 
