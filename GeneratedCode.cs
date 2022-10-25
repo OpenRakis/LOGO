@@ -28,10 +28,10 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     {
         // 0x1000
         DefineFunction(cs1, 0x0, EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000, false);
-        DefineFunction(cs1, 0x970, unknown_1000_0970_10970, false);
+        DefineFunction(cs1, 0x970, SetVideoMode_1000_0970_10970, false);
         DefineFunction(cs1, 0x9B5, Nop_1000_09B5_109B5, false);
         DefineFunction(cs1, 0x9D8, WaitFrameAndWriteNextPaletteData_1000_09D8_109D8, false);
-        DefineFunction(cs1, 0xA22, unknown_1000_0A22_10A22, false);
+        DefineFunction(cs1, 0xA22, ExchangeValuesTwice_1000_0A22_10A22, false);
         DefineFunction(cs1, 0xA3A, Nop_1000_0A3A_10A3A, false);
         DefineFunction(cs1, 0xA51, Nop_1000_0A51_10A51, false);
         DefineFunction(cs1, 0xB9A, DisplayHNMVideoFrames_1000_0B9A_10B9A, false);
@@ -108,7 +108,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         if (!CarryFlag)
         {
             Stack.Push16(AX);
-            unknown_1000_0970_10970(0);
+            SetVideoMode_1000_0970_10970(0);
             unknown_1000_1019_11019(0);
             BX = Stack.Pop16();
             AX = UInt16[DS, 0x52];
@@ -137,7 +137,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_1000_0970_10970(int loadOffset)
+    public virtual Action SetVideoMode_1000_0970_10970(int loadOffset)
     {
         // Set Video mode VGA 0x13
         AX = 0x13;
@@ -187,7 +187,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_1000_0A22_10A22(int loadOffset)
+    public virtual Action ExchangeValuesTwice_1000_0A22_10A22(int loadOffset)
     {
         // CMP BX,0xc8 (1000_0A22 / 0x10A22)
         Alu.Sub16(BX, 0xC8);
@@ -306,7 +306,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             BP = DI;
             BP = Alu.And16(BP, 511);
             AX = DI;
-            unknown_1000_0A22_10A22(0);
+            ExchangeValuesTwice_1000_0A22_10A22(0);
             BX = CX;
             BH = 0;
             Alu.Sub8(CH, byte.MaxValue);
@@ -375,7 +375,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         BP = DI;
         BP = Alu.And16(BP, 511);
         AX = DI;
-        unknown_1000_0A22_10A22(0);
+        ExchangeValuesTwice_1000_0A22_10A22(0);
         BX = CX;
         BH = 0;
         Alu.And16(AX, 16384);
