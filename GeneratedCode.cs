@@ -135,32 +135,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Sets Video mode VGA to 0x13
     /// </summary>
     public virtual Action SetVideoMode_1000_0970_10970(int loadOffset)
     {
-        // Set Video mode VGA 0x13
-        AX = 0x13;
-        Interrupt(0x10);
-        Stack.Push16(FlagRegister16);
-        InterruptFlag = true;
-        AX = 0x40;
-        ES = AX;
-        DX = UInt16[ES, 0x63];
-        DL = Alu.Add8(DL, 6);
-        UInt16[EntrySegmentAddress, 0x6C] = DX;
-        BP = 0x6C;
-        CheckExternalEvents(EntrySegmentAddress, 0x98C);
-        AL = Cpu.In8(DX);
-        AL = Alu.And8(AL, 8);
-        Nop_1000_09B5_109B5(0);
-        Nop_1000_09B5_109B5(0);
-        DI = SI;
-        UInt8[EntrySegmentAddress, 0x6F] = AH;
-        Nop_1000_09B5_109B5(0);
-        Alu.Sub16(SI, DI);
-        UInt8[EntrySegmentAddress, 0x6E] = (byte)~UInt8[EntrySegmentAddress, 0x6E];
-        FlagRegister16 = Stack.Pop16();
+        Machine.VgaCard.SetVideoModeValue(0x13);
         return NearRet();
     }
 
