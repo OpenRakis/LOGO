@@ -632,7 +632,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// TODO: High level rewrite this first.
     /// </summary>
     public virtual Action unknown_display_1000_0E59_10E59(int loadOffset)
     {
@@ -689,7 +689,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         ushort value = UInt16[segment, offset];
         CX = (ushort)(value - 2);
         ZeroFlag = value == 0;
-        return NearRet((ushort)0);
+        return NearRet(0);
     }
 
     public virtual Action unknown_1000_0EBD_10EBD(int loadOffset)
