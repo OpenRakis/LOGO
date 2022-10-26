@@ -8,14 +8,14 @@ namespace logo;
 /// </summary>
 public partial class GeneratedOverrides : CSharpOverrideHelper
 {
-    protected ushort cs1; // 0x1000
-    protected ushort cs2; // 0xF000
+    /// <summary>
+    /// Observed entry segment address at generation time
+    /// </summary>
+    private const ushort EntrySegmentAddress = 0x1000;
 
     public GeneratedOverrides(Dictionary<SegmentedAddress, FunctionInformation> functionInformations, Machine machine, ushort entrySegment = 0x1000) : base(functionInformations, machine)
     {
-        // Observed cs1 address at generation time is 0x1000. Do not set entrySegment to something else if the program is not relocatable.
-        cs1 = (ushort)(entrySegment + 0x0);
-        cs2 = (ushort)(entrySegment + 0xE000);
+        //Do not set EntrySegmentAddress to something else if the program is not relocatable.
 
         DefineGeneratedCodeOverrides();
         DetectCodeRewrites();
@@ -27,38 +27,38 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     public void DefineGeneratedCodeOverrides()
     {
         // 0x1000
-        DefineFunction(cs1, 0x0, EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000, false);
-        DefineFunction(cs1, 0x970, SetVideoMode_1000_0970_10970, false);
-        DefineFunction(cs1, 0x9B5, Nop_1000_09B5_109B5, false);
-        DefineFunction(cs1, 0x9D8, WaitFrameAndWriteNextPaletteData_1000_09D8_109D8, false);
-        DefineFunction(cs1, 0xA22, Unknown_1000_0A22_10A22, false);
-        DefineFunction(cs1, 0xA3A, Nop_1000_0A3A_10A3A, false);
-        DefineFunction(cs1, 0xA51, Nop_1000_0A51_10A51, false);
-        DefineFunction(cs1, 0xB9A, Unknown_1000_0B9A_10B9A, false);
-        DefineFunction(cs1, 0xC72, unknown_display_1000_0C72_10C72, false);
-        DefineFunction(cs1, 0xCF4, unknown_1000_0CF4_10CF4, false);
-        DefineFunction(cs1, 0xD22, ChangeVgaPalette_1000_0D22_10D22, false);
-        DefineFunction(cs1, 0xD5F, ComputeNextVgaPalette_1000_0D5F_10D5F, false);
-        DefineFunction(cs1, 0xDBC, unknown_1000_0DBC_10DBC, false);
-        DefineFunction(cs1, 0xDDE, CirclesAnimation_1000_0DDE_10DDE, false);
-        DefineFunction(cs1, 0xE46, unknown_1000_0E46_10E46, false);
-        DefineFunction(cs1, 0xE49, unknown_1000_0E49_10E49, false);
-        DefineFunction(cs1, 0xE4C, unknown_1000_0E4C_10E4C, false);
-        DefineFunction(cs1, 0xE59, unknown_display_1000_0E59_10E59, false);
-        DefineFunction(cs1, 0xE86, unknown_1000_0E86_10E86, false);
-        DefineFunction(cs1, 0xEAD, unknown_1000_0EAD_10EAD, false);
-        DefineFunction(cs1, 0xEBD, unknown_1000_0EBD_10EBD, false);
-        DefineFunction(cs1, 0xEFE, unknown_1000_0EFE_10EFE, false);
-        DefineFunction(cs1, 0xF30, split_1000_0F30_10F30, false);
-        DefineFunction(cs1, 0xFA4, ChangeVgaPaletteLoop_1000_0FA4_10FA4, false);
-        DefineFunction(cs1, 0xFCC, nop_1000_0FCC_10FCC, false);
-        DefineFunction(cs1, 0xFEA, unknown_1000_0FEA_10FEA, false);
-        DefineFunction(cs1, 0x1019, unknown_1000_1019_11019, false);
-        DefineFunction(cs1, 0x105F, unknown_1000_105F_1105F, false);
-        DefineFunction(cs1, 0x1085, CheckForAnyKeyStroke_1000_1085_11085, false);
-        DefineFunction(cs1, 0x109A, ReadFile_AdvancePointer_CloseFile_1000_109A_1109A, false);
-        DefineFunction(cs1, 0x10F4, Nop_1000_10F4_110F4, false);
-        DefineFunction(cs1, 0x11BD, Nop_1000_11BD_111BD, false);
+        DefineFunction(EntrySegmentAddress, 0x0, EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000, false);
+        DefineFunction(EntrySegmentAddress, 0x970, SetVideoMode_1000_0970_10970, false);
+        DefineFunction(EntrySegmentAddress, 0x9B5, Nop_1000_09B5_109B5, false);
+        DefineFunction(EntrySegmentAddress, 0x9D8, WaitFrameAndWriteNextPaletteData_1000_09D8_109D8, false);
+        DefineFunction(EntrySegmentAddress, 0xA22, Unknown_1000_0A22_10A22, false);
+        DefineFunction(EntrySegmentAddress, 0xA3A, Nop_1000_0A3A_10A3A, false);
+        DefineFunction(EntrySegmentAddress, 0xA51, Nop_1000_0A51_10A51, false);
+        DefineFunction(EntrySegmentAddress, 0xB9A, Unknown_1000_0B9A_10B9A, false);
+        DefineFunction(EntrySegmentAddress, 0xC72, unknown_display_1000_0C72_10C72, false);
+        DefineFunction(EntrySegmentAddress, 0xCF4, unknown_1000_0CF4_10CF4, false);
+        DefineFunction(EntrySegmentAddress, 0xD22, ChangeVgaPalette_1000_0D22_10D22, false);
+        DefineFunction(EntrySegmentAddress, 0xD5F, ComputeNextVgaPalette_1000_0D5F_10D5F, false);
+        DefineFunction(EntrySegmentAddress, 0xDBC, unknown_1000_0DBC_10DBC, false);
+        DefineFunction(EntrySegmentAddress, 0xDDE, CirclesAnimation_1000_0DDE_10DDE, false);
+        DefineFunction(EntrySegmentAddress, 0xE46, unknown_1000_0E46_10E46, false);
+        DefineFunction(EntrySegmentAddress, 0xE49, unknown_1000_0E49_10E49, false);
+        DefineFunction(EntrySegmentAddress, 0xE4C, unknown_1000_0E4C_10E4C, false);
+        DefineFunction(EntrySegmentAddress, 0xE59, unknown_display_1000_0E59_10E59, false);
+        DefineFunction(EntrySegmentAddress, 0xE86, unknown_1000_0E86_10E86, false);
+        DefineFunction(EntrySegmentAddress, 0xEAD, unknown_1000_0EAD_10EAD, false);
+        DefineFunction(EntrySegmentAddress, 0xEBD, unknown_1000_0EBD_10EBD, false);
+        DefineFunction(EntrySegmentAddress, 0xEFE, unknown_1000_0EFE_10EFE, false);
+        DefineFunction(EntrySegmentAddress, 0xF30, split_1000_0F30_10F30, false);
+        DefineFunction(EntrySegmentAddress, 0xFA4, ChangeVgaPaletteLoop_1000_0FA4_10FA4, false);
+        DefineFunction(EntrySegmentAddress, 0xFCC, nop_1000_0FCC_10FCC, false);
+        DefineFunction(EntrySegmentAddress, 0xFEA, unknown_1000_0FEA_10FEA, false);
+        DefineFunction(EntrySegmentAddress, 0x1019, unknown_1000_1019_11019, false);
+        DefineFunction(EntrySegmentAddress, 0x105F, unknown_1000_105F_1105F, false);
+        DefineFunction(EntrySegmentAddress, 0x1085, CheckForAnyKeyStroke_1000_1085_11085, false);
+        DefineFunction(EntrySegmentAddress, 0x109A, ReadFile_AdvancePointer_CloseFile_1000_109A_1109A, false);
+        DefineFunction(EntrySegmentAddress, 0x10F4, Nop_1000_10F4_110F4, false);
+        DefineFunction(EntrySegmentAddress, 0x11BD, Nop_1000_11BD_111BD, false);
     }
 
     public void DetectCodeRewrites()
@@ -130,7 +130,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AL = 0;
         AH = 0x4C;
         Interrupt(0x21);
-        CheckExternalEvents(cs1, 0x6D);
+        CheckExternalEvents(EntrySegmentAddress, 0x6D);
         throw new NotImplementedException("You should not be here...");
     }
 
@@ -148,18 +148,18 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         ES = AX;
         DX = UInt16[ES, 0x63];
         DL = Alu.Add8(DL, 6);
-        UInt16[cs1, 0x6C] = DX;
+        UInt16[EntrySegmentAddress, 0x6C] = DX;
         BP = 0x6C;
-        CheckExternalEvents(cs1, 0x98C);
+        CheckExternalEvents(EntrySegmentAddress, 0x98C);
         AL = Cpu.In8(DX);
         AL = Alu.And8(AL, 8);
         Nop_1000_09B5_109B5(0);
         Nop_1000_09B5_109B5(0);
         DI = SI;
-        UInt8[cs1, 0x6F] = AH;
+        UInt8[EntrySegmentAddress, 0x6F] = AH;
         Nop_1000_09B5_109B5(0);
         Alu.Sub16(SI, DI);
-        UInt8[cs1, 0x6E] = (byte)~UInt8[cs1, 0x6E];
+        UInt8[EntrySegmentAddress, 0x6E] = (byte)~UInt8[EntrySegmentAddress, 0x6E];
         FlagRegister16 = Stack.Pop16();
         return NearRet();
     }
@@ -178,7 +178,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         Machine.VgaCard.SetVgaWriteIndex(BL);
         for (int i = 0; i < colors * 3; i++)
         {
-            CheckExternalEvents(cs1, 0x09D9);
+            CheckExternalEvents(EntrySegmentAddress, 0x09D9);
             Machine.VgaCard.RgbDataWrite(UInt8[DS, (ushort)(colorOffset + i)]);
         }
         return NearRet();
@@ -373,8 +373,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         {
             goto label_2;
         }
-        UInt8[cs1, 0xA71] = 0xC7;
-        UInt8[cs1, 0xB2F] = 0xC7;
+        UInt8[EntrySegmentAddress, 0xA71] = 0xC7;
+        UInt8[EntrySegmentAddress, 0xB2F] = 0xC7;
         return FarRet();
     }
 
@@ -437,13 +437,13 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     {
         unknown_display_1000_0C72_10C72(0);
         SI = 0xCBC;
-        AX = UInt16[cs1, SI];
-        UInt16[cs1, 0xCB6] = AX;
-        UInt16[cs1, 0xCBA] = SI;
+        AX = UInt16[EntrySegmentAddress, SI];
+        UInt16[EntrySegmentAddress, 0xCB6] = AX;
+        UInt16[EntrySegmentAddress, 0xCBA] = SI;
         AX = 0;
-        UInt16[cs1, 0xCB0] = AX;
-        UInt16[cs1, 0xCB2] = AX;
-        UInt16[cs1, 0xCB4] = AX;
+        UInt16[EntrySegmentAddress, 0xCB0] = AX;
+        UInt16[EntrySegmentAddress, 0xCB2] = AX;
+        UInt16[EntrySegmentAddress, 0xCB4] = AX;
         CX = 0xFB;
         ushort num;
         do
@@ -465,17 +465,17 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     {
         Stack.Push16(DS);
         Stack.Push16(ES);
-        Stack.Push16(cs1);
-        Stack.Push16(cs1);
+        Stack.Push16(EntrySegmentAddress);
+        Stack.Push16(EntrySegmentAddress);
         DS = Stack.Pop16();
         ES = Stack.Pop16();
-        Alu.Sub16(UInt16[cs1, 0xCB6], 0);
+        Alu.Sub16(UInt16[EntrySegmentAddress, 0xCB6], 0);
         if (!SignFlag)
         {
             DI = 0x160;
             SI = DI;
             CX = 0xF0;
-            DX = UInt16[cs1, 0xCB8];
+            DX = UInt16[EntrySegmentAddress, 0xCB8];
             AX = DX;
             AX <<= 1;
             AX += DX;
@@ -505,18 +505,18 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// </summary>
     public virtual Action ComputeNextVgaPalette_1000_0D5F_10D5F(int loadOffset)
     {
-        SI = UInt16[cs1, 0xCBA];
-        UInt16[cs1, 0xCB6] = Alu.Dec16(UInt16[cs1, 0xCB6]);
+        SI = UInt16[EntrySegmentAddress, 0xCBA];
+        UInt16[EntrySegmentAddress, 0xCB6] = Alu.Dec16(UInt16[EntrySegmentAddress, 0xCB6]);
         if (ZeroFlag)
         {
             SI = Alu.Add16(SI, 8);
-            UInt16[cs1, 0xCBA] = SI;
+            UInt16[EntrySegmentAddress, 0xCBA] = SI;
             AX = UInt16[DS, SI];
-            UInt16[cs1, 0xCB6] = AX;
+            UInt16[EntrySegmentAddress, 0xCB6] = AX;
         }
         AX = UInt16[DS, (ushort)(SI + 2U)];
-        AX = Alu.Add16(AX, UInt16[cs1, 0xCB0]);
-        UInt16[cs1, 0xCB0] = AX;
+        AX = Alu.Add16(AX, UInt16[EntrySegmentAddress, 0xCB0]);
+        UInt16[EntrySegmentAddress, 0xCB0] = AX;
         AL = Alu.Shl8(AL, 1);
         AH = Alu.Adc8(AH, 0);
         AL = AH;
@@ -524,8 +524,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         UInt8[ES, DI] = AL;
         DI += (ushort)Direction8;
         AX = UInt16[DS, (ushort)(SI + 0x4)];
-        AX = Alu.Add16(AX, UInt16[cs1, 0xCB2]);
-        UInt16[cs1, 0xCB2] = AX;
+        AX = Alu.Add16(AX, UInt16[EntrySegmentAddress, 0xCB2]);
+        UInt16[EntrySegmentAddress, 0xCB2] = AX;
         AL = Alu.Shl8(AL, 1);
         AH = Alu.Adc8(AH, 0);
         AL = AH;
@@ -533,8 +533,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         UInt8[ES, DI] = AL;
         DI += (ushort)Direction8;
         AX = UInt16[DS, (ushort)(SI + 0x6)];
-        AX = Alu.Add16(AX, UInt16[cs1, 0xCB4]);
-        UInt16[cs1, 0xCB4] = AX;
+        AX = Alu.Add16(AX, UInt16[EntrySegmentAddress, 0xCB4]);
+        UInt16[EntrySegmentAddress, 0xCB4] = AX;
         AL = Alu.Shl8(AL, 1);
         AH = Alu.Adc8(AH, 0);
         AL = AH;
@@ -954,7 +954,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         {
             AX = 0;
             ES = AX;
-            CheckExternalEvents(cs1, 0x100F);
+            CheckExternalEvents(EntrySegmentAddress, 0x100F);
             AX = UInt16[ES, 0x46C];
             AX -= BX;
             Alu.Sub16(AX, BP);
