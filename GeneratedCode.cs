@@ -31,11 +31,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DefineFunction(cs1, 0x970, SetVideoMode_1000_0970_10970, false);
         DefineFunction(cs1, 0x9B5, Nop_1000_09B5_109B5, false);
         DefineFunction(cs1, 0x9D8, WaitFrameAndWriteNextPaletteData_1000_09D8_109D8, false);
-        DefineFunction(cs1, 0xA22, ExchangeValuesTwice_1000_0A22_10A22, false);
+        DefineFunction(cs1, 0xA22, Unknown_1000_0A22_10A22, false);
         DefineFunction(cs1, 0xA3A, Nop_1000_0A3A_10A3A, false);
         DefineFunction(cs1, 0xA51, Nop_1000_0A51_10A51, false);
-        DefineFunction(cs1, 0xB9A, DisplayHNMVideoFrames_1000_0B9A_10B9A, false);
-        DefineFunction(cs1, 0xC72, unknown_1000_0C72_10C72, false);
+        DefineFunction(cs1, 0xB9A, Unknown_1000_0B9A_10B9A, false);
+        DefineFunction(cs1, 0xC72, unknown_display_1000_0C72_10C72, false);
         DefineFunction(cs1, 0xCF4, unknown_1000_0CF4_10CF4, false);
         DefineFunction(cs1, 0xD22, ChangeVgaPalette_1000_0D22_10D22, false);
         DefineFunction(cs1, 0xD5F, ComputeNextVgaPalette_1000_0D5F_10D5F, false);
@@ -44,7 +44,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DefineFunction(cs1, 0xE46, unknown_1000_0E46_10E46, false);
         DefineFunction(cs1, 0xE49, unknown_1000_0E49_10E49, false);
         DefineFunction(cs1, 0xE4C, unknown_1000_0E4C_10E4C, false);
-        DefineFunction(cs1, 0xE59, unknown_1000_0E59_10E59, false);
+        DefineFunction(cs1, 0xE59, unknown_display_1000_0E59_10E59, false);
         DefineFunction(cs1, 0xE86, unknown_1000_0E86_10E86, false);
         DefineFunction(cs1, 0xEAD, unknown_1000_0EAD_10EAD, false);
         DefineFunction(cs1, 0xEBD, unknown_1000_0EBD_10EBD, false);
@@ -187,7 +187,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action ExchangeValuesTwice_1000_0A22_10A22(int loadOffset)
+    public virtual Action Unknown_1000_0A22_10A22(int loadOffset)
     {
         // CMP BX,0xc8 (1000_0A22 / 0x10A22)
         Alu.Sub16(BX, 0xC8);
@@ -222,79 +222,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action DisplayHNMVideoFrames_1000_0B9A_10B9A(int loadOffset)
+    public virtual Action Unknown_1000_0B9A_10B9A(int loadOffset)
     {
-        if (loadOffset == 0)
-        {
-            goto label_60;
-        }
-
-    label_2:
-        BP = DX;
-        DI -= (ushort)(uint)BP;
-        DI = Alu.Add16(DI, 320);
-    label_3:
-        do
-        {
-            AL = UInt8[DS, SI];
-            SI += (ushort)(uint)Direction8;
-            AL = Alu.Or8(AL, AL);
-            if (!SignFlag)
-            {
-                CX = AX;
-                CH = 0;
-                ++CX;
-                BP = Alu.Sub16(BP, CX);
-                while (true)
-                {
-                    AL = UInt8[DS, SI];
-                    SI += (ushort)(uint)Direction8;
-                    AL = Alu.Or8(AL, AL);
-                    if (!ZeroFlag)
-                    {
-                        UInt8[ES, DI] = AL;
-                        DI += (ushort)(uint)Direction8;
-                        if (--CX == 0)
-                        {
-                            BP = Alu.Or16(BP, BP);
-                            if (ZeroFlag)
-                            {
-                                BX = Alu.Dec16(BX);
-                                goto label_2;
-                            }
-                            else
-                            {
-                                goto label_3;
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                CX = 0x101;
-                AH = 0;
-                CX -= (ushort)(uint)AX;
-                BP = Alu.Sub16(BP, CX);
-                AL = UInt8[DS, SI];
-                SI += (ushort)(uint)Direction8;
-                AL = Alu.Or8(AL, AL);
-                goto label_18;
-            }
-        label_18:
-            DI = Alu.Add16(DI, CX);
-            BP = Alu.Or16(BP, BP);
-        }
-        while (!CarryFlag && !ZeroFlag);
-        BX = Alu.Dec16(BX);
-        if (!ZeroFlag)
-        {
-            goto label_2;
-        }
-        UInt8[cs1, 0xA71] = 0xC7;
-        UInt8[cs1, 0xB2F] = 0xC7;
-        return FarRet();
-    label_60:
         Alu.Sub8(CH, 0xFE);
         DI = Alu.Or16(DI, DI);
         if (!SignFlag)
@@ -302,7 +231,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             BP = DI;
             BP = Alu.And16(BP, 511);
             AX = DI;
-            ExchangeValuesTwice_1000_0A22_10A22(0);
+            Unknown_1000_0A22_10A22(0);
             BX = CX;
             BH = 0;
             Alu.Sub8(CH, byte.MaxValue);
@@ -371,7 +300,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         BP = DI;
         BP = Alu.And16(BP, 511);
         AX = DI;
-        ExchangeValuesTwice_1000_0A22_10A22(0);
+        Unknown_1000_0A22_10A22(0);
         BX = CX;
         BH = 0;
         Alu.And16(AX, 16384);
@@ -382,14 +311,77 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             Alu.Sub8(CH, byte.MaxValue);
             goto label_3;
         }
-        // Not Executed
-        return NearRet();
+    label_2:
+        BP = DX;
+        DI -= (ushort)(uint)BP;
+        DI = Alu.Add16(DI, 320);
+    label_3:
+        do
+        {
+            AL = UInt8[DS, SI];
+            SI += (ushort)(uint)Direction8;
+            AL = Alu.Or8(AL, AL);
+            if (!SignFlag)
+            {
+                CX = AX;
+                CH = 0;
+                ++CX;
+                BP = Alu.Sub16(BP, CX);
+                while (true)
+                {
+                    AL = UInt8[DS, SI];
+                    SI += (ushort)(uint)Direction8;
+                    AL = Alu.Or8(AL, AL);
+                    if (!ZeroFlag)
+                    {
+                        UInt8[ES, DI] = AL;
+                        DI += (ushort)(uint)Direction8;
+                        if (--CX == 0)
+                        {
+                            BP = Alu.Or16(BP, BP);
+                            if (ZeroFlag)
+                            {
+                                BX = Alu.Dec16(BX);
+                                goto label_2;
+                            }
+                            else
+                            {
+                                goto label_3;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                CX = 0x101;
+                AH = 0;
+                CX -= (ushort)(uint)AX;
+                BP = Alu.Sub16(BP, CX);
+                AL = UInt8[DS, SI];
+                SI += (ushort)(uint)Direction8;
+                AL = Alu.Or8(AL, AL);
+                goto label_18;
+            }
+        label_18:
+            DI = Alu.Add16(DI, CX);
+            BP = Alu.Or16(BP, BP);
+        }
+        while (!CarryFlag && !ZeroFlag);
+        BX = Alu.Dec16(BX);
+        if (!ZeroFlag)
+        {
+            goto label_2;
+        }
+        UInt8[cs1, 0xA71] = 0xC7;
+        UInt8[cs1, 0xB2F] = 0xC7;
+        return FarRet();
     }
 
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_1000_0C72_10C72(int loadOffset)
+    public virtual Action unknown_display_1000_0C72_10C72(int loadOffset)
     {
         Stack.Push16(DS);
         AX = 0xA000;
@@ -443,7 +435,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// </summary>
     public virtual Action unknown_1000_0CF4_10CF4(int loadOffset)
     {
-        unknown_1000_0C72_10C72(0);
+        unknown_display_1000_0C72_10C72(0);
         SI = 0xCBC;
         AX = UInt16[cs1, SI];
         UInt16[cs1, 0xCB6] = AX;
@@ -641,7 +633,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     public virtual Action unknown_1000_0E49_10E49(int loadOffset)
     {
         // CALL 0x1000:0e59 (1000_0E49 / 0x10E49)
-        unknown_1000_0E59_10E59(0);
+        unknown_display_1000_0E59_10E59(0);
         // Function call generated as ASM continues to next function entry point without return
         return unknown_1000_0E4C_10E4C(0);
     }
@@ -663,7 +655,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_1000_0E59_10E59(int loadOffset)
+    public virtual Action unknown_display_1000_0E59_10E59(int loadOffset)
     {
         Stack.Push16(DS);
         SI = UInt16[DS, 0x56];
@@ -691,7 +683,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             BX = AX;
             AX = 0xA000;
             ES = AX;
-            DisplayHNMVideoFrames_1000_0B9A_10B9A(0);
+            Unknown_1000_0B9A_10B9A(0);
         }
         DS = Stack.Pop16();
         return NearRet();
