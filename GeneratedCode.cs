@@ -153,7 +153,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         int colors = CX;
         ushort colorOffset = DX;
         Machine.VgaCard.UpdateScreen();
-        Thread.Sleep(17);
+        Thread.Sleep(15);
         Machine.VgaCard.SetVgaWriteIndex(BL);
         for (int i = 0; i < colors * 3; i++)
         {
