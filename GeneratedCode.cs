@@ -747,7 +747,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             if (!ZeroFlag)
             {
                 if (!CarryFlag)
+                {
                     goto label_4;
+                }
             }
             else
             {
@@ -766,8 +768,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             CarryFlag = true;
             BP = Alu.Rcr16(BP, 1);
             if (CarryFlag)
+            {
                 goto label_2;
-            label_4:
+            }
+
+        label_4:
             CX = 0;
             BP = Alu.Shr16(BP, 1);
             if (ZeroFlag)
@@ -808,24 +813,26 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             {
                 goto label_16;
             }
-
-        label_12:
-            AX = Alu.Add16(AX, DI);
-            (SI, AX) = (AX, SI);
-            BX = DS;
-            DX = ES;
-            DS = DX;
-            ++CX;
-            CX = Alu.Inc16(CX);
-            while (CX != 0)
+            label_12();
+        void label_12()
             {
-                CX--;
-                UInt8[ES, DI] = UInt8[DS, SI];
-                SI += (ushort)Direction8;
-                DI += (ushort)Direction8;
+                AX = Alu.Add16(AX, DI);
+                (SI, AX) = (AX, SI);
+                BX = DS;
+                DX = ES;
+                DS = DX;
+                ++CX;
+                CX = Alu.Inc16(CX);
+                while (CX != 0)
+                {
+                    CX--;
+                    UInt8[ES, DI] = UInt8[DS, SI];
+                    SI += (ushort)Direction8;
+                    DI += (ushort)Direction8;
+                }
+                DS = BX;
+                SI = AX;
             }
-            DS = BX;
-            SI = AX;
             continue;
         label_16:
             AX = UInt16[DS, SI];
@@ -846,7 +853,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 CL = Alu.Or8(CL, CL);
                 if (!ZeroFlag)
                 {
-                    goto label_12;
+                    label_12();
                 }
                 else
                 {
@@ -855,7 +862,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             }
             else
             {
-                goto label_12;
+                label_12();
             }
         }
         CarryFlag = true;
