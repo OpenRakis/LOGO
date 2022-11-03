@@ -283,17 +283,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         BX = CX;
         BH = 0;
         Alu.And16(AX, 16384);
-        if (ZeroFlag)
-        {
-            Alu.And16(AX, 8192);
-            DX = BP;
-            Alu.Sub8(CH, byte.MaxValue);
-            goto label_3;
-        }
-    label_2:
-        BP = DX;
-        DI -= (ushort)(uint)BP;
-        DI = Alu.Add16(DI, 320);
     label_3:
         do
         {
@@ -321,7 +310,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                             if (ZeroFlag)
                             {
                                 BX = Alu.Dec16(BX);
-                                goto label_2;
                             }
                             else
                             {
@@ -348,10 +336,6 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         }
         while (!CarryFlag && !ZeroFlag);
         BX = Alu.Dec16(BX);
-        if (!ZeroFlag)
-        {
-            goto label_2;
-        }
         UInt8[EntrySegmentAddress, 0xA71] = 0xC7;
         UInt8[EntrySegmentAddress, 0xB2F] = 0xC7;
         return FarRet();
