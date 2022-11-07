@@ -30,33 +30,33 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         DefineFunction(EntrySegmentAddress, 0x0, EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000, false);
         DefineFunction(EntrySegmentAddress, 0x970, SetVideoMode_1000_0970_10970, false);
         DefineFunction(EntrySegmentAddress, 0x9B5, Nop_1000_09B5_109B5, false);
-        DefineFunction(EntrySegmentAddress, 0x9D8, WaitFrameAndWriteNextPaletteData_1000_09D8_109D8, false);
-        DefineFunction(EntrySegmentAddress, 0xA22, Unknown_1000_0A22_10A22, false);
+        DefineFunction(EntrySegmentAddress, 0x9D8, CommonCirclesWaitFrameAndWriteNextPaletteData_1000_09D8_109D8, false);
+        DefineFunction(EntrySegmentAddress, 0xA22, CommonUnknown_1000_0A22_10A22, false);
         DefineFunction(EntrySegmentAddress, 0xA3A, Nop_1000_0A3A_10A3A, false);
         DefineFunction(EntrySegmentAddress, 0xA51, Nop_1000_0A51_10A51, false);
-        DefineFunction(EntrySegmentAddress, 0xB9A, Unknown_1000_0B9A_10B9A, false);
-        DefineFunction(EntrySegmentAddress, 0xC72, unknown_display_1000_0C72_10C72, false);
-        DefineFunction(EntrySegmentAddress, 0xCF4, unknown_1000_0CF4_10CF4, false);
-        DefineFunction(EntrySegmentAddress, 0xD22, ChangeVgaPalette_1000_0D22_10D22, false);
-        DefineFunction(EntrySegmentAddress, 0xD5F, ComputeNextVgaPalette_1000_0D5F_10D5F, false);
-        DefineFunction(EntrySegmentAddress, 0xDBC, unknown_1000_0DBC_10DBC, false);
+        DefineFunction(EntrySegmentAddress, 0xB9A, CommonUnknown_1000_0B9A_10B9A, false);
+        DefineFunction(EntrySegmentAddress, 0xC72, CirclesUnknown_display_1000_0C72_10C72, false);
+        DefineFunction(EntrySegmentAddress, 0xCF4, CircleUunknown_1000_0CF4_10CF4, false);
+        DefineFunction(EntrySegmentAddress, 0xD22, CommonChangeVgaPalette_1000_0D22_10D22, false);
+        DefineFunction(EntrySegmentAddress, 0xD5F, CommonComputeNextVgaPalette_1000_0D5F_10D5F, false);
+        DefineFunction(EntrySegmentAddress, 0xDBC, CirclesUnknown_1000_0DBC_10DBC, false);
         DefineFunction(EntrySegmentAddress, 0xDDE, CirclesAnimation_1000_0DDE_10DDE, false);
-        DefineFunction(EntrySegmentAddress, 0xE46, unknown_1000_0E46_10E46, false);
-        DefineFunction(EntrySegmentAddress, 0xE49, unknown_1000_0E49_10E49, false);
-        DefineFunction(EntrySegmentAddress, 0xE4C, unknown_1000_0E4C_10E4C, false);
-        DefineFunction(EntrySegmentAddress, 0xE59, unknown_display_1000_0E59_10E59, false);
-        DefineFunction(EntrySegmentAddress, 0xE86, unknown_1000_0E86_10E86, false);
-        DefineFunction(EntrySegmentAddress, 0xEAD, unknown_1000_0EAD_10EAD, false);
-        DefineFunction(EntrySegmentAddress, 0xEBD, unknown_1000_0EBD_10EBD, false);
-        DefineFunction(EntrySegmentAddress, 0xEFE, unknown_1000_0EFE_10EFE, false);
-        DefineFunction(EntrySegmentAddress, 0xF30, split_1000_0F30_10F30, false);
-        DefineFunction(EntrySegmentAddress, 0xFA4, ChangeVgaPaletteLoop_1000_0FA4_10FA4, false);
+        DefineFunction(EntrySegmentAddress, 0xE46, HNMUnknown_1000_0E46_10E46, false);
+        DefineFunction(EntrySegmentAddress, 0xE49, CommonUnknown_1000_0E49_10E49, false);
+        DefineFunction(EntrySegmentAddress, 0xE4C, CommonUnknown_1000_0E4C_10E4C, false);
+        DefineFunction(EntrySegmentAddress, 0xE59, CommonUnknown_display_1000_0E59_10E59, false);
+        DefineFunction(EntrySegmentAddress, 0xE86, CommonUnknown_1000_0E86_10E86, false);
+        DefineFunction(EntrySegmentAddress, 0xEAD, CommonUnknown_1000_0EAD_10EAD, false);
+        DefineFunction(EntrySegmentAddress, 0xEBD, CommonUnknown_1000_0EBD_10EBD, false);
+        DefineFunction(EntrySegmentAddress, 0xEFE, CommonUnknown_1000_0EFE_10EFE, false);
+        DefineFunction(EntrySegmentAddress, 0xF30, CommonUnknownSplit_1000_0F30_10F30, false);
+        DefineFunction(EntrySegmentAddress, 0xFA4, CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4, false);
         DefineFunction(EntrySegmentAddress, 0xFCC, nop_1000_0FCC_10FCC, false);
-        DefineFunction(EntrySegmentAddress, 0xFEA, unknown_1000_0FEA_10FEA, false);
-        DefineFunction(EntrySegmentAddress, 0x1019, unknown_1000_1019_11019, false);
-        DefineFunction(EntrySegmentAddress, 0x105F, unknown_1000_105F_1105F, false);
-        DefineFunction(EntrySegmentAddress, 0x1085, CheckForAnyKeyStroke_1000_1085_11085, false);
-        DefineFunction(EntrySegmentAddress, 0x109A, ReadFile_AdvancePointer_CloseFile_1000_109A_1109A, false);
+        DefineFunction(EntrySegmentAddress, 0xFEA, HNMUnknown_1000_0FEA_10FEA, false);
+        DefineFunction(EntrySegmentAddress, 0x1019, CirclesUnknown_1000_1019_11019, false);
+        DefineFunction(EntrySegmentAddress, 0x105F, CirclesUnknown_1000_105F_1105F, false);
+        DefineFunction(EntrySegmentAddress, 0x1085, CommonCheckForAnyKeyStroke_1000_1085_11085, false);
+        DefineFunction(EntrySegmentAddress, 0x109A, HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A, false);
         DefineFunction(EntrySegmentAddress, 0x10F4, Nop_1000_10F4_110F4, false);
         DefineFunction(EntrySegmentAddress, 0x11BD, Nop_1000_11BD_111BD, false);
     }
@@ -93,7 +93,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         Alu.Sub8(UInt8[DS, SI], 0);
         UInt16[DS, 0x52] = AX;
         DX = 0x5A;
-        unknown_1000_105F_1105F(0);
+        CirclesUnknown_1000_105F_1105F(0);
         Alu.Sub8(UInt8[DS, DI], 46);
         if (!ZeroFlag)
         {
@@ -109,7 +109,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         {
             Stack.Push16(AX);
             SetVideoMode_1000_0970_10970(0);
-            unknown_1000_1019_11019(0);
+            CirclesUnknown_1000_1019_11019(0);
             BX = Stack.Pop16();
             AX = UInt16[DS, 0x52];
             CirclesAnimation_1000_0DDE_10DDE(0);
@@ -148,7 +148,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action WaitFrameAndWriteNextPaletteData_1000_09D8_109D8(int loadOffset)
+    public virtual Action CommonCirclesWaitFrameAndWriteNextPaletteData_1000_09D8_109D8(int loadOffset)
     {
         int colors = CX;
         ushort colorOffset = DX;
@@ -166,7 +166,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action Unknown_1000_0A22_10A22(int loadOffset)
+    public virtual Action CommonUnknown_1000_0A22_10A22(int loadOffset)
     {
         // CMP BX,0xc8 (1000_0A22 / 0x10A22)
         Alu.Sub16(BX, 0xC8);
@@ -201,7 +201,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action Unknown_1000_0B9A_10B9A(int loadOffset)
+    public virtual Action CommonUnknown_1000_0B9A_10B9A(int loadOffset)
     {
         Alu.Sub8(CH, 0xFE);
         DI = Alu.Or16(DI, DI);
@@ -210,7 +210,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             BP = DI;
             BP = Alu.And16(BP, 511);
             AX = DI;
-            Unknown_1000_0A22_10A22(0);
+            CommonUnknown_1000_0A22_10A22(0);
             BX = CX;
             BH = 0;
             Alu.Sub8(CH, byte.MaxValue);
@@ -279,7 +279,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         BP = DI;
         BP = Alu.And16(BP, 511);
         AX = DI;
-        Unknown_1000_0A22_10A22(0);
+        CommonUnknown_1000_0A22_10A22(0);
         BX = CX;
         BH = 0;
         Alu.And16(AX, 16384);
@@ -344,7 +344,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_display_1000_0C72_10C72(int loadOffset)
+    public virtual Action CirclesUnknown_display_1000_0C72_10C72(int loadOffset)
     {
         Stack.Push16(DS);
         AX = 0xA000;
@@ -396,9 +396,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_1000_0CF4_10CF4(int loadOffset)
+    public virtual Action CircleUunknown_1000_0CF4_10CF4(int loadOffset)
     {
-        unknown_display_1000_0C72_10C72(0);
+        CirclesUnknown_display_1000_0C72_10C72(0);
         SI = 0xCBC;
         AX = UInt16[EntrySegmentAddress, SI];
         UInt16[EntrySegmentAddress, 0xCB6] = AX;
@@ -412,9 +412,9 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         do
         {
             Stack.Push16(CX);
-            ChangeVgaPalette_1000_0D22_10D22(0);
+            CommonChangeVgaPalette_1000_0D22_10D22(0);
             CX = Stack.Pop16();
-            CheckForAnyKeyStroke_1000_1085_11085(0);
+            CommonCheckForAnyKeyStroke_1000_1085_11085(0);
             num = --CX;
         }
         while (num != 0 && ZeroFlag);
@@ -424,7 +424,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action ChangeVgaPalette_1000_0D22_10D22(int loadOffset)
+    public virtual Action CommonChangeVgaPalette_1000_0D22_10D22(int loadOffset)
     {
         Stack.Push16(DS);
         Stack.Push16(ES);
@@ -452,11 +452,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
                 DI += (ushort)Direction8;
             }
             CX = DX;
-            ComputeNextVgaPalette_1000_0D5F_10D5F(0);
+            CommonComputeNextVgaPalette_1000_0D5F_10D5F(0);
             DX = 0x160;
             BX = 0x50;
             CX = 0x50;
-            WaitFrameAndWriteNextPaletteData_1000_09D8_109D8(0);
+            CommonCirclesWaitFrameAndWriteNextPaletteData_1000_09D8_109D8(0);
         }
         ES = Stack.Pop16();
         DS = Stack.Pop16();
@@ -466,7 +466,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action ComputeNextVgaPalette_1000_0D5F_10D5F(int loadOffset)
+    public virtual Action CommonComputeNextVgaPalette_1000_0D5F_10D5F(int loadOffset)
     {
         SI = UInt16[EntrySegmentAddress, 0xCBA];
         UInt16[EntrySegmentAddress, 0xCB6] = Alu.Dec16(UInt16[EntrySegmentAddress, 0xCB6]);
@@ -507,7 +507,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0DBC_10DBC(int loadOffset)
+    public virtual Action CirclesUnknown_1000_0DBC_10DBC(int loadOffset)
     {
         // LES DI,[0x4c] (1000_0DBC / 0x10DBC)
         DI = UInt16[DS, 0x4C];
@@ -525,7 +525,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         // CMP AX,0x3a02 (1000_0DCF / 0x10DCF)
         Alu.Sub16(AX, 0x3A02);
         // CALL 0x1000:109a (1000_0DD4 / 0x10DD4)
-        ReadFile_AdvancePointer_CloseFile_1000_109A_1109A(0);
+        HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A(0);
         // ADD DI,CX (1000_0DD7 / 0x10DD7)
         DI += CX;
         // XOR AX,AX (1000_0DD9 / 0x10DD9)
@@ -546,7 +546,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     {
         // Read File
         UInt16[DS, 0x54] = AX;
-        unknown_1000_0DBC_10DBC(0);
+        CirclesUnknown_1000_0DBC_10DBC(0);
         Nop_1000_0A3A_10A3A(0);
         AX = UInt16[DS, 84];
         UInt16[DS, 0x52] = AX;
@@ -554,19 +554,19 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         ES = UInt16[DS, 78];
         UInt16[DS, 0x56] = DI;
         UInt16[DS, 0x58] = ES;
-        unknown_1000_0EAD_10EAD(0);
-        ChangeVgaPaletteLoop_1000_0FA4_10FA4(0);
-        unknown_1000_0E4C_10E4C(0);
+        CommonUnknown_1000_0EAD_10EAD(0);
+        CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4(0);
+        CommonUnknown_1000_0E4C_10E4C(0);
         CarryFlag = true;
-        unknown_1000_0E49_10E49(0);
-        unknown_1000_0CF4_10CF4(0);
+        CommonUnknown_1000_0E49_10E49(0);
+        CircleUunknown_1000_0CF4_10CF4(0);
         CarryFlag = true;
 
         do
         {
             AX = UInt16[DS, 0x52];
             BP = 0xE46;
-            unknown_1000_0FEA_10FEA(0);
+            HNMUnknown_1000_0FEA_10FEA(0);
             CarryFlag = true;
             Alu.Sub16(UInt16[DS, 82], 0);
         }
@@ -585,28 +585,28 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0E46_10E46(int loadOffset)
+    public virtual Action HNMUnknown_1000_0E46_10E46(int loadOffset)
     {
         // CALL 0x1000:0d22 (1000_0E46 / 0x10E46)
-        ChangeVgaPalette_1000_0D22_10D22(0);
+        CommonChangeVgaPalette_1000_0D22_10D22(0);
         // Function call generated as ASM continues to next function entry point without return
-        return unknown_1000_0E49_10E49(0);
+        return CommonUnknown_1000_0E49_10E49(0);
     }
 
-    public virtual Action unknown_1000_0E49_10E49(int loadOffset)
+    public virtual Action CommonUnknown_1000_0E49_10E49(int loadOffset)
     {
         // CALL 0x1000:0e59 (1000_0E49 / 0x10E49)
-        unknown_display_1000_0E59_10E59(0);
+        CommonUnknown_display_1000_0E59_10E59(0);
         // Function call generated as ASM continues to next function entry point without return
-        return unknown_1000_0E4C_10E4C(0);
+        return CommonUnknown_1000_0E4C_10E4C(0);
     }
 
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_1000_0E4C_10E4C(int loadOffset)
+    public virtual Action CommonUnknown_1000_0E4C_10E4C(int loadOffset)
     {
-        unknown_1000_0E86_10E86(0);
+        CommonUnknown_1000_0E86_10E86(0);
         if (!ZeroFlag)
         {
             return NearRet();
@@ -618,7 +618,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// TODO: High level rewrite this first.
     /// </summary>
-    public virtual Action unknown_display_1000_0E59_10E59(int loadOffset)
+    public virtual Action CommonUnknown_display_1000_0E59_10E59(int loadOffset)
     {
         Stack.Push16(DS);
         SI = UInt16[DS, 0x56];
@@ -636,7 +636,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             Alu.And16(DI, 0x200);
             if (!ZeroFlag)
             {
-                unknown_1000_0EBD_10EBD(0);
+                CommonUnknown_1000_0EBD_10EBD(0);
             }
             AX = UInt16[DS, SI];
             SI += (ushort)Direction16;
@@ -646,13 +646,13 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             BX = AX;
             AX = 0xA000;
             ES = AX;
-            Unknown_1000_0B9A_10B9A(0);
+            CommonUnknown_1000_0B9A_10B9A(0);
         }
         DS = Stack.Pop16();
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0E86_10E86(int loadOffset)
+    public virtual Action CommonUnknown_1000_0E86_10E86(int loadOffset)
     {
         SegmentedAddress pointer = new SegmentedAddress(UInt16[DS, 0x58], UInt16[DS, 0x56]);
         ushort newSegmentOffset = (ushort)(UInt16[pointer.ToPhysical()] + pointer.Offset);
@@ -660,15 +660,15 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         ushort newOffset = (ushort)(newSegmentOffset & 0xF);
         UInt16[DS, 0x56] = newOffset;
         UInt16[DS, 0x58] = newSegment;
-        return split_1000_0EB2_10EB2(newSegment, newOffset);
+        return CommonUnknown_1000_0EB2_10EB2(newSegment, newOffset);
     }
 
-    public virtual Action unknown_1000_0EAD_10EAD(int loadOffset)
+    public virtual Action CommonUnknown_1000_0EAD_10EAD(int loadOffset)
     {
-        return split_1000_0EB2_10EB2(UInt16[DS, 0x58], UInt16[DS, 0x56]);
+        return CommonUnknown_1000_0EB2_10EB2(UInt16[DS, 0x58], UInt16[DS, 0x56]);
     }
 
-    public Action split_1000_0EB2_10EB2(ushort segment, ushort offset)
+    public Action CommonUnknown_1000_0EB2_10EB2(ushort segment, ushort offset)
     {
         ushort value = UInt16[segment, offset];
         CX = (ushort)(value - 2);
@@ -676,7 +676,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet(0);
     }
 
-    public virtual Action unknown_1000_0EBD_10EBD(int loadOffset)
+    public virtual Action CommonUnknown_1000_0EBD_10EBD(int loadOffset)
     {
         // AND DI,0xfdff (1000_0EBD / 0x10EBD)
         // DI &= 0xFDFF;
@@ -696,7 +696,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         // PUSH ES (1000_0ECC / 0x10ECC)
         Stack.Push16(ES);
         // CALL 0x1000:0efe (1000_0ECD / 0x10ECD)
-        unknown_1000_0EFE_10EFE(0);
+        CommonUnknown_1000_0EFE_10EFE(0);
         // POP DS (1000_0ED0 / 0x10ED0)
         DS = Stack.Pop16();
         // POP SI (1000_0ED1 / 0x10ED1)
@@ -709,21 +709,21 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0EFE_10EFE(int loadOffset)
+    public virtual Action CommonUnknown_1000_0EFE_10EFE(int loadOffset)
     {
         Stack.Push16(CX);
         Stack.Push16(DI);
         Stack.Push16(DS);
         SI += 6;
         BP = 0;
-        JumpDispatcher?.Jump(split_1000_0F30_10F30, 0);
+        JumpDispatcher?.Jump(CommonUnknownSplit_1000_0F30_10F30, 0);
         return JumpDispatcher?.JumpAsmReturn;
     }
 
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action split_1000_0F30_10F30(int loadOffset)
+    public virtual Action CommonUnknownSplit_1000_0F30_10F30(int loadOffset)
     {
         while (true)
         {
@@ -861,7 +861,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action ChangeVgaPaletteLoop_1000_0FA4_10FA4(int loadOffset)
+    public virtual Action CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4(int loadOffset)
     {
         SI = UInt16[DS, 0x56];
         ES = UInt16[DS, 0x58];
@@ -902,14 +902,14 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action unknown_1000_0FEA_10FEA(int loadOffset)
+    public virtual Action HNMUnknown_1000_0FEA_10FEA(int loadOffset)
     {
         InterruptFlag = true;
         Stack.Push16(AX);
         AX = 0;
         ES = AX;
         Stack.Push16(UInt16[ES, 0x46C]);
-        unknown_1000_0E46_10E46(0);
+        HNMUnknown_1000_0E46_10E46(0);
         BX = Stack.Pop16();
         BP = Stack.Pop16();
         BP >>= 1;
@@ -930,14 +930,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             Alu.Sub16(AX, BP);
         }
         while (CarryFlag);
-        CheckForAnyKeyStroke_1000_1085_11085(0);
+        CommonCheckForAnyKeyStroke_1000_1085_11085(0);
         return NearRet();
     }
 
-    /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
-    /// </summary>
-    public virtual Action unknown_1000_1019_11019(int loadOffset)
+    public virtual Action CirclesUnknown_1000_1019_11019(int loadOffset)
     {
         DI = DX;
         while (true)
@@ -951,7 +948,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         }
     }
 
-    public virtual Action unknown_1000_105F_1105F(int loadOffset)
+    public virtual Action CirclesUnknown_1000_105F_1105F(int loadOffset)
     {
         // MOV DI,DX (1000_105F / 0x1105F)
         DI = DX;
@@ -980,7 +977,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// Checks 288 times during the whole program runtime if any key from the keyboard was received.
     /// If any, exit to DOS immediatly.
     /// </summary>
-    public virtual Action CheckForAnyKeyStroke_1000_1085_11085(int loadOffset)
+    public virtual Action CommonCheckForAnyKeyStroke_1000_1085_11085(int loadOffset)
     {
         // Bios Interrupt: GetKeystrokeStatus
         // MOV AH,0x1 (1000_1085 / 0x11085)
@@ -1007,7 +1004,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action ReadFile_AdvancePointer_CloseFile_1000_109A_1109A(int loadOffset)
+    public virtual Action HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A(int loadOffset)
     {
         Stack.Push16(DS);
         AX = ES;
