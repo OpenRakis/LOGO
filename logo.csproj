@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <Using Include="Spice86.Core.Emulator.Function" />
   </ItemGroup>
   <ItemGroup>
-  <PackageReference Include="Spice86" Version="3.0.6" />
+  <PackageReference Include="Spice86" Version="3.0.11" />
   </ItemGroup>
   <!-- <ItemGroup>
     <ProjectReference Include="..\Spice86\src\Bufdio.Spice86\Bufdio.Spice86.csproj" />

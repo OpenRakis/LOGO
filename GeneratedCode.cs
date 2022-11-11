@@ -130,8 +130,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         AL = 0;
         AH = 0x4C;
         Interrupt(0x21);
-        CheckExternalEvents(EntrySegmentAddress, 0x6D);
-        throw new NotImplementedException("You should not be here...");
+        return () => { };
     }
 
     /// <summary>
@@ -568,7 +567,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
             BP = 0xE46;
             HNMUnknown_1000_0FEA_10FEA(0);
             CarryFlag = true;
-            Alu.Sub16(UInt16[DS, 82], 0);
+            Alu.Sub16(UInt16[DS, 0x52], 0);
         }
         while (!ZeroFlag);
         SI = 0xEE;
@@ -611,6 +610,8 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         {
             return NearRet();
         }
+        //Runs on program end
+        //Without this line, the program doesn't exit.
         UInt16[DS, 0x52] = 0;
         return NearRet();
     }
