@@ -6,7 +6,7 @@ namespace logo;
 /// This is the output from Jetbrains Dotpeek, which took a logo.dll assembly compiled with ReadyToRun (-p:PublishReadyToRun=true)
 /// which is a form of AOT compilation done by the .NET Compiler (Roslyn)
 /// The re-formed C# code from the Intermediate Language (MSIL) is below.
-/// This as replaced a lot of goto ridden code with loops.
+/// This has replaced a lot of goto ridden code with loops.
 /// This is an optional step in a rewrite of "C# ASM" to high level code, but it helps a lot.
 /// </summary>
 public partial class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
