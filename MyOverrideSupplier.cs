@@ -1,3 +1,5 @@
+using Spice86.Shared.Interfaces;
+
 namespace logo;
 
 /// <summary>
@@ -9,7 +11,7 @@ public class MyOverrideSupplier : IOverrideSupplier
         int programStartAddress,
         Machine machine)
     {
-        var generatedCode = new GeneratedOverrides(new(), machine);
+        var generatedCode = new GeneratedOverrides(new(), machine, (ILoggerService)Program.ServiceProvider!.GetService(typeof(ILoggerService)));
         return generatedCode.FunctionInformations;
     }
 }

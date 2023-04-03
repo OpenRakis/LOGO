@@ -1,4 +1,7 @@
 ﻿using System.Diagnostics;
+using Spice86.Aeon.Emulator.Video;
+using Spice86.Core.Emulator.Devices.Video;
+using Spice86.Shared.Interfaces;
 
 namespace logo;
 
@@ -13,7 +16,7 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// </summary>
     private const ushort EntrySegmentAddress = 0x1000;
 
-    public GeneratedOverrides(Dictionary<SegmentedAddress, FunctionInformation> functionInformations, Machine machine, ushort entrySegment = 0x1000) : base(functionInformations, machine)
+    public GeneratedOverrides(Dictionary<SegmentedAddress, FunctionInformation> functionInformations, Machine machine, ILoggerService loggerService, ushort entrySegment = 0x1000) : base(functionInformations, machine, loggerService)
     {
         //Do not set EntrySegmentAddress to something else if the program is not relocatable.
 
@@ -138,7 +141,10 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
     /// </summary>
     public virtual Action SetVideoMode_1000_0970_10970(int loadOffset)
     {
-        Machine.VgaCard.SetVideoModeValue(0x13);
+        // MOV AX,0x13 (1000_0970 / 0x10970)
+        AX = 0x13;
+        // INT 0x10 (1000_0973 / 0x10973)
+        Interrupt(0x10);
         return NearRet();
     }
 
@@ -153,11 +159,11 @@ public partial class GeneratedOverrides : CSharpOverrideHelper
         ushort colorOffset = DX;
         Machine.VgaCard.UpdateScreen();
         Thread.Sleep(15);
-        Machine.VgaCard.SetVgaWriteIndex(BL);
+        ((IAeonVgaCard)Machine.VgaCard).Dac.WriteIndex = BL;
         for (int i = 0; i < colors * 3; i++)
         {
             CheckExternalEvents(EntrySegmentAddress, 0x09D9);
-            Machine.VgaCard.RgbDataWrite(UInt8[DS, (ushort)(colorOffset + i)]);
+            ((IAeonVgaCard)Machine.VgaCard).Dac.Write(UInt8[DS, (ushort)(colorOffset + i)]);
         }
         return NearRet();
     }

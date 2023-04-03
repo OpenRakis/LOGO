@@ -1,3 +1,5 @@
+using Spice86.Shared.Interfaces;
+
 namespace logo;
 
 /// <summary>
@@ -15,7 +17,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
     protected ushort cs1; // 0x1000
     protected ushort cs2; // 0xF000
 
-    public GeneratedOverridesOriginalAsm(Dictionary<SegmentedAddress, FunctionInformation> functionInformations, Machine machine, ushort entrySegment = 0x1000) : base(functionInformations, machine)
+    public GeneratedOverridesOriginalAsm(Dictionary<SegmentedAddress, FunctionInformation> functionInformations, Machine machine, ILoggerService loggerService, ushort entrySegment = 0x1000) : base(functionInformations, machine, loggerService)
     {
         // Observed cs1 address at generation time is 0x1000. Do not set entrySegment to something else if the program is not relocatable.
         this.cs1 = (ushort)(entrySegment + 0x0);
