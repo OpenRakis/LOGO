@@ -16,7 +16,7 @@
     <Using Include="Spice86.Core.Emulator.Function" />
   </ItemGroup>
   <ItemGroup>
-  <PackageReference Include="Spice86" Version="4.1.0" />
+  <PackageReference Include="Spice86" Version="4.1.1" />
   </ItemGroup>
   <!-- <ItemGroup>
     <ProjectReference Include="..\Spice86\src\Bufdio.Spice86\Bufdio.Spice86.csproj" />
