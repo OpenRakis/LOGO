@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using Spice86.Aeon.Emulator.Video;
 using Spice86.Core.Emulator.Devices.Video;
+using Spice86.Shared;
+using Spice86.Shared.Emulator.Memory;
 using Spice86.Shared.Interfaces;
 
 namespace logo;
