@@ -16,6 +16,6 @@
     <Using Include="Spice86.Core.Emulator.Function" />
   </ItemGroup>
   <ItemGroup>
-  <PackageReference Include="Spice86" Version="4.1.3" />
+  <PackageReference Include="Spice86" Version="6.1.4" />
   </ItemGroup>
 </Project>
