@@ -1,4 +1,4 @@
-using Spice86.Shared;
+using Spice86.Core.CLI;
 using Spice86.Shared.Emulator.Memory;
 using Spice86.Shared.Interfaces;
 
@@ -9,11 +9,12 @@ namespace logo;
 /// </summary>
 public class MyOverrideSupplier : IOverrideSupplier
 {
-    public Dictionary<SegmentedAddress, FunctionInformation> GenerateFunctionInformations(
-        int programStartAddress,
-        Machine machine)
-    {
-        var generatedCode = new GeneratedOverrides(new(), machine, (ILoggerService)Program.ServiceProvider!.GetService(typeof(ILoggerService)));
+    public IDictionary<SegmentedAddress, FunctionInformation> GenerateFunctionInformations(
+        ILoggerService loggerService,
+        Configuration configuration,
+        ushort programStartSegment,
+        Machine machine) {
+        var generatedCode = new RewrittenOverrides(new(), machine, loggerService, configuration);
         return generatedCode.FunctionInformations;
     }
 }
