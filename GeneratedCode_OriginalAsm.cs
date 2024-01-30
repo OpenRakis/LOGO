@@ -1,7 +1,7 @@
-using Spice86.Shared;
+using Spice86.Core.CLI;
+using Spice86.Core.Emulator.CPU;
 using Spice86.Shared.Emulator.Memory;
 using Spice86.Shared.Interfaces;
-using Spice86.Shared.Utils;
 
 namespace logo;
 
@@ -19,12 +19,12 @@ namespace logo;
 /// The Ghidra plugin has replaced it.
 /// See Spice86 README for details.
 /// </summary>
-public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
+public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
 {
     protected ushort cs1; // 0x1000
     protected ushort cs2; // 0xF000
 
-    public GeneratedOverridesOriginalAsm(Dictionary<SegmentedAddress, FunctionInformation> functionInformations, Machine machine, ILoggerService loggerService, ushort entrySegment = 0x1000) : base(functionInformations, machine, loggerService)
+    public GeneratedOverrides_OriginalAsm(Dictionary<SegmentedAddress, FunctionInformation> functionInformations, Machine machine, ILoggerService loggerService, Configuration configuration, ushort entrySegment = 0x1000) : base(functionInformations, machine, loggerService, configuration)
     {
         // Observed cs1 address at generation time is 0x1000. Do not set entrySegment to something else if the program is not relocatable.
         this.cs1 = (ushort)(entrySegment + 0x0);
@@ -40,44 +40,40 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
     public void DefineGeneratedCodeOverrides()
     {
         // 0x1000
-        DefineFunction(cs1, 0x0, entry_1000_0000_10000, false);
-        DefineFunction(cs1, 0x970, unknown_1000_0970_10970, false);
-        DefineFunction(cs1, 0x9B5, unknown_1000_09B5_109B5, false);
-        DefineFunction(cs1, 0x9D8, unknown_1000_09D8_109D8, false);
-        DefineFunction(cs1, 0xA22, unknown_1000_0A22_10A22, false);
-        DefineFunction(cs1, 0xA3A, unknown_1000_0A3A_10A3A, false);
-        DefineFunction(cs1, 0xA51, unknown_1000_0A51_10A51, false);
-        DefineFunction(cs1, 0xB9A, unknown_1000_0B9A_10B9A, false);
-        DefineFunction(cs1, 0xC72, unknown_1000_0C72_10C72, false);
-        DefineFunction(cs1, 0xCF4, unknown_1000_0CF4_10CF4, false);
-        DefineFunction(cs1, 0xD22, unknown_1000_0D22_10D22, false);
-        DefineFunction(cs1, 0xD5F, unknown_1000_0D5F_10D5F, false);
-        DefineFunction(cs1, 0xDBC, unknown_1000_0DBC_10DBC, false);
-        DefineFunction(cs1, 0xDDE, unknown_1000_0DDE_10DDE, false);
-        DefineFunction(cs1, 0xE46, unknown_1000_0E46_10E46, false);
-        DefineFunction(cs1, 0xE49, unknown_1000_0E49_10E49, false);
-        DefineFunction(cs1, 0xE4C, unknown_1000_0E4C_10E4C, false);
-        DefineFunction(cs1, 0xE59, unknown_1000_0E59_10E59, false);
-        DefineFunction(cs1, 0xE86, unknown_1000_0E86_10E86, false);
-        DefineFunction(cs1, 0xEAD, unknown_1000_0EAD_10EAD, false);
+        DefineFunction(cs1, 0x0, EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000, false);
+        DefineFunction(cs1, 0x970, SetVideoMode_1000_0970_10970, false);
+        DefineFunction(cs1, 0x9B5, CheckCrtRegisterForChange_1000_09B5_109B5, false);
+        DefineFunction(cs1, 0x9D8, CommonCirclesWaitFrameAndWriteNextPaletteData_1000_09D8_109D8, false);
+        DefineFunction(cs1, 0xA22, ConvertLineNumberToArrayIndex_1000_0A22_10A22, false);
+        DefineFunction(cs1, 0xA3A, Nop_1000_0A3A_10A3A, false);
+        DefineFunction(cs1, 0xA51, Nop_1000_0A51_10A51, false);
+        DefineFunction(cs1, 0xB9A, CommonUnknown_1000_0B9A_10B9A, false);
+        DefineFunction(cs1, 0xC72, CirclesUnknown_display_1000_0C72_10C72, false);
+        DefineFunction(cs1, 0xCF4, CircleMainLoop_1000_0CF4_10CF4, false);
+        DefineFunction(cs1, 0xD22, CirclesDrawStep_1000_0D22_10D22, false);
+        DefineFunction(cs1, 0xD5F, CommonComputeNextVgaPalette_1000_0D5F_10D5F, false);
+        DefineFunction(cs1, 0xDBC, CirclesUnknown_1000_0DBC_10DBC, false);
+        DefineFunction(cs1, 0xDDE, CirclesAnimation_1000_0DDE_10DDE, false);
+        DefineFunction(cs1, 0xE46, HNMUnknown_1000_0E46_10E46, false);
+        DefineFunction(cs1, 0xE49, CommonUnknown_1000_0E49_10E49, false);
+        DefineFunction(cs1, 0xE4C, CommonUnknown_1000_0E4C_10E4C, false);
+        DefineFunction(cs1, 0xE59, CommonUnknown_display_1000_0E59_10E59, false);
+        DefineFunction(cs1, 0xE86, UpdatePaletteDataAddress_1000_0E86_10E86, false);
+        DefineFunction(cs1, 0xEAD, CommonUnknown_1000_0EAD_10EAD, false);
         DefineFunction(cs1, 0xEB2, split_1000_0EB2_10EB2, false);
-        DefineFunction(cs1, 0xEBD, unknown_1000_0EBD_10EBD, false);
-        DefineFunction(cs1, 0xEFE, unknown_1000_0EFE_10EFE, false);
-        DefineFunction(cs1, 0xF30, split_1000_0F30_10F30, false);
-        DefineFunction(cs1, 0xFA4, unknown_1000_0FA4_10FA4, false);
-        DefineFunction(cs1, 0xFCC, unknown_1000_0FCC_10FCC, false);
-        DefineFunction(cs1, 0xFEA, unknown_1000_0FEA_10FEA, false);
-        DefineFunction(cs1, 0x1019, unknown_1000_1019_11019, false);
-        DefineFunction(cs1, 0x105F, unknown_1000_105F_1105F, false);
-        DefineFunction(cs1, 0x1085, unknown_1000_1085_11085, false);
-        DefineFunction(cs1, 0x109A, unknown_1000_109A_1109A, false);
-        DefineFunction(cs1, 0x10F4, unknown_1000_10F4_110F4, false);
+        DefineFunction(cs1, 0xEBD, CommonUnknown_1000_0EBD_10EBD, false);
+        DefineFunction(cs1, 0xEFE, CommonUnknown_1000_0EFE_10EFE, false);
+        DefineFunction(cs1, 0xF30, CommonUnknownSplit_1000_0F30_10F30, false);
+        DefineFunction(cs1, 0xFA4, CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4, false);
+        DefineFunction(cs1, 0xFCC, nop_1000_0FCC_10FCC, false);
+        DefineFunction(cs1, 0xFEA, HNMUnknown_1000_0FEA_10FEA, false);
+        DefineFunction(cs1, 0x1019, CirclesUnknown_1000_1019_11019, false);
+        DefineFunction(cs1, 0x105F, CirclesUnknown_1000_105F_1105F, false);
+        DefineFunction(cs1, 0x1085, CommonCheckForAnyKeyStroke_1000_1085_11085, false);
+        DefineFunction(cs1, 0x109A, HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A, false);
+        DefineFunction(cs1, 0x10F4, Nop_1000_10F4_110F4, false);
         DefineFunction(cs1, 0x112D, ghidra_guess_1000_112D_1112D, false);
-        DefineFunction(cs1, 0x11BD, unknown_1000_11BD_111BD, false);
-        // 0xF000
-        DefineFunction(cs2, 0x8, interrupt_handler_0x10_F000_0008_F0008, false);
-        DefineFunction(cs2, 0x14, interrupt_handler_0x16_F000_0014_F0014, false);
-        DefineFunction(cs2, 0x20, interrupt_handler_0x21_F000_0020_F0020, false);
+        DefineFunction(cs1, 0x11BD, Nop_1000_11BD_111BD, false);
     }
 
     public void DetectCodeRewrites()
@@ -96,7 +92,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         DefineExecutableArea(0xF0020, 0xF0023);
     }
 
-    public virtual Action entry_1000_0000_10000(int loadOffset)
+    public virtual Action EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000(int loadOffset)
     {
         // MOV AX,0x111c (1000_0000 / 0x10000)
         AX = 0x111C;
@@ -109,13 +105,13 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // MOV BX,0x8 (1000_000C / 0x1000C)
         BX = 0x8;
         // CALL 0x1000:10f4 (1000_000F / 0x1000F)
-        NearCall(cs1, 0x12, unknown_1000_10F4_110F4);
+        NearCall(cs1, 0x12, Nop_1000_10F4_110F4);
         // MOV AX,0xc (1000_0012 / 0x10012)
         AX = 0xC;
         // MOV SI,0x8e (1000_0015 / 0x10015)
         SI = 0x8E;
         // CMP byte ptr [SI],0x0 (1000_0018 / 0x10018)
-        Alu.Sub8(UInt8[DS, SI], 0x0);
+        Alu8.Sub(UInt8[DS, SI], 0x0);
         // JZ 0x1000:0023 (1000_001B / 0x1001B)
         if (ZeroFlag)
         {
@@ -131,9 +127,9 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // MOV DX,0x5a (1000_0026 / 0x10026)
         DX = 0x5A;
         // CALL 0x1000:105f (1000_0029 / 0x10029)
-        NearCall(cs1, 0x2C, unknown_1000_105F_1105F);
+        NearCall(cs1, 0x2C, CirclesUnknown_1000_105F_1105F);
         // CMP byte ptr [DI],0x2e (1000_002C / 0x1002C)
-        Alu.Sub8(UInt8[DS, DI], 0x2E);
+        Alu8.Sub(UInt8[DS, DI], 0x2E);
         // JZ 0x1000:003e (1000_002F / 0x1002F)
         if (ZeroFlag)
         {
@@ -160,17 +156,17 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // PUSH AX (1000_0048 / 0x10048)
         Stack.Push16(AX);
         // CALL 0x1000:0970 (1000_0049 / 0x10049)
-        NearCall(cs1, 0x4C, unknown_1000_0970_10970);
+        NearCall(cs1, 0x4C, SetVideoMode_1000_0970_10970);
         // CALL 0x1000:1019 (1000_004C / 0x1004C)
-        NearCall(cs1, 0x4F, unknown_1000_1019_11019);
+        NearCall(cs1, 0x4F, CirclesUnknown_1000_1019_11019);
         // POP BX (1000_004F / 0x1004F)
         BX = Stack.Pop16();
         // MOV AX,[0x52] (1000_0050 / 0x10050)
         AX = UInt16[DS, 0x52];
         // CALL 0x1000:0dde (1000_0053 / 0x10053)
-        NearCall(cs1, 0x56, unknown_1000_0DDE_10DDE);
+        NearCall(cs1, 0x56, CirclesAnimation_1000_0DDE_10DDE);
         // CALL 0x1000:0a51 (1000_0056 / 0x10056)
-        NearCall(cs1, 0x59, unknown_1000_0A51_10A51);
+        NearCall(cs1, 0x59, Nop_1000_0A51_10A51);
         // XOR DX,DX (1000_0059 / 0x10059)
         DX = 0;
         // XOR AL,AL (1000_005B / 0x1005B)
@@ -232,11 +228,11 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         UInt8[DS, (ushort)(BX + SI)] += AL;
         // ADD byte ptr [BX + SI],AL (1000_008F / 0x1008F)
         // UInt8[DS, (ushort)(BX + SI)] += AL;
-        UInt8[DS, (ushort)(BX + SI)] = Alu.Add8(UInt8[DS, (ushort)(BX + SI)], AL);
+        UInt8[DS, (ushort)(BX + SI)] = Alu8.Add(UInt8[DS, (ushort)(BX + SI)], AL);
         throw FailAsUntested("Function does not end with return and no instruction after the body ...");
     }
 
-    public virtual Action unknown_1000_0970_10970(int loadOffset)
+    public virtual Action SetVideoMode_1000_0970_10970(int loadOffset)
     {
         // MOV AX,0x13 (1000_0970 / 0x10970)
         AX = 0x13;
@@ -254,7 +250,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         DX = UInt16[ES, 0x63];
         // ADD DL,0x6 (1000_0981 / 0x10981)
         // DL += 0x6;
-        DL = Alu.Add8(DL, 0x6);
+        DL = Alu8.Add(DL, 0x6);
         // MOV word ptr CS:[0x6c],DX (1000_0984 / 0x10984)
         UInt16[cs1, 0x6C] = DX;
         // MOV BP,0x6c (1000_0989 / 0x10989)
@@ -264,16 +260,16 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AL = Cpu.In8(DX);
         // AND AL,0x8 (1000_098D / 0x1098D)
         // AL &= 0x8;
-        AL = Alu.And8(AL, 0x8);
+        AL = Alu8.And(AL, 0x8);
         // CALL 0x1000:09b5 (1000_098F / 0x1098F)
-        NearCall(cs1, 0x992, unknown_1000_09B5_109B5);
+        NearCall(cs1, 0x992, CheckCrtRegisterForChange_1000_09B5_109B5);
         // JNC 0x1000:09b3 (1000_0992 / 0x10992)
         if (!CarryFlag)
         {
             goto label_1000_09B3_109B3;
         }
         // CALL 0x1000:09b5 (1000_0994 / 0x10994)
-        NearCall(cs1, 0x997, unknown_1000_09B5_109B5);
+        NearCall(cs1, 0x997, CheckCrtRegisterForChange_1000_09B5_109B5);
         // JNC 0x1000:09b3 (1000_0997 / 0x10997)
         if (!CarryFlag)
         {
@@ -284,14 +280,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // MOV byte ptr CS:[0x6f],AH (1000_099B / 0x1099B)
         UInt8[cs1, 0x6F] = AH;
         // CALL 0x1000:09b5 (1000_09A0 / 0x109A0)
-        NearCall(cs1, 0x9A3, unknown_1000_09B5_109B5);
+        NearCall(cs1, 0x9A3, CheckCrtRegisterForChange_1000_09B5_109B5);
         // JNC 0x1000:09b3 (1000_09A3 / 0x109A3)
         if (!CarryFlag)
         {
             goto label_1000_09B3_109B3;
         }
         // CMP SI,DI (1000_09A5 / 0x109A5)
-        Alu.Sub16(SI, DI);
+        Alu16.Sub(SI, DI);
         // NOT byte ptr CS:[0x6e] (1000_09A7 / 0x109A7)
         UInt8[cs1, 0x6E] = (byte)~UInt8[cs1, 0x6E];
         // JNC 0x1000:09b3 (1000_09AC / 0x109AC)
@@ -308,7 +304,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_09B5_109B5(int loadOffset)
+    public virtual Action CheckCrtRegisterForChange_1000_09B5_109B5(int loadOffset)
     {
         // MOV AH,AL (1000_09B5 / 0x109B5)
         AH = AL;
@@ -318,14 +314,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         BX = UInt16[ES, BP];
     label_1000_09BD_109BD:
         // INC SI (1000_09BD / 0x109BD)
-        SI = Alu.Inc16(SI);
+        SI = Alu16.Inc(SI);
         // JNZ 0x1000:09c1 (1000_09BE / 0x109BE)
         if (!ZeroFlag)
         {
             goto label_1000_09C1_109C1;
         }
         // DEC SI (1000_09C0 / 0x109C0)
-        SI = Alu.Dec16(SI);
+        SI = Alu16.Dec(SI);
     label_1000_09C1_109C1:
         // IN AL,DX (1000_09C1 / 0x109C1)
         CheckExternalEvents(cs1, 0x9c2);
@@ -333,7 +329,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // AND AL,0x8 (1000_09C2 / 0x109C2)
         AL &= 0x8;
         // CMP AL,AH (1000_09C4 / 0x109C4)
-        Alu.Sub8(AL, AH);
+        Alu8.Sub(AL, AH);
         // JNZ 0x1000:09d6 (1000_09C6 / 0x109C6)
         if (!ZeroFlag)
         {
@@ -346,7 +342,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // SUB AX,BX (1000_09CD / 0x109CD)
         AX -= BX;
         // CMP AX,0x64 (1000_09CF / 0x109CF)
-        Alu.Sub16(AX, 0x64);
+        Alu16.Sub(AX, 0x64);
         // POP AX (1000_09D2 / 0x109D2)
         AX = Stack.Pop16();
         // JC 0x1000:09bd (1000_09D3 / 0x109D3)
@@ -363,7 +359,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_09D8_109D8(int loadOffset)
+    public virtual Action CommonCirclesWaitFrameAndWriteNextPaletteData_1000_09D8_109D8(int loadOffset)
     {
         // PUSH SI (1000_09D8 / 0x109D8)
         Stack.Push16(SI);
@@ -378,7 +374,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // PUSHF  (1000_09DE / 0x109DE)
         Stack.Push16(FlagRegister16);
         // CMP byte ptr CS:[0x6e],0x0 (1000_09DF / 0x109DF)
-        Alu.Sub8(UInt8[cs1, 0x6E], 0x0);
+        Alu8.Sub(UInt8[cs1, 0x6E], 0x0);
         // JZ 0x1000:09f6 (1000_09E5 / 0x109E5)
         if (ZeroFlag)
         {
@@ -393,7 +389,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // AND AL,0x8 (1000_09ED / 0x109ED)
         AL &= 0x8;
         // CMP AL,byte ptr CS:[0x6f] (1000_09EF / 0x109EF)
-        Alu.Sub8(AL, UInt8[cs1, 0x6F]);
+        Alu8.Sub(AL, UInt8[cs1, 0x6F]);
         // JNZ 0x1000:09ec (1000_09F4 / 0x109F4)
         if (!ZeroFlag)
         {
@@ -418,7 +414,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         goto label_1000_0A05_10A05;
     label_1000_0A05_10A05:
         // INC DX (1000_0A05 / 0x10A05)
-        DX = Alu.Inc16(DX);
+        DX = Alu16.Inc(DX);
         // MOV AX,CX (1000_0A06 / 0x10A06)
         AX = CX;
         // ADD CX,CX (1000_0A08 / 0x10A08)
@@ -426,7 +422,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // ADD CX,AX (1000_0A0A / 0x10A0A)
         CX += AX;
         // CMP byte ptr CS:[0x6b],0x0 (1000_0A0C / 0x10A0C)
-        Alu.Sub8(UInt8[cs1, 0x6B], 0x0);
+        Alu8.Sub(UInt8[cs1, 0x6B], 0x0);
         // JZ 0x1000:0a1a (1000_0A12 / 0x10A12)
         if (ZeroFlag)
         {
@@ -469,10 +465,10 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0A22_10A22(int loadOffset)
+    public virtual Action ConvertLineNumberToArrayIndex_1000_0A22_10A22(int loadOffset)
     {
         // CMP BX,0xc8 (1000_0A22 / 0x10A22)
-        Alu.Sub16(BX, 0xC8);
+        Alu16.Sub(BX, 0xC8);
         // JC 0x1000:0a2b (1000_0A26 / 0x10A26)
         if (CarryFlag)
         {
@@ -491,17 +487,17 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         DI >>= 0x1;
         // ADD DI,BX (1000_0A33 / 0x10A33)
         // DI += BX;
-        DI = Alu.Add16(DI, BX);
+        DI = Alu16.Add(DI, BX);
         // XCHG BL,BH (1000_0A35 / 0x10A35)
         (BH, BL) = (BL, BH);
         // ADD DI,DX (1000_0A37 / 0x10A37)
         // DI += DX;
-        DI = Alu.Add16(DI, DX);
+        DI = Alu16.Add(DI, DX);
         // RET  (1000_0A39 / 0x10A39)
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0A3A_10A3A(int loadOffset)
+    public virtual Action Nop_1000_0A3A_10A3A(int loadOffset)
     {
         // PUSH AX (1000_0A3A / 0x10A3A)
         Stack.Push16(AX);
@@ -541,7 +537,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0A51_10A51(int loadOffset)
+    public virtual Action Nop_1000_0A51_10A51(int loadOffset)
     {
         // PUSH DS (1000_0A51 / 0x10A51)
         Stack.Push16(DS);
@@ -562,7 +558,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AL = UInt8[DS, SI];
         SI = (ushort)(SI + Direction8);
         // CMP AL,0xa0 (1000_0A61 / 0x10A61)
-        Alu.Sub8(AL, 0xA0);
+        Alu8.Sub(AL, 0xA0);
         // JNC 0x1000:0a67 (1000_0A63 / 0x10A63)
         if (!CarryFlag)
         {
@@ -585,7 +581,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0B9A_10B9A(int loadOffset)
+    public virtual Action CommonUnknown_1000_0B9A_10B9A(int loadOffset)
     {
         switch (loadOffset)
         {
@@ -599,14 +595,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         DI -= BP;
         // ADD DI,0x140 (1000_0A70 / 0x10A70)
         // DI += 0x140;
-        DI = Alu.Add16(DI, 0x140);
+        DI = Alu16.Add(DI, 0x140);
     label_1000_0A74_10A74:
         // LODSB SI (1000_0A74 / 0x10A74)
         AL = UInt8[DS, SI];
         SI = (ushort)(SI + Direction8);
         // OR AL,AL (1000_0A75 / 0x10A75)
         // AL |= AL;
-        AL = Alu.Or8(AL, AL);
+        AL = Alu8.Or(AL, AL);
         // JS 0x1000:0aa9 (1000_0A77 / 0x10A77)
         if (SignFlag)
         {
@@ -620,14 +616,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX++;
         // SUB BP,CX (1000_0A7E / 0x10A7E)
         // BP -= CX;
-        BP = Alu.Sub16(BP, CX);
+        BP = Alu16.Sub(BP, CX);
     label_1000_0A80_10A80:
         // LODSB SI (1000_0A80 / 0x10A80)
         AL = UInt8[DS, SI];
         SI = (ushort)(SI + Direction8);
         // OR AL,AL (1000_0A81 / 0x10A81)
         // AL |= AL;
-        AL = Alu.Or8(AL, AL);
+        AL = Alu8.Or(AL, AL);
         // JZ 0x1000:0a9d (1000_0A83 / 0x10A83)
         if (ZeroFlag)
         {
@@ -643,14 +639,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // OR BP,BP (1000_0A88 / 0x10A88)
         // BP |= BP;
-        BP = Alu.Or16(BP, BP);
+        BP = Alu16.Or(BP, BP);
         // JA 0x1000:0a74 (1000_0A8A / 0x10A8A)
         if (!CarryFlag && !ZeroFlag)
         {
             goto label_1000_0A74_10A74;
         }
         // DEC BX (1000_0A8C / 0x10A8C)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0a6c (1000_0A8D / 0x10A8D)
         if (!ZeroFlag)
         {
@@ -667,7 +663,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return FarRet();
     label_1000_0A9D_10A9D:
         // INC DI (1000_0A9D / 0x10A9D)
-        DI = Alu.Inc16(DI);
+        DI = Alu16.Inc(DI);
         // LOOP 0x1000:0a80 (1000_0A9E / 0x10A9E)
         if (--CX != 0)
         {
@@ -675,14 +671,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // OR BP,BP (1000_0AA0 / 0x10AA0)
         // BP |= BP;
-        BP = Alu.Or16(BP, BP);
+        BP = Alu16.Or(BP, BP);
         // JA 0x1000:0a74 (1000_0AA2 / 0x10AA2)
         if (!CarryFlag && !ZeroFlag)
         {
             goto label_1000_0A74_10A74;
         }
         // DEC BX (1000_0AA4 / 0x10AA4)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0a6c (1000_0AA5 / 0x10AA5)
         if (!ZeroFlag)
         {
@@ -699,13 +695,13 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX -= AX;
         // SUB BP,CX (1000_0AB0 / 0x10AB0)
         // BP -= CX;
-        BP = Alu.Sub16(BP, CX);
+        BP = Alu16.Sub(BP, CX);
         // LODSB SI (1000_0AB2 / 0x10AB2)
         AL = UInt8[DS, SI];
         SI = (ushort)(SI + Direction8);
         // OR AL,AL (1000_0AB3 / 0x10AB3)
         // AL |= AL;
-        AL = Alu.Or8(AL, AL);
+        AL = Alu8.Or(AL, AL);
         // JZ 0x1000:0ac2 (1000_0AB5 / 0x10AB5)
         if (ZeroFlag)
         {
@@ -721,14 +717,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // OR BP,BP (1000_0AB9 / 0x10AB9)
         // BP |= BP;
-        BP = Alu.Or16(BP, BP);
+        BP = Alu16.Or(BP, BP);
         // JA 0x1000:0a74 (1000_0ABB / 0x10ABB)
         if (!CarryFlag && !ZeroFlag)
         {
             goto label_1000_0A74_10A74;
         }
         // DEC BX (1000_0ABD / 0x10ABD)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0a6c (1000_0ABE / 0x10ABE)
         if (!ZeroFlag)
         {
@@ -739,17 +735,17 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
     label_1000_0AC2_10AC2:
         // ADD DI,CX (1000_0AC2 / 0x10AC2)
         // DI += CX;
-        DI = Alu.Add16(DI, CX);
+        DI = Alu16.Add(DI, CX);
         // OR BP,BP (1000_0AC4 / 0x10AC4)
         // BP |= BP;
-        BP = Alu.Or16(BP, BP);
+        BP = Alu16.Or(BP, BP);
         // JA 0x1000:0a74 (1000_0AC6 / 0x10AC6)
         if (!CarryFlag && !ZeroFlag)
         {
             goto label_1000_0A74_10A74;
         }
         // DEC BX (1000_0AC8 / 0x10AC8)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0a6c (1000_0AC9 / 0x10AC9)
         if (!ZeroFlag)
         {
@@ -764,15 +760,15 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         DI += BP;
         // ADD DI,0x140 (1000_0AD1 / 0x10AD1)
         // DI += 0x140;
-        DI = Alu.Add16(DI, 0x140);
+        DI = Alu16.Add(DI, 0x140);
     label_1000_0AD5_10AD5:
         // MOV AL,byte ptr [SI] (1000_0AD5 / 0x10AD5)
         AL = UInt8[DS, SI];
         // INC SI (1000_0AD7 / 0x10AD7)
-        SI = Alu.Inc16(SI);
+        SI = Alu16.Inc(SI);
         // OR AL,AL (1000_0AD8 / 0x10AD8)
         // AL |= AL;
-        AL = Alu.Or8(AL, AL);
+        AL = Alu8.Or(AL, AL);
         // JZ 0x1000:0b02 (1000_0ADA / 0x10ADA)
         if (ZeroFlag)
         {
@@ -786,15 +782,15 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX++;
         // SUB BP,CX (1000_0AE1 / 0x10AE1)
         // BP -= CX;
-        BP = Alu.Sub16(BP, CX);
+        BP = Alu16.Sub(BP, CX);
     label_1000_0AE3_10AE3:
         // MOV AL,byte ptr [SI] (1000_0AE3 / 0x10AE3)
         AL = UInt8[DS, SI];
         // INC SI (1000_0AE5 / 0x10AE5)
-        SI = Alu.Inc16(SI);
+        SI = Alu16.Inc(SI);
         // OR AL,AL (1000_0AE6 / 0x10AE6)
         // AL |= AL;
-        AL = Alu.Or8(AL, AL);
+        AL = Alu8.Or(AL, AL);
         // JZ 0x1000:0af6 (1000_0AE8 / 0x10AE8)
         if (ZeroFlag)
         {
@@ -810,14 +806,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // OR BP,BP (1000_0AED / 0x10AED)
         // BP |= BP;
-        BP = Alu.Or16(BP, BP);
+        BP = Alu16.Or(BP, BP);
         // JA 0x1000:0ad5 (1000_0AEF / 0x10AEF)
         if (!CarryFlag && !ZeroFlag)
         {
             goto label_1000_0AD5_10AD5;
         }
         // DEC BX (1000_0AF1 / 0x10AF1)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0acd (1000_0AF2 / 0x10AF2)
         if (!ZeroFlag)
         {
@@ -827,7 +823,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         goto label_1000_0A8F_10A8F;
     label_1000_0AF6_10AF6:
         // DEC DI (1000_0AF6 / 0x10AF6)
-        DI = Alu.Dec16(DI);
+        DI = Alu16.Dec(DI);
         // LOOP 0x1000:0ae3 (1000_0AF7 / 0x10AF7)
         if (--CX != 0)
         {
@@ -835,14 +831,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // OR BP,BP (1000_0AF9 / 0x10AF9)
         // BP |= BP;
-        BP = Alu.Or16(BP, BP);
+        BP = Alu16.Or(BP, BP);
         // JA 0x1000:0ad5 (1000_0AFB / 0x10AFB)
         if (!CarryFlag && !ZeroFlag)
         {
             goto label_1000_0AD5_10AD5;
         }
         // DEC BX (1000_0AFD / 0x10AFD)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0acd (1000_0AFE / 0x10AFE)
         if (!ZeroFlag)
         {
@@ -859,14 +855,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX -= AX;
         // SUB BP,CX (1000_0B09 / 0x10B09)
         // BP -= CX;
-        BP = Alu.Sub16(BP, CX);
+        BP = Alu16.Sub(BP, CX);
         // MOV AL,byte ptr [SI] (1000_0B0B / 0x10B0B)
         AL = UInt8[DS, SI];
         // INC SI (1000_0B0D / 0x10B0D)
-        SI = Alu.Inc16(SI);
+        SI = Alu16.Inc(SI);
         // OR AL,AL (1000_0B0E / 0x10B0E)
         // AL |= AL;
-        AL = Alu.Or8(AL, AL);
+        AL = Alu8.Or(AL, AL);
         // JZ 0x1000:0b1e (1000_0B10 / 0x10B10)
         if (ZeroFlag)
         {
@@ -882,14 +878,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // OR BP,BP (1000_0B14 / 0x10B14)
         // BP |= BP;
-        BP = Alu.Or16(BP, BP);
+        BP = Alu16.Or(BP, BP);
         // JA 0x1000:0ad5 (1000_0B16 / 0x10B16)
         if (!CarryFlag && !ZeroFlag)
         {
             goto label_1000_0AD5_10AD5;
         }
         // DEC BX (1000_0B18 / 0x10B18)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0acd (1000_0B19 / 0x10B19)
         if (!ZeroFlag)
         {
@@ -900,17 +896,17 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
     label_1000_0B1E_10B1E:
         // SUB DI,CX (1000_0B1E / 0x10B1E)
         // DI -= CX;
-        DI = Alu.Sub16(DI, CX);
+        DI = Alu16.Sub(DI, CX);
         // OR BP,BP (1000_0B20 / 0x10B20)
         // BP |= BP;
-        BP = Alu.Or16(BP, BP);
+        BP = Alu16.Or(BP, BP);
         // JA 0x1000:0ad5 (1000_0B22 / 0x10B22)
         if (!CarryFlag && !ZeroFlag)
         {
             goto label_1000_0AD5_10AD5;
         }
         // DEC BX (1000_0B24 / 0x10B24)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0acd (1000_0B25 / 0x10B25)
         if (!ZeroFlag)
         {
@@ -925,14 +921,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         DI -= BP;
         // ADD DI,0x140 (1000_0B2E / 0x10B2E)
         // DI += 0x140;
-        DI = Alu.Add16(DI, 0x140);
+        DI = Alu16.Add(DI, 0x140);
     label_1000_0B32_10B32:
         // LODSB SI (1000_0B32 / 0x10B32)
         AL = UInt8[DS, SI];
         SI = (ushort)(SI + Direction8);
         // OR AL,AL (1000_0B33 / 0x10B33)
         // AL |= AL;
-        AL = Alu.Or8(AL, AL);
+        AL = Alu8.Or(AL, AL);
         // JS 0x1000:0b48 (1000_0B35 / 0x10B35)
         if (SignFlag)
         {
@@ -946,7 +942,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX++;
         // SUB BP,CX (1000_0B3C / 0x10B3C)
         // BP -= CX;
-        BP = Alu.Sub16(BP, CX);
+        BP = Alu16.Sub(BP, CX);
         // REP
         while (CX != 0)
         {
@@ -962,7 +958,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
             goto label_1000_0B32_10B32;
         }
         // DEC BX (1000_0B42 / 0x10B42)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0b2a (1000_0B43 / 0x10B43)
         if (!ZeroFlag)
         {
@@ -979,7 +975,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX -= AX;
         // SUB BP,CX (1000_0B4F / 0x10B4F)
         // BP -= CX;
-        BP = Alu.Sub16(BP, CX);
+        BP = Alu16.Sub(BP, CX);
         // LODSB SI (1000_0B51 / 0x10B51)
         AL = UInt8[DS, SI];
         SI = (ushort)(SI + Direction8);
@@ -997,7 +993,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
             goto label_1000_0B32_10B32;
         }
         // DEC BX (1000_0B56 / 0x10B56)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0b2a (1000_0B57 / 0x10B57)
         if (!ZeroFlag)
         {
@@ -1012,15 +1008,15 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         DI += BP;
         // ADD DI,0x140 (1000_0B60 / 0x10B60)
         // DI += 0x140;
-        DI = Alu.Add16(DI, 0x140);
+        DI = Alu16.Add(DI, 0x140);
     label_1000_0B64_10B64:
         // MOV AL,byte ptr [SI] (1000_0B64 / 0x10B64)
         AL = UInt8[DS, SI];
         // INC SI (1000_0B66 / 0x10B66)
-        SI = Alu.Inc16(SI);
+        SI = Alu16.Inc(SI);
         // OR AL,AL (1000_0B67 / 0x10B67)
         // AL |= AL;
-        AL = Alu.Or8(AL, AL);
+        AL = Alu8.Or(AL, AL);
         // JZ 0x1000:0b82 (1000_0B69 / 0x10B69)
         if (ZeroFlag)
         {
@@ -1034,12 +1030,12 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX++;
         // SUB BP,CX (1000_0B70 / 0x10B70)
         // BP -= CX;
-        BP = Alu.Sub16(BP, CX);
+        BP = Alu16.Sub(BP, CX);
     label_1000_0B72_10B72:
         // MOV AL,byte ptr [SI] (1000_0B72 / 0x10B72)
         AL = UInt8[DS, SI];
         // INC SI (1000_0B74 / 0x10B74)
-        SI = Alu.Inc16(SI);
+        SI = Alu16.Inc(SI);
         // STOSB ES:DI (1000_0B75 / 0x10B75)
         UInt8[ES, DI] = AL;
         DI = (ushort)(DI + Direction8);
@@ -1050,14 +1046,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // OR BP,BP (1000_0B78 / 0x10B78)
         // BP |= BP;
-        BP = Alu.Or16(BP, BP);
+        BP = Alu16.Or(BP, BP);
         // JA 0x1000:0b64 (1000_0B7A / 0x10B7A)
         if (!CarryFlag && !ZeroFlag)
         {
             goto label_1000_0B64_10B64;
         }
         // DEC BX (1000_0B7C / 0x10B7C)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0b5c (1000_0B7D / 0x10B7D)
         if (!ZeroFlag)
         {
@@ -1074,11 +1070,11 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX -= AX;
         // SUB BP,CX (1000_0B89 / 0x10B89)
         // BP -= CX;
-        BP = Alu.Sub16(BP, CX);
+        BP = Alu16.Sub(BP, CX);
         // MOV AL,byte ptr [SI] (1000_0B8B / 0x10B8B)
         AL = UInt8[DS, SI];
         // INC SI (1000_0B8D / 0x10B8D)
-        SI = Alu.Inc16(SI);
+        SI = Alu16.Inc(SI);
         // REP
         while (CX != 0)
         {
@@ -1089,14 +1085,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // OR BP,BP (1000_0B90 / 0x10B90)
         // BP |= BP;
-        BP = Alu.Or16(BP, BP);
+        BP = Alu16.Or(BP, BP);
         // JA 0x1000:0b64 (1000_0B92 / 0x10B92)
         if (!CarryFlag && !ZeroFlag)
         {
             goto label_1000_0B64_10B64;
         }
         // DEC BX (1000_0B94 / 0x10B94)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0b5c (1000_0B95 / 0x10B95)
         if (!ZeroFlag)
         {
@@ -1106,7 +1102,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         goto label_1000_0A8F_10A8F;
     entry:
         // CMP CH,0xfe (1000_0B9A / 0x10B9A)
-        Alu.Sub8(CH, 0xFE);
+        Alu8.Sub(CH, 0xFE);
         // JNC 0x1000:0ba0 (1000_0B9D / 0x10B9D)
         if (!CarryFlag)
         {
@@ -1117,7 +1113,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
     label_1000_0BA0_10BA0:
         // OR DI,DI (1000_0BA0 / 0x10BA0)
         // DI |= DI;
-        DI = Alu.Or16(DI, DI);
+        DI = Alu16.Or(DI, DI);
         // JS 0x1000:0bfa (1000_0BA2 / 0x10BA2)
         if (SignFlag)
         {
@@ -1127,17 +1123,17 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         BP = DI;
         // AND BP,0x1ff (1000_0BA6 / 0x10BA6)
         // BP &= 0x1FF;
-        BP = Alu.And16(BP, 0x1FF);
+        BP = Alu16.And(BP, 0x1FF);
         // MOV AX,DI (1000_0BAA / 0x10BAA)
         AX = DI;
         // CALL 0x1000:0a22 (1000_0BAC / 0x10BAC)
-        NearCall(cs1, 0xBAF, unknown_1000_0A22_10A22);
+        NearCall(cs1, 0xBAF, ConvertLineNumberToArrayIndex_1000_0A22_10A22);
         // MOV BX,CX (1000_0BAF / 0x10BAF)
         BX = CX;
         // XOR BH,BH (1000_0BB1 / 0x10BB1)
         BH = 0;
         // CMP CH,0xff (1000_0BB3 / 0x10BB3)
-        Alu.Sub8(CH, 0xFF);
+        Alu8.Sub(CH, 0xFF);
         // JZ 0x1000:0bd9 (1000_0BB6 / 0x10BB6)
         if (ZeroFlag)
         {
@@ -1145,7 +1141,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // SHR BP,0x1 (1000_0BB8 / 0x10BB8)
         // BP >>= 0x1;
-        BP = Alu.Shr16(BP, 0x1);
+        BP = Alu16.Shr(BP, 0x1);
         // MOV AX,DI (1000_0BBA / 0x10BBA)
         AX = DI;
         // JC 0x1000:0bcb (1000_0BBC / 0x10BBC)
@@ -1170,7 +1166,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // ADD AX,0x140 (1000_0BC4 / 0x10BC4)
         AX += 0x140;
         // DEC BX (1000_0BC7 / 0x10BC7)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0bbe (1000_0BC8 / 0x10BC8)
         if (!ZeroFlag)
         {
@@ -1199,7 +1195,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // ADD AX,0x140 (1000_0BD2 / 0x10BD2)
         AX += 0x140;
         // DEC BX (1000_0BD5 / 0x10BD5)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0bcb (1000_0BD6 / 0x10BD6)
         if (!ZeroFlag)
         {
@@ -1221,7 +1217,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         SI = (ushort)(SI + Direction8);
         // OR AL,AL (1000_0BE0 / 0x10BE0)
         // AL |= AL;
-        AL = Alu.Or8(AL, AL);
+        AL = Alu8.Or(AL, AL);
         // JZ 0x1000:0bef (1000_0BE2 / 0x10BE2)
         if (ZeroFlag)
         {
@@ -1238,7 +1234,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // ADD DX,0x140 (1000_0BE7 / 0x10BE7)
         DX += 0x140;
         // DEC BX (1000_0BEB / 0x10BEB)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0bdb (1000_0BEC / 0x10BEC)
         if (!ZeroFlag)
         {
@@ -1248,7 +1244,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return FarRet();
     label_1000_0BEF_10BEF:
         // INC DI (1000_0BEF / 0x10BEF)
-        DI = Alu.Inc16(DI);
+        DI = Alu16.Inc(DI);
         // LOOP 0x1000:0bdf (1000_0BF0 / 0x10BF0)
         if (--CX != 0)
         {
@@ -1257,7 +1253,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // ADD DX,0x140 (1000_0BF2 / 0x10BF2)
         DX += 0x140;
         // DEC BX (1000_0BF6 / 0x10BF6)
-        BX = Alu.Dec16(BX);
+        BX = Alu16.Dec(BX);
         // JNZ 0x1000:0bdb (1000_0BF7 / 0x10BF7)
         if (!ZeroFlag)
         {
@@ -1270,24 +1266,24 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         BP = DI;
         // AND BP,0x1ff (1000_0BFC / 0x10BFC)
         // BP &= 0x1FF;
-        BP = Alu.And16(BP, 0x1FF);
+        BP = Alu16.And(BP, 0x1FF);
         // MOV AX,DI (1000_0C00 / 0x10C00)
         AX = DI;
         // CALL 0x1000:0a22 (1000_0C02 / 0x10C02)
-        NearCall(cs1, 0xC05, unknown_1000_0A22_10A22);
+        NearCall(cs1, 0xC05, ConvertLineNumberToArrayIndex_1000_0A22_10A22);
         // MOV BX,CX (1000_0C05 / 0x10C05)
         BX = CX;
         // XOR BH,BH (1000_0C07 / 0x10C07)
         BH = 0;
         // TEST AX,0x4000 (1000_0C09 / 0x10C09)
-        Alu.And16(AX, 0x4000);
+        Alu16.And(AX, 0x4000);
         // JNZ 0x1000:0c3e (1000_0C0C / 0x10C0C)
         if (!ZeroFlag)
         {
             goto label_1000_0C3E_10C3E;
         }
         // TEST AX,0x2000 (1000_0C0E / 0x10C0E)
-        Alu.And16(AX, 0x2000);
+        Alu16.And(AX, 0x2000);
         // JZ 0x1000:0c31 (1000_0C11 / 0x10C11)
         if (ZeroFlag)
         {
@@ -1300,7 +1296,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // MOV AH,BL (1000_0C1F / 0x10C1F)
         AH = BL;
         // DEC AH (1000_0C21 / 0x10C21)
-        AH = Alu.Dec8(AH);
+        AH = Alu8.Dec(AH);
         // MOV DH,AH (1000_0C23 / 0x10C23)
         DH = AH;
         // XOR DL,DL (1000_0C25 / 0x10C25)
@@ -1315,12 +1311,12 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         DI += AX;
         // ADD DI,DX (1000_0C2F / 0x10C2F)
         // DI += DX;
-        DI = Alu.Add16(DI, DX);
+        DI = Alu16.Add(DI, DX);
     label_1000_0C31_10C31:
         // MOV DX,BP (1000_0C31 / 0x10C31)
         DX = BP;
         // CMP CH,0xff (1000_0C33 / 0x10C33)
-        Alu.Sub8(CH, 0xFF);
+        Alu8.Sub(CH, 0xFF);
         // JZ 0x1000:0c3b (1000_0C36 / 0x10C36)
         if (ZeroFlag)
         {
@@ -1332,7 +1328,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         goto label_1000_0B32_10B32;
     label_1000_0C3E_10C3E:
         // TEST AX,0x2000 (1000_0C3E / 0x10C3E)
-        Alu.And16(AX, 0x2000);
+        Alu16.And(AX, 0x2000);
         // JZ 0x1000:0c61 (1000_0C41 / 0x10C41)
         if (ZeroFlag)
         {
@@ -1345,7 +1341,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // MOV AH,BL (1000_0C4F / 0x10C4F)
         AH = BL;
         // DEC AH (1000_0C51 / 0x10C51)
-        AH = Alu.Dec8(AH);
+        AH = Alu8.Dec(AH);
         // MOV DH,AH (1000_0C53 / 0x10C53)
         DH = AH;
         // XOR DL,DL (1000_0C55 / 0x10C55)
@@ -1364,13 +1360,13 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // ADD DI,BP (1000_0C61 / 0x10C61)
         DI += BP;
         // DEC DI (1000_0C63 / 0x10C63)
-        DI = Alu.Dec16(DI);
+        DI = Alu16.Dec(DI);
         // STD  (1000_0C64 / 0x10C64)
         DirectionFlag = true;
         // MOV DX,BP (1000_0C65 / 0x10C65)
         DX = BP;
         // CMP CH,0xff (1000_0C67 / 0x10C67)
-        Alu.Sub8(CH, 0xFF);
+        Alu8.Sub(CH, 0xFF);
         // JZ 0x1000:0c6f (1000_0C6A / 0x10C6A)
         if (ZeroFlag)
         {
@@ -1382,7 +1378,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         goto label_1000_0B64_10B64;
     }
 
-    public virtual Action unknown_1000_0C72_10C72(int loadOffset)
+    public virtual Action CirclesUnknown_display_1000_0C72_10C72(int loadOffset)
     {
         // PUSH DS (1000_0C72 / 0x10C72)
         Stack.Push16(DS);
@@ -1409,7 +1405,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         (AL, AH) = (AH, AL);
         // SUB DI,0x2 (1000_0C88 / 0x10C88)
         // DI -= 0x2;
-        DI = Alu.Sub16(DI, 0x2);
+        DI = Alu16.Sub(DI, 0x2);
         // MOV word ptr [DI],AX (1000_0C8B / 0x10C8B)
         UInt16[DS, DI] = AX;
         // LOOP 0x1000:0c85 (1000_0C8D / 0x10C8D)
@@ -1422,7 +1418,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // ADD DI,0x1e0 (1000_0C93 / 0x10C93)
         DI += 0x1E0;
         // DEC DX (1000_0C97 / 0x10C97)
-        DX = Alu.Dec16(DX);
+        DX = Alu16.Dec(DX);
         // JNZ 0x1000:0c82 (1000_0C98 / 0x10C98)
         if (!ZeroFlag)
         {
@@ -1449,7 +1445,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // SUB DI,0x280 (1000_0CA7 / 0x10CA7)
         DI -= 0x280;
         // DEC DX (1000_0CAB / 0x10CAB)
-        DX = Alu.Dec16(DX);
+        DX = Alu16.Dec(DX);
         // JNZ 0x1000:0ca2 (1000_0CAC / 0x10CAC)
         if (!ZeroFlag)
         {
@@ -1461,10 +1457,10 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0CF4_10CF4(int loadOffset)
+    public virtual Action CircleMainLoop_1000_0CF4_10CF4(int loadOffset)
     {
         // CALL 0x1000:0c72 (1000_0CF4 / 0x10CF4)
-        NearCall(cs1, 0xCF7, unknown_1000_0C72_10C72);
+        NearCall(cs1, 0xCF7, CirclesUnknown_display_1000_0C72_10C72);
         // MOV SI,0xcbc (1000_0CF7 / 0x10CF7)
         SI = 0xCBC;
         // MOV AX,word ptr CS:[SI] (1000_0CFA / 0x10CFA)
@@ -1487,11 +1483,11 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // PUSH CX (1000_0D17 / 0x10D17)
         Stack.Push16(CX);
         // CALL 0x1000:0d22 (1000_0D18 / 0x10D18)
-        NearCall(cs1, 0xD1B, unknown_1000_0D22_10D22);
+        NearCall(cs1, 0xD1B, CirclesDrawStep_1000_0D22_10D22);
         // POP CX (1000_0D1B / 0x10D1B)
         CX = Stack.Pop16();
         // CALL 0x1000:1085 (1000_0D1C / 0x10D1C)
-        NearCall(cs1, 0xD1F, unknown_1000_1085_11085);
+        NearCall(cs1, 0xD1F, CommonCheckForAnyKeyStroke_1000_1085_11085);
         // LOOPZ 0x1000:0d17 (1000_0D1F / 0x10D1F)
         if (--CX != 0 && ZeroFlag)
         {
@@ -1501,7 +1497,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0D22_10D22(int loadOffset)
+    public virtual Action CirclesDrawStep_1000_0D22_10D22(int loadOffset)
     {
         // PUSH DS (1000_0D22 / 0x10D22)
         Stack.Push16(DS);
@@ -1516,7 +1512,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // POP ES (1000_0D27 / 0x10D27)
         ES = Stack.Pop16();
         // CMP word ptr CS:[0xcb6],0x0 (1000_0D28 / 0x10D28)
-        Alu.Sub16(UInt16[cs1, 0xCB6], 0x0);
+        Alu16.Sub(UInt16[cs1, 0xCB6], 0x0);
         // JS 0x1000:0d5c (1000_0D2E / 0x10D2E)
         if (SignFlag)
         {
@@ -1540,7 +1536,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         SI += AX;
         // SUB CX,AX (1000_0D45 / 0x10D45)
         // CX -= AX;
-        CX = Alu.Sub16(CX, AX);
+        CX = Alu16.Sub(CX, AX);
         // REP
         while (CX != 0)
         {
@@ -1554,7 +1550,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX = DX;
     label_1000_0D4B_10D4B:
         // CALL 0x1000:0d5f (1000_0D4B / 0x10D4B)
-        NearCall(cs1, 0xD4E, unknown_1000_0D5F_10D5F);
+        NearCall(cs1, 0xD4E, CommonComputeNextVgaPalette_1000_0D5F_10D5F);
         // LOOP 0x1000:0d4b (1000_0D4E / 0x10D4E)
         if (--CX != 0)
         {
@@ -1567,7 +1563,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // MOV CX,0x50 (1000_0D56 / 0x10D56)
         CX = 0x50;
         // CALL 0x1000:09d8 (1000_0D59 / 0x10D59)
-        NearCall(cs1, 0xD5C, unknown_1000_09D8_109D8);
+        NearCall(cs1, 0xD5C, CommonCirclesWaitFrameAndWriteNextPaletteData_1000_09D8_109D8);
     label_1000_0D5C_10D5C:
         // POP ES (1000_0D5C / 0x10D5C)
         ES = Stack.Pop16();
@@ -1577,12 +1573,12 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0D5F_10D5F(int loadOffset)
+    public virtual Action CommonComputeNextVgaPalette_1000_0D5F_10D5F(int loadOffset)
     {
         // MOV SI,word ptr CS:[0xcba] (1000_0D5F / 0x10D5F)
         SI = UInt16[cs1, 0xCBA];
         // DEC word ptr CS:[0xcb6] (1000_0D64 / 0x10D64)
-        UInt16[cs1, 0xCB6] = Alu.Dec16(UInt16[cs1, 0xCB6]);
+        UInt16[cs1, 0xCB6] = Alu16.Dec(UInt16[cs1, 0xCB6]);
         // JNZ 0x1000:0d79 (1000_0D69 / 0x10D69)
         if (!ZeroFlag)
         {
@@ -1590,7 +1586,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // ADD SI,0x8 (1000_0D6B / 0x10D6B)
         // SI += 0x8;
-        SI = Alu.Add16(SI, 0x8);
+        SI = Alu16.Add(SI, 0x8);
         // MOV word ptr CS:[0xcba],SI (1000_0D6E / 0x10D6E)
         UInt16[cs1, 0xCBA] = SI;
         // MOV AX,word ptr [SI] (1000_0D73 / 0x10D73)
@@ -1602,19 +1598,19 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AX = UInt16[DS, (ushort)(SI + 0x2)];
         // ADD AX,word ptr CS:[0xcb0] (1000_0D7C / 0x10D7C)
         // AX += UInt16[cs1, 0xCB0];
-        AX = Alu.Add16(AX, UInt16[cs1, 0xCB0]);
+        AX = Alu16.Add(AX, UInt16[cs1, 0xCB0]);
         // MOV CS:[0xcb0],AX (1000_0D81 / 0x10D81)
         UInt16[cs1, 0xCB0] = AX;
         // SHL AL,0x1 (1000_0D85 / 0x10D85)
         // AL <<= 0x1;
-        AL = Alu.Shl8(AL, 0x1);
+        AL = Alu8.Shl(AL, 0x1);
         // ADC AH,0x0 (1000_0D87 / 0x10D87)
-        AH = Alu.Adc8(AH, 0x0);
+        AH = Alu8.Adc(AH, 0x0);
         // MOV AL,AH (1000_0D8A / 0x10D8A)
         AL = AH;
         // AND AL,0x3f (1000_0D8C / 0x10D8C)
         // AL &= 0x3F;
-        AL = Alu.And8(AL, 0x3F);
+        AL = Alu8.And(AL, 0x3F);
         // STOSB ES:DI (1000_0D8E / 0x10D8E)
         UInt8[ES, DI] = AL;
         DI = (ushort)(DI + Direction8);
@@ -1622,19 +1618,19 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AX = UInt16[DS, (ushort)(SI + 0x4)];
         // ADD AX,word ptr CS:[0xcb2] (1000_0D92 / 0x10D92)
         // AX += UInt16[cs1, 0xCB2];
-        AX = Alu.Add16(AX, UInt16[cs1, 0xCB2]);
+        AX = Alu16.Add(AX, UInt16[cs1, 0xCB2]);
         // MOV CS:[0xcb2],AX (1000_0D97 / 0x10D97)
         UInt16[cs1, 0xCB2] = AX;
         // SHL AL,0x1 (1000_0D9B / 0x10D9B)
         // AL <<= 0x1;
-        AL = Alu.Shl8(AL, 0x1);
+        AL = Alu8.Shl(AL, 0x1);
         // ADC AH,0x0 (1000_0D9D / 0x10D9D)
-        AH = Alu.Adc8(AH, 0x0);
+        AH = Alu8.Adc(AH, 0x0);
         // MOV AL,AH (1000_0DA0 / 0x10DA0)
         AL = AH;
         // AND AL,0x3f (1000_0DA2 / 0x10DA2)
         // AL &= 0x3F;
-        AL = Alu.And8(AL, 0x3F);
+        AL = Alu8.And(AL, 0x3F);
         // STOSB ES:DI (1000_0DA4 / 0x10DA4)
         UInt8[ES, DI] = AL;
         DI = (ushort)(DI + Direction8);
@@ -1642,19 +1638,19 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AX = UInt16[DS, (ushort)(SI + 0x6)];
         // ADD AX,word ptr CS:[0xcb4] (1000_0DA8 / 0x10DA8)
         // AX += UInt16[cs1, 0xCB4];
-        AX = Alu.Add16(AX, UInt16[cs1, 0xCB4]);
+        AX = Alu16.Add(AX, UInt16[cs1, 0xCB4]);
         // MOV CS:[0xcb4],AX (1000_0DAD / 0x10DAD)
         UInt16[cs1, 0xCB4] = AX;
         // SHL AL,0x1 (1000_0DB1 / 0x10DB1)
         // AL <<= 0x1;
-        AL = Alu.Shl8(AL, 0x1);
+        AL = Alu8.Shl(AL, 0x1);
         // ADC AH,0x0 (1000_0DB3 / 0x10DB3)
-        AH = Alu.Adc8(AH, 0x0);
+        AH = Alu8.Adc(AH, 0x0);
         // MOV AL,AH (1000_0DB6 / 0x10DB6)
         AL = AH;
         // AND AL,0x3f (1000_0DB8 / 0x10DB8)
         // AL &= 0x3F;
-        AL = Alu.And8(AL, 0x3F);
+        AL = Alu8.And(AL, 0x3F);
         // STOSB ES:DI (1000_0DBA / 0x10DBA)
         UInt8[ES, DI] = AL;
         DI = (ushort)(DI + Direction8);
@@ -1662,7 +1658,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0DBC_10DBC(int loadOffset)
+    public virtual Action CirclesUnknown_1000_0DBC_10DBC(int loadOffset)
     {
         // LES DI,[0x4c] (1000_0DBC / 0x10DBC)
         DI = UInt16[DS, 0x4C];
@@ -1678,7 +1674,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // SUB AX,CX (1000_0DCD / 0x10DCD)
         AX -= CX;
         // CMP AX,0x3a02 (1000_0DCF / 0x10DCF)
-        Alu.Sub16(AX, 0x3A02);
+        Alu16.Sub(AX, 0x3A02);
         // JC 0x1000:0ddd (1000_0DD2 / 0x10DD2)
         if (CarryFlag)
         {
@@ -1687,7 +1683,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
             return NearRet();
         }
         // CALL 0x1000:109a (1000_0DD4 / 0x10DD4)
-        NearCall(cs1, 0xDD7, unknown_1000_109A_1109A);
+        NearCall(cs1, 0xDD7, HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A);
         // ADD DI,CX (1000_0DD7 / 0x10DD7)
         DI += CX;
         // XOR AX,AX (1000_0DD9 / 0x10DD9)
@@ -1701,12 +1697,12 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0DDE_10DDE(int loadOffset)
+    public virtual Action CirclesAnimation_1000_0DDE_10DDE(int loadOffset)
     {
         // MOV [0x54],AX (1000_0DDE / 0x10DDE)
         UInt16[DS, 0x54] = AX;
         // CALL 0x1000:0dbc (1000_0DE1 / 0x10DE1)
-        NearCall(cs1, 0xDE4, unknown_1000_0DBC_10DBC);
+        NearCall(cs1, 0xDE4, CirclesUnknown_1000_0DBC_10DBC);
         // JC 0x1000:0e45 (1000_0DE4 / 0x10DE4)
         if (CarryFlag)
         {
@@ -1716,7 +1712,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
     label_1000_0DE6_10DE6:
         // CALL 0x1000:0a3a (1000_0DE6 / 0x10DE6)
-        NearCall(cs1, 0xDE9, unknown_1000_0A3A_10A3A);
+        NearCall(cs1, 0xDE9, Nop_1000_0A3A_10A3A);
         // MOV AX,[0x54] (1000_0DE9 / 0x10DE9)
         AX = UInt16[DS, 0x54];
         // MOV [0x52],AX (1000_0DEC / 0x10DEC)
@@ -1729,7 +1725,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // MOV word ptr [0x58],ES (1000_0DF7 / 0x10DF7)
         UInt16[DS, 0x58] = ES;
         // CALL 0x1000:0ead (1000_0DFB / 0x10DFB)
-        NearCall(cs1, 0xDFE, unknown_1000_0EAD_10EAD);
+        NearCall(cs1, 0xDFE, CommonUnknown_1000_0EAD_10EAD);
         // JZ 0x1000:0e45 (1000_0DFE / 0x10DFE)
         if (ZeroFlag)
         {
@@ -1738,9 +1734,9 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
             return NearRet();
         }
         // CALL 0x1000:0fa4 (1000_0E00 / 0x10E00)
-        NearCall(cs1, 0xE03, unknown_1000_0FA4_10FA4);
+        NearCall(cs1, 0xE03, CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4);
         // CALL 0x1000:0e4c (1000_0E03 / 0x10E03)
-        NearCall(cs1, 0xE06, unknown_1000_0E4C_10E4C);
+        NearCall(cs1, 0xE06, CommonUnknown_1000_0E4C_10E4C);
         // STC  (1000_0E06 / 0x10E06)
         CarryFlag = true;
         // JZ 0x1000:0e45 (1000_0E07 / 0x10E07)
@@ -1751,9 +1747,9 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
             return NearRet();
         }
         // CALL 0x1000:0e49 (1000_0E09 / 0x10E09)
-        NearCall(cs1, 0xE0C, unknown_1000_0E49_10E49);
+        NearCall(cs1, 0xE0C, CommonUnknown_1000_0E49_10E49);
         // CALL 0x1000:0cf4 (1000_0E0C / 0x10E0C)
-        NearCall(cs1, 0xE0F, unknown_1000_0CF4_10CF4);
+        NearCall(cs1, 0xE0F, CircleMainLoop_1000_0CF4_10CF4);
         // STC  (1000_0E0F / 0x10E0F)
         CarryFlag = true;
         // JNZ 0x1000:0e45 (1000_0E10 / 0x10E10)
@@ -1769,7 +1765,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // MOV BP,0xe46 (1000_0E15 / 0x10E15)
         BP = 0xE46;
         // CALL 0x1000:0fea (1000_0E18 / 0x10E18)
-        NearCall(cs1, 0xE1B, unknown_1000_0FEA_10FEA);
+        NearCall(cs1, 0xE1B, HNMUnknown_1000_0FEA_10FEA);
         // STC  (1000_0E1B / 0x10E1B)
         CarryFlag = true;
         // JNZ 0x1000:0e45 (1000_0E1C / 0x10E1C)
@@ -1780,7 +1776,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
             return NearRet();
         }
         // CMP word ptr [0x52],0x0 (1000_0E1E / 0x10E1E)
-        Alu.Sub16(UInt16[DS, 0x52], 0x0);
+        Alu16.Sub(UInt16[DS, 0x52], 0x0);
         // JNZ 0x1000:0e12 (1000_0E23 / 0x10E23)
         if (!ZeroFlag)
         {
@@ -1792,13 +1788,13 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AX = UInt16[DS, SI];
         SI = (ushort)(SI + Direction16);
         // CALL 0x1000:11bd (1000_0E29 / 0x10E29)
-        NearCall(cs1, 0xE2C, unknown_1000_11BD_111BD);
+        NearCall(cs1, 0xE2C, Nop_1000_11BD_111BD);
         // XCHG AH,AL (1000_0E2C / 0x10E2C)
         (AL, AH) = (AH, AL);
         // CALL 0x1000:11bd (1000_0E2E / 0x10E2E)
-        NearCall(cs1, 0xE31, unknown_1000_11BD_111BD);
+        NearCall(cs1, 0xE31, Nop_1000_11BD_111BD);
         // CMP AX,0x4c4f (1000_0E31 / 0x10E31)
-        Alu.Sub16(AX, 0x4C4F);
+        Alu16.Sub(AX, 0x4C4F);
         // JNZ 0x1000:0e44 (1000_0E34 / 0x10E34)
         if (!ZeroFlag)
         {
@@ -1808,13 +1804,13 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AX = UInt16[DS, SI];
         SI = (ushort)(SI + Direction16);
         // CALL 0x1000:11bd (1000_0E37 / 0x10E37)
-        NearCall(cs1, 0xE3A, unknown_1000_11BD_111BD);
+        NearCall(cs1, 0xE3A, Nop_1000_11BD_111BD);
         // XCHG AH,AL (1000_0E3A / 0x10E3A)
         (AL, AH) = (AH, AL);
         // CALL 0x1000:11bd (1000_0E3C / 0x10E3C)
-        NearCall(cs1, 0xE3F, unknown_1000_11BD_111BD);
+        NearCall(cs1, 0xE3F, Nop_1000_11BD_111BD);
         // CMP AX,0x4f50 (1000_0E3F / 0x10E3F)
-        Alu.Sub16(AX, 0x4F50);
+        Alu16.Sub(AX, 0x4F50);
         // JZ 0x1000:0de6 (1000_0E42 / 0x10E42)
         if (ZeroFlag)
         {
@@ -1827,26 +1823,26 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0E46_10E46(int loadOffset)
+    public virtual Action HNMUnknown_1000_0E46_10E46(int loadOffset)
     {
         // CALL 0x1000:0d22 (1000_0E46 / 0x10E46)
-        NearCall(cs1, 0xE49, unknown_1000_0D22_10D22);
+        NearCall(cs1, 0xE49, CirclesDrawStep_1000_0D22_10D22);
         // Function call generated as ASM continues to next function entry point without return
-        return unknown_1000_0E49_10E49(0);
+        return CommonUnknown_1000_0E49_10E49(0);
     }
 
-    public virtual Action unknown_1000_0E49_10E49(int loadOffset)
+    public virtual Action CommonUnknown_1000_0E49_10E49(int loadOffset)
     {
         // CALL 0x1000:0e59 (1000_0E49 / 0x10E49)
-        NearCall(cs1, 0xE4C, unknown_1000_0E59_10E59);
+        NearCall(cs1, 0xE4C, CommonUnknown_display_1000_0E59_10E59);
         // Function call generated as ASM continues to next function entry point without return
-        return unknown_1000_0E4C_10E4C(0);
+        return CommonUnknown_1000_0E4C_10E4C(0);
     }
 
-    public virtual Action unknown_1000_0E4C_10E4C(int loadOffset)
+    public virtual Action CommonUnknown_1000_0E4C_10E4C(int loadOffset)
     {
         // CALL 0x1000:0e86 (1000_0E4C / 0x10E4C)
-        NearCall(cs1, 0xE4F, unknown_1000_0E86_10E86);
+        NearCall(cs1, 0xE4F, UpdatePaletteDataAddress_1000_0E86_10E86);
         // JZ 0x1000:0e52 (1000_0E4F / 0x10E4F)
         if (ZeroFlag)
         {
@@ -1861,7 +1857,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0E59_10E59(int loadOffset)
+    public virtual Action CommonUnknown_display_1000_0E59_10E59(int loadOffset)
     {
         // PUSH DS (1000_0E59 / 0x10E59)
         Stack.Push16(DS);
@@ -1870,7 +1866,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         DS = UInt16[DS, 0x58];
         // ADD SI,0x2 (1000_0E5E / 0x10E5E)
         // SI += 0x2;
-        SI = Alu.Add16(SI, 0x2);
+        SI = Alu16.Add(SI, 0x2);
         // LODSW SI (1000_0E61 / 0x10E61)
         AX = UInt16[DS, SI];
         SI = (ushort)(SI + Direction16);
@@ -1883,21 +1879,21 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX = AX;
         // OR CL,CL (1000_0E67 / 0x10E67)
         // CL |= CL;
-        CL = Alu.Or8(CL, CL);
+        CL = Alu8.Or(CL, CL);
         // JZ 0x1000:0e84 (1000_0E69 / 0x10E69)
         if (ZeroFlag)
         {
             goto label_1000_0E84_10E84;
         }
         // TEST DI,0x200 (1000_0E6B / 0x10E6B)
-        Alu.And16(DI, 0x200);
+        Alu16.And(DI, 0x200);
         // JZ 0x1000:0e74 (1000_0E6F / 0x10E6F)
         if (ZeroFlag)
         {
             goto label_1000_0E74_10E74;
         }
         // CALL 0x1000:0ebd (1000_0E71 / 0x10E71)
-        NearCall(cs1, 0xE74, unknown_1000_0EBD_10EBD);
+        NearCall(cs1, 0xE74, CommonUnknown_1000_0EBD_10EBD);
     label_1000_0E74_10E74:
         // LODSW SI (1000_0E74 / 0x10E74)
         AX = UInt16[DS, SI];
@@ -1914,7 +1910,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // MOV ES,AX (1000_0E7D / 0x10E7D)
         ES = AX;
         // CALLF 0x1000:0b9a (1000_0E7F / 0x10E7F)
-        FarCall(cs1, 0xE84, unknown_1000_0B9A_10B9A);
+        FarCall(cs1, 0xE84, CommonUnknown_1000_0B9A_10B9A);
     label_1000_0E84_10E84:
         // POP DS (1000_0E84 / 0x10E84)
         DS = Stack.Pop16();
@@ -1922,7 +1918,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0E86_10E86(int loadOffset)
+    public virtual Action UpdatePaletteDataAddress_1000_0E86_10E86(int loadOffset)
     {
     entrydispatcher:
         if (loadOffset != 0)
@@ -1938,7 +1934,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AX = UInt16[ES, SI];
         // ADD SI,AX (1000_0E8E / 0x10E8E)
         // SI += AX;
-        SI = Alu.Add16(SI, AX);
+        SI = Alu16.Add(SI, AX);
         // MOV AX,SI (1000_0E90 / 0x10E90)
         AX = SI;
         // SHR AX,0x1 (1000_0E92 / 0x10E92)
@@ -1949,17 +1945,17 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AX >>= 0x1;
         // SHR AX,0x1 (1000_0E98 / 0x10E98)
         // AX >>= 0x1;
-        AX = Alu.Shr16(AX, 0x1);
+        AX = Alu16.Shr(AX, 0x1);
         // MOV CX,ES (1000_0E9A / 0x10E9A)
         CX = ES;
         // ADD AX,CX (1000_0E9C / 0x10E9C)
         // AX += CX;
-        AX = Alu.Add16(AX, CX);
+        AX = Alu16.Add(AX, CX);
         // MOV ES,AX (1000_0E9E / 0x10E9E)
         ES = AX;
         // AND SI,0xf (1000_0EA0 / 0x10EA0)
         // SI &= 0xF;
-        SI = Alu.And16(SI, 0xF);
+        SI = Alu16.And(SI, 0xF);
         // MOV word ptr [0x56],SI (1000_0EA3 / 0x10EA3)
         UInt16[DS, 0x56] = SI;
         // MOV word ptr [0x58],ES (1000_0EA7 / 0x10EA7)
@@ -1974,7 +1970,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return JumpDispatcher.JumpAsmReturn!;
     }
 
-    public virtual Action unknown_1000_0EAD_10EAD(int loadOffset)
+    public virtual Action CommonUnknown_1000_0EAD_10EAD(int loadOffset)
     {
         // PUSH SI (1000_0EAD / 0x10EAD)
         Stack.Push16(SI);
@@ -1994,21 +1990,21 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX = AX;
         // SUB CX,0x2 (1000_0EB6 / 0x10EB6)
         // CX -= 0x2;
-        CX = Alu.Sub16(CX, 0x2);
+        CX = Alu16.Sub(CX, 0x2);
         // POP SI (1000_0EB9 / 0x10EB9)
         SI = Stack.Pop16();
         // OR AX,AX (1000_0EBA / 0x10EBA)
         // AX |= AX;
-        AX = Alu.Or16(AX, AX);
+        AX = Alu16.Or(AX, AX);
         // RET  (1000_0EBC / 0x10EBC)
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0EBD_10EBD(int loadOffset)
+    public virtual Action CommonUnknown_1000_0EBD_10EBD(int loadOffset)
     {
         // AND DI,0xfdff (1000_0EBD / 0x10EBD)
         // DI &= 0xFDFF;
-        DI = Alu.And16(DI, 0xFDFF);
+        DI = Alu16.And(DI, 0xFDFF);
         // PUSH CX (1000_0EC1 / 0x10EC1)
         Stack.Push16(CX);
         // PUSH DI (1000_0EC2 / 0x10EC2)
@@ -2024,7 +2020,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // PUSH ES (1000_0ECC / 0x10ECC)
         Stack.Push16(ES);
         // CALL 0x1000:0efe (1000_0ECD / 0x10ECD)
-        NearCall(cs1, 0xED0, unknown_1000_0EFE_10EFE);
+        NearCall(cs1, 0xED0, CommonUnknown_1000_0EFE_10EFE);
         // POP DS (1000_0ED0 / 0x10ED0)
         DS = Stack.Pop16();
         // POP SI (1000_0ED1 / 0x10ED1)
@@ -2037,7 +2033,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0EFE_10EFE(int loadOffset)
+    public virtual Action CommonUnknown_1000_0EFE_10EFE(int loadOffset)
     {
     entrydispatcher:
         if (loadOffset != 0)
@@ -2056,7 +2052,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         BP = 0;
         // JMP 0x1000:0f30 (1000_0F06 / 0x10F06)
         // Jump converted to entry function call
-        if (JumpDispatcher.Jump(split_1000_0F30_10F30, 0))
+        if (JumpDispatcher.Jump(CommonUnknownSplit_1000_0F30_10F30, 0))
         {
             loadOffset = JumpDispatcher.NextEntryAddress;
             goto entrydispatcher;
@@ -2064,12 +2060,12 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return JumpDispatcher.JumpAsmReturn!;
     }
 
-    public virtual Action split_1000_0F30_10F30(int loadOffset)
+    public virtual Action CommonUnknownSplit_1000_0F30_10F30(int loadOffset)
     {
     label_1000_0F30_10F30:
         // SHR BP,0x1 (1000_0F30 / 0x10F30)
         // BP >>= 0x1;
-        BP = Alu.Shr16(BP, 0x1);
+        BP = Alu16.Shr(BP, 0x1);
         // JZ 0x1000:0f39 (1000_0F32 / 0x10F32)
         if (ZeroFlag)
         {
@@ -2096,7 +2092,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // STC  (1000_0F3C / 0x10F3C)
         CarryFlag = true;
         // RCR BP,0x1 (1000_0F3D / 0x10F3D)
-        BP = Alu.Rcr16(BP, 0x1);
+        BP = Alu16.Rcr(BP, 0x1);
         // JC 0x1000:0f36 (1000_0F3F / 0x10F3F)
         if (CarryFlag)
         {
@@ -2107,7 +2103,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         CX = 0;
         // SHR BP,0x1 (1000_0F43 / 0x10F43)
         // BP >>= 0x1;
-        BP = Alu.Shr16(BP, 0x1);
+        BP = Alu16.Shr(BP, 0x1);
         // JNZ 0x1000:0f4d (1000_0F45 / 0x10F45)
         if (!ZeroFlag)
         {
@@ -2121,7 +2117,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // STC  (1000_0F4A / 0x10F4A)
         CarryFlag = true;
         // RCR BP,0x1 (1000_0F4B / 0x10F4B)
-        BP = Alu.Rcr16(BP, 0x1);
+        BP = Alu16.Rcr(BP, 0x1);
     label_1000_0F4D_10F4D:
         // JC 0x1000:0f7d (1000_0F4D / 0x10F4D)
         if (CarryFlag)
@@ -2130,7 +2126,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // SHR BP,0x1 (1000_0F4F / 0x10F4F)
         // BP >>= 0x1;
-        BP = Alu.Shr16(BP, 0x1);
+        BP = Alu16.Shr(BP, 0x1);
         // JNZ 0x1000:0f59 (1000_0F51 / 0x10F51)
         if (!ZeroFlag)
         {
@@ -2144,13 +2140,13 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // STC  (1000_0F56 / 0x10F56)
         CarryFlag = true;
         // RCR BP,0x1 (1000_0F57 / 0x10F57)
-        BP = Alu.Rcr16(BP, 0x1);
+        BP = Alu16.Rcr(BP, 0x1);
     label_1000_0F59_10F59:
         // RCL CX,0x1 (1000_0F59 / 0x10F59)
-        CX = Alu.Rcl16(CX, 0x1);
+        CX = Alu16.Rcl(CX, 0x1);
         // SHR BP,0x1 (1000_0F5B / 0x10F5B)
         // BP >>= 0x1;
-        BP = Alu.Shr16(BP, 0x1);
+        BP = Alu16.Shr(BP, 0x1);
         // JNZ 0x1000:0f65 (1000_0F5D / 0x10F5D)
         if (!ZeroFlag)
         {
@@ -2164,10 +2160,10 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // STC  (1000_0F62 / 0x10F62)
         CarryFlag = true;
         // RCR BP,0x1 (1000_0F63 / 0x10F63)
-        BP = Alu.Rcr16(BP, 0x1);
+        BP = Alu16.Rcr(BP, 0x1);
     label_1000_0F65_10F65:
         // RCL CX,0x1 (1000_0F65 / 0x10F65)
-        CX = Alu.Rcl16(CX, 0x1);
+        CX = Alu16.Rcl(CX, 0x1);
         // LODSB SI (1000_0F67 / 0x10F67)
         AL = UInt8[DS, SI];
         SI = (ushort)(SI + Direction8);
@@ -2176,7 +2172,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
     label_1000_0F6A_10F6A:
         // ADD AX,DI (1000_0F6A / 0x10F6A)
         // AX += DI;
-        AX = Alu.Add16(AX, DI);
+        AX = Alu16.Add(AX, DI);
         // XCHG AX,SI (1000_0F6C / 0x10F6C)
         (SI, AX) = (AX, SI);
         // MOV BX,DS (1000_0F6D / 0x10F6D)
@@ -2188,7 +2184,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // INC CX (1000_0F73 / 0x10F73)
         CX++;
         // INC CX (1000_0F74 / 0x10F74)
-        CX = Alu.Inc16(CX);
+        CX = Alu16.Inc(CX);
         // REP
         while (CX != 0)
         {
@@ -2216,12 +2212,12 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AX >>= 0x1;
         // SHR AX,0x1 (1000_0F84 / 0x10F84)
         // AX >>= 0x1;
-        AX = Alu.Shr16(AX, 0x1);
+        AX = Alu16.Shr(AX, 0x1);
         // OR AH,0xe0 (1000_0F86 / 0x10F86)
         AH |= 0xE0;
         // AND CL,0x7 (1000_0F89 / 0x10F89)
         // CL &= 0x7;
-        CL = Alu.And8(CL, 0x7);
+        CL = Alu8.And(CL, 0x7);
         // JNZ 0x1000:0f6a (1000_0F8C / 0x10F8C)
         if (!ZeroFlag)
         {
@@ -2238,7 +2234,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AX = BX;
         // OR CL,CL (1000_0F95 / 0x10F95)
         // CL |= CL;
-        CL = Alu.Or8(CL, CL);
+        CL = Alu8.Or(CL, CL);
         // JNZ 0x1000:0f6a (1000_0F97 / 0x10F97)
         if (!ZeroFlag)
         {
@@ -2256,25 +2252,25 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         SP += 0x2;
         // SUB CX,DI (1000_0FA1 / 0x10FA1)
         // CX -= DI;
-        CX = Alu.Sub16(CX, DI);
+        CX = Alu16.Sub(CX, DI);
         // RET  (1000_0FA3 / 0x10FA3)
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0FA4_10FA4(int loadOffset)
+    public virtual Action CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4(int loadOffset)
     {
         // LES SI,[0x56] (1000_0FA4 / 0x10FA4)
         SI = UInt16[DS, 0x56];
         ES = UInt16[DS, 0x58];
         // ADD SI,0x2 (1000_0FA8 / 0x10FA8)
         // SI += 0x2;
-        SI = Alu.Add16(SI, 0x2);
+        SI = Alu16.Add(SI, 0x2);
     label_1000_0FAB_10FAB:
         // LODSW ES:SI (1000_0FAB / 0x10FAB)
         AX = UInt16[ES, SI];
         SI = (ushort)(SI + Direction16);
         // CMP AL,0xff (1000_0FAD / 0x10FAD)
-        Alu.Sub8(AL, 0xFF);
+        Alu8.Sub(AL, 0xFF);
         // JZ 0x1000:0fcb (1000_0FAF / 0x10FAF)
         if (ZeroFlag)
         {
@@ -2298,18 +2294,18 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         SI += CX;
         // ADD SI,CX (1000_0FBF / 0x10FBF)
         // SI += CX;
-        SI = Alu.Add16(SI, CX);
+        SI = Alu16.Add(SI, CX);
         // MOV AX,0x1012 (1000_0FC1 / 0x10FC1)
         AX = 0x1012;
         // INT 0x10 (1000_0FC4 / 0x10FC4)
         Interrupt(0x10);
         // CALL 0x1000:0fcc (1000_0FC6 / 0x10FC6)
-        NearCall(cs1, 0xFC9, unknown_1000_0FCC_10FCC);
+        NearCall(cs1, 0xFC9, nop_1000_0FCC_10FCC);
         // JMP 0x1000:0fab (1000_0FC9 / 0x10FC9)
         goto label_1000_0FAB_10FAB;
     }
 
-    public virtual Action unknown_1000_0FCC_10FCC(int loadOffset)
+    public virtual Action nop_1000_0FCC_10FCC(int loadOffset)
     {
         // PUSH SI (1000_0FCC / 0x10FCC)
         Stack.Push16(SI);
@@ -2325,14 +2321,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         DI += BX;
         // ADD DI,BX (1000_0FD7 / 0x10FD7)
         // DI += BX;
-        DI = Alu.Add16(DI, BX);
+        DI = Alu16.Add(DI, BX);
         // MOV AX,CX (1000_0FD9 / 0x10FD9)
         AX = CX;
         // SHL CX,0x1 (1000_0FDB / 0x10FDB)
         CX <<= 0x1;
         // ADD CX,AX (1000_0FDD / 0x10FDD)
         // CX += AX;
-        CX = Alu.Add16(CX, AX);
+        CX = Alu16.Add(CX, AX);
     label_1000_0FDF_10FDF:
         // LODSB ES:SI (1000_0FDF / 0x10FDF)
         AL = UInt8[ES, SI];
@@ -2340,7 +2336,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // MOV byte ptr CS:[DI],AL (1000_0FE1 / 0x10FE1)
         UInt8[cs1, DI] = AL;
         // INC DI (1000_0FE4 / 0x10FE4)
-        DI = Alu.Inc16(DI);
+        DI = Alu16.Inc(DI);
         // LOOP 0x1000:0fdf (1000_0FE5 / 0x10FE5)
         if (--CX != 0)
         {
@@ -2354,7 +2350,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_0FEA_10FEA(int loadOffset)
+    public virtual Action HNMUnknown_1000_0FEA_10FEA(int loadOffset)
     {
         // STI  (1000_0FEA / 0x10FEA)
         InterruptFlag = true;
@@ -2371,7 +2367,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         uint targetAddress_1000_0FF5 = (uint)(BP);
         switch (targetAddress_1000_0FF5)
         {
-            case 0xE46: NearCall(cs1, 0xFF7, unknown_1000_0E46_10E46); break;
+            case 0xE46: NearCall(cs1, 0xFF7, HNMUnknown_1000_0E46_10E46); break;
             default:
                 throw FailAsUntested("Error: Function not registered at address " + ConvertUtils.ToHex32WithoutX(targetAddress_1000_0FF5));
         }
@@ -2385,7 +2381,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         BP >>= 0x1;
         // SHR BP,0x1 (1000_0FFD / 0x10FFD)
         // BP >>= 0x1;
-        BP = Alu.Shr16(BP, 0x1);
+        BP = Alu16.Shr(BP, 0x1);
         // MOV AX,BP (1000_0FFF / 0x10FFF)
         AX = BP;
         // SHR AX,0x1 (1000_1001 / 0x11001)
@@ -2405,19 +2401,19 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // SUB AX,BX (1000_100F / 0x1100F)
         AX -= BX;
         // CMP AX,BP (1000_1011 / 0x11011)
-        Alu.Sub16(AX, BP);
+        Alu16.Sub(AX, BP);
         // JC 0x1000:1007 (1000_1013 / 0x11013)
         if (CarryFlag)
         {
             goto label_1000_1007_11007;
         }
         // CALL 0x1000:1085 (1000_1015 / 0x11015)
-        NearCall(cs1, 0x1018, unknown_1000_1085_11085);
+        NearCall(cs1, 0x1018, CommonCheckForAnyKeyStroke_1000_1085_11085);
         // RET  (1000_1018 / 0x11018)
         return NearRet();
     }
 
-    public virtual Action unknown_1000_1019_11019(int loadOffset)
+    public virtual Action CirclesUnknown_1000_1019_11019(int loadOffset)
     {
         // PUSHF  (1000_1019 / 0x11019)
         Stack.Push16(FlagRegister16);
@@ -2438,7 +2434,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // AND AX,0xf000 (1000_1022 / 0x11022)
         AX &= 0xF000;
         // CMP AX,0xf000 (1000_1025 / 0x11025)
-        Alu.Sub16(AX, 0xF000);
+        Alu16.Sub(AX, 0xF000);
         // JZ 0x1000:1039 (1000_1028 / 0x11028)
         if (ZeroFlag)
         {
@@ -2456,7 +2452,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AX = Stack.Pop16();
         // AND AX,0x7000 (1000_1031 / 0x11031)
         // AX &= 0x7000;
-        AX = Alu.And16(AX, 0x7000);
+        AX = Alu16.And(AX, 0x7000);
         // MOV byte ptr CS:[0x6b],AH (1000_1034 / 0x11034)
         UInt8[cs1, 0x6B] = AH;
     label_1000_1039_11039:
@@ -2466,7 +2462,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_105F_1105F(int loadOffset)
+    public virtual Action CirclesUnknown_1000_105F_1105F(int loadOffset)
     {
         // MOV DI,DX (1000_105F / 0x1105F)
         DI = DX;
@@ -2474,7 +2470,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // MOV AL,byte ptr [DI] (1000_1061 / 0x11061)
         AL = UInt8[DS, DI];
         // CMP AL,0x2e (1000_1063 / 0x11063)
-        Alu.Sub8(AL, 0x2E);
+        Alu8.Sub(AL, 0x2E);
         // JZ 0x1000:106e (1000_1065 / 0x11065)
         if (ZeroFlag)
         {
@@ -2484,7 +2480,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // OR AL,AL (1000_1067 / 0x11067)
         // AL |= AL;
-        AL = Alu.Or8(AL, AL);
+        AL = Alu8.Or(AL, AL);
         // JZ 0x1000:106e (1000_1069 / 0x11069)
         if (ZeroFlag)
         {
@@ -2493,13 +2489,13 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
             return NearRet();
         }
         // INC DI (1000_106B / 0x1106B)
-        DI = Alu.Inc16(DI);
+        DI = Alu16.Inc(DI);
         // JMP 0x1000:1061 (1000_106C / 0x1106C)
         goto label_1000_1061_11061;
         // RET  (1000_106E / 0x1106E)
     }
 
-    public virtual Action unknown_1000_1085_11085(int loadOffset)
+    public virtual Action CommonCheckForAnyKeyStroke_1000_1085_11085(int loadOffset)
     {
         // MOV AH,0x1 (1000_1085 / 0x11085)
         AH = 0x1;
@@ -2518,12 +2514,12 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         Interrupt(0x16);
         // OR AX,AX (1000_108F / 0x1108F)
         // AX |= AX;
-        AX = Alu.Or16(AX, AX);
+        AX = Alu16.Or(AX, AX);
         // RET  (1000_1091 / 0x11091)
         return NearRet();
     }
 
-    public virtual Action unknown_1000_109A_1109A(int loadOffset)
+    public virtual Action HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A(int loadOffset)
     {
     label_1000_109A_1109A:
         // PUSH DS (1000_109A / 0x1109A)
@@ -2548,7 +2544,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
             goto label_1000_10BB_110BB;
         }
         // CMP CX,AX (1000_10AB / 0x110AB)
-        Alu.Sub16(CX, AX);
+        Alu16.Sub(CX, AX);
         // JA 0x1000:10b8 (1000_10AD / 0x110AD)
         if (!CarryFlag && !ZeroFlag)
         {
@@ -2558,7 +2554,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AX = ES;
         // ADD AX,0x800 (1000_10B1 / 0x110B1)
         // AX += 0x800;
-        AX = Alu.Add16(AX, 0x800);
+        AX = Alu16.Add(AX, 0x800);
         // MOV ES,AX (1000_10B4 / 0x110B4)
         ES = AX;
         // JMP 0x1000:109a (1000_10B6 / 0x110B6)
@@ -2581,7 +2577,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_10F4_110F4(int loadOffset)
+    public virtual Action Nop_1000_10F4_110F4(int loadOffset)
     {
         // PUSH DS (1000_10F4 / 0x110F4)
         Stack.Push16(DS);
@@ -2613,10 +2609,10 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // INC BX (1000_1106 / 0x11106)
         BX++;
         // INC BX (1000_1107 / 0x11107)
-        BX = Alu.Inc16(BX);
+        BX = Alu16.Inc(BX);
         // OR DI,DI (1000_1108 / 0x11108)
         // DI |= DI;
-        DI = Alu.Or16(DI, DI);
+        DI = Alu16.Or(DI, DI);
         // JZ 0x1000:1127 (1000_110A / 0x1110A)
         if (ZeroFlag)
         {
@@ -2624,14 +2620,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
     label_1000_110C_1110C:
         // CMP byte ptr [SI],0x20 (1000_110C / 0x1110C)
-        Alu.Sub8(UInt8[DS, SI], 0x20);
+        Alu8.Sub(UInt8[DS, SI], 0x20);
         // JNZ 0x1000:1114 (1000_110F / 0x1110F)
         if (!ZeroFlag)
         {
             goto label_1000_1114_11114;
         }
         // INC SI (1000_1111 / 0x11111)
-        SI = Alu.Inc16(SI);
+        SI = Alu16.Inc(SI);
         // LOOP 0x1000:110c (1000_1112 / 0x11112)
         if (--CX != 0)
         {
@@ -2642,14 +2638,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AL = UInt8[DS, SI];
         SI = (ushort)(SI + Direction8);
         // CMP AL,0x20 (1000_1115 / 0x11115)
-        Alu.Sub8(AL, 0x20);
+        Alu8.Sub(AL, 0x20);
         // JZ 0x1000:1120 (1000_1117 / 0x11117)
         if (ZeroFlag)
         {
             goto label_1000_1120_11120;
         }
         // CMP AL,0xd (1000_1119 / 0x11119)
-        Alu.Sub8(AL, 0xD);
+        Alu8.Sub(AL, 0xD);
         // JZ 0x1000:1120 (1000_111B / 0x1111B)
         if (ZeroFlag)
         {
@@ -2704,14 +2700,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // INC DI (1000_1135 / 0x11135)
         DI++;
         // CMP AL,0x20 (1000_1136 / 0x11136)
-        Alu.Sub8(AL, 0x20);
+        Alu8.Sub(AL, 0x20);
         // JBE 0x1000:1144 (1000_1138 / 0x11138)
         if (CarryFlag || ZeroFlag)
         {
             goto label_1000_1144_11144;
         }
         // CMP AL,0x61 (1000_113A / 0x1113A)
-        Alu.Sub8(AL, 0x61);
+        Alu8.Sub(AL, 0x61);
         // JC 0x1000:1132 (1000_113C / 0x1113C)
         if (CarryFlag)
         {
@@ -2720,7 +2716,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         // AND AL,0xdf (1000_113E / 0x1113E)
         AL &= 0xDF;
         // DEC DI (1000_1140 / 0x11140)
-        DI = Alu.Dec16(DI);
+        DI = Alu16.Dec(DI);
         // STOSB ES:DI (1000_1141 / 0x11141)
         UInt8[ES, DI] = AL;
         DI = (ushort)(DI + Direction8);
@@ -2738,7 +2734,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         {
             CX--;
             // SCASB ES:DI (1000_114B / 0x1114B)
-            Alu.Sub8(AL, UInt8[ES, DI]);
+            Alu8.Sub(AL, UInt8[ES, DI]);
             DI = (ushort)(DI + Direction8);
             if (ZeroFlag != false)
             {
@@ -2761,14 +2757,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AL = UInt8[DS, SI];
         SI = (ushort)(SI + Direction8);
         // CMP AL,0x41 (1000_1157 / 0x11157)
-        Alu.Sub8(AL, 0x41);
+        Alu8.Sub(AL, 0x41);
         // JC 0x1000:1161 (1000_1159 / 0x11159)
         if (CarryFlag)
         {
             goto label_1000_1161_11161;
         }
         // CMP AL,0x46 (1000_115B / 0x1115B)
-        Alu.Sub8(AL, 0x46);
+        Alu8.Sub(AL, 0x46);
         // JA 0x1000:1161 (1000_115D / 0x1115D)
         if (!CarryFlag && !ZeroFlag)
         {
@@ -2779,14 +2775,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
     label_1000_1161_11161:
         // SUB AL,0x30 (1000_1161 / 0x11161)
         // AL -= 0x30;
-        AL = Alu.Sub8(AL, 0x30);
+        AL = Alu8.Sub(AL, 0x30);
         // JC 0x1000:11b5 (1000_1163 / 0x11163)
         if (CarryFlag)
         {
             goto label_1000_11B5_111B5;
         }
         // CMP AL,0x10 (1000_1165 / 0x11165)
-        Alu.Sub8(AL, 0x10);
+        Alu8.Sub(AL, 0x10);
         // JNC 0x1000:11b5 (1000_1167 / 0x11167)
         if (!CarryFlag)
         {
@@ -2794,35 +2790,35 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // SHL BX,0x1 (1000_1169 / 0x11169)
         // BX <<= 0x1;
-        BX = Alu.Shl16(BX, 0x1);
+        BX = Alu16.Shl(BX, 0x1);
         // RCL DX,0x1 (1000_116B / 0x1116B)
-        DX = Alu.Rcl16(DX, 0x1);
+        DX = Alu16.Rcl(DX, 0x1);
         // MOV BP,BX (1000_116D / 0x1116D)
         BP = BX;
         // MOV DI,DX (1000_116F / 0x1116F)
         DI = DX;
         // SHL BX,0x1 (1000_1171 / 0x11171)
         // BX <<= 0x1;
-        BX = Alu.Shl16(BX, 0x1);
+        BX = Alu16.Shl(BX, 0x1);
         // RCL DX,0x1 (1000_1173 / 0x11173)
-        DX = Alu.Rcl16(DX, 0x1);
+        DX = Alu16.Rcl(DX, 0x1);
         // SHL BX,0x1 (1000_1175 / 0x11175)
         // BX <<= 0x1;
-        BX = Alu.Shl16(BX, 0x1);
+        BX = Alu16.Shl(BX, 0x1);
         // RCL DX,0x1 (1000_1177 / 0x11177)
-        DX = Alu.Rcl16(DX, 0x1);
+        DX = Alu16.Rcl(DX, 0x1);
         // ADD BX,BP (1000_1179 / 0x11179)
         // BX += BP;
-        BX = Alu.Add16(BX, BP);
+        BX = Alu16.Add(BX, BP);
         // ADC DX,DI (1000_117B / 0x1117B)
-        DX = Alu.Adc16(DX, DI);
+        DX = Alu16.Adc(DX, DI);
         // CBW  (1000_117D / 0x1117D)
         AX = (ushort)((short)((sbyte)AL));
         // ADD BX,AX (1000_117E / 0x1117E)
         // BX += AX;
-        BX = Alu.Add16(BX, AX);
+        BX = Alu16.Add(BX, AX);
         // ADC DX,0x0 (1000_1180 / 0x11180)
-        DX = Alu.Adc16(DX, 0x0);
+        DX = Alu16.Adc(DX, 0x0);
         // LOOP 0x1000:1156 (1000_1183 / 0x11183)
         if (--CX != 0)
         {
@@ -2842,14 +2838,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         AL = UInt8[DS, SI];
         SI = (ushort)(SI + Direction8);
         // CMP AL,0x41 (1000_118F / 0x1118F)
-        Alu.Sub8(AL, 0x41);
+        Alu8.Sub(AL, 0x41);
         // JC 0x1000:1199 (1000_1191 / 0x11191)
         if (CarryFlag)
         {
             goto label_1000_1199_11199;
         }
         // CMP AL,0x46 (1000_1193 / 0x11193)
-        Alu.Sub8(AL, 0x46);
+        Alu8.Sub(AL, 0x46);
         // JA 0x1000:1199 (1000_1195 / 0x11195)
         if (!CarryFlag && !ZeroFlag)
         {
@@ -2860,14 +2856,14 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
     label_1000_1199_11199:
         // SUB AL,0x30 (1000_1199 / 0x11199)
         // AL -= 0x30;
-        AL = Alu.Sub8(AL, 0x30);
+        AL = Alu8.Sub(AL, 0x30);
         // JC 0x1000:11b5 (1000_119B / 0x1119B)
         if (CarryFlag)
         {
             goto label_1000_11B5_111B5;
         }
         // CMP AL,0x10 (1000_119D / 0x1119D)
-        Alu.Sub8(AL, 0x10);
+        Alu8.Sub(AL, 0x10);
         // JNC 0x1000:11b5 (1000_119F / 0x1119F)
         if (!CarryFlag)
         {
@@ -2875,27 +2871,27 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // SHL BX,0x1 (1000_11A1 / 0x111A1)
         // BX <<= 0x1;
-        BX = Alu.Shl16(BX, 0x1);
+        BX = Alu16.Shl(BX, 0x1);
         // RCL DX,0x1 (1000_11A3 / 0x111A3)
-        DX = Alu.Rcl16(DX, 0x1);
+        DX = Alu16.Rcl(DX, 0x1);
         // SHL BX,0x1 (1000_11A5 / 0x111A5)
         // BX <<= 0x1;
-        BX = Alu.Shl16(BX, 0x1);
+        BX = Alu16.Shl(BX, 0x1);
         // RCL DX,0x1 (1000_11A7 / 0x111A7)
-        DX = Alu.Rcl16(DX, 0x1);
+        DX = Alu16.Rcl(DX, 0x1);
         // SHL BX,0x1 (1000_11A9 / 0x111A9)
         // BX <<= 0x1;
-        BX = Alu.Shl16(BX, 0x1);
+        BX = Alu16.Shl(BX, 0x1);
         // RCL DX,0x1 (1000_11AB / 0x111AB)
-        DX = Alu.Rcl16(DX, 0x1);
+        DX = Alu16.Rcl(DX, 0x1);
         // SHL BX,0x1 (1000_11AD / 0x111AD)
         // BX <<= 0x1;
-        BX = Alu.Shl16(BX, 0x1);
+        BX = Alu16.Shl(BX, 0x1);
         // RCL DX,0x1 (1000_11AF / 0x111AF)
-        DX = Alu.Rcl16(DX, 0x1);
+        DX = Alu16.Rcl(DX, 0x1);
         // OR BL,AL (1000_11B1 / 0x111B1)
         // BL |= AL;
-        BL = Alu.Or8(BL, AL);
+        BL = Alu8.Or(BL, AL);
         // LOOP 0x1000:118e (1000_11B3 / 0x111B3)
         if (--CX != 0)
         {
@@ -2918,10 +2914,10 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action unknown_1000_11BD_111BD(int loadOffset)
+    public virtual Action Nop_1000_11BD_111BD(int loadOffset)
     {
         // CMP AL,0x61 (1000_11BD / 0x111BD)
-        Alu.Sub8(AL, 0x61);
+        Alu8.Sub(AL, 0x61);
         // JC 0x1000:11c7 (1000_11BF / 0x111BF)
         if (CarryFlag)
         {
@@ -2930,7 +2926,7 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
             return NearRet();
         }
         // CMP AL,0x7a (1000_11C1 / 0x111C1)
-        Alu.Sub8(AL, 0x7A);
+        Alu8.Sub(AL, 0x7A);
         // JA 0x1000:11c7 (1000_11C3 / 0x111C3)
         if (!CarryFlag && !ZeroFlag)
         {
@@ -2940,45 +2936,9 @@ public partial class GeneratedOverridesOriginalAsm: CSharpOverrideHelper
         }
         // AND AL,0xdf (1000_11C5 / 0x111C5)
         // AL &= 0xDF;
-        AL = Alu.And8(AL, 0xDF);
+        AL = Alu8.And(AL, 0xDF);
         // RET  (1000_11C7 / 0x111C7)
         return NearRet();
-    }
-
-    public virtual Action interrupt_handler_0x10_F000_0008_F0008(int loadOffset)
-    {
-        // NOP  (F000_0008 / 0xF0008)
-
-        // NOP  (F000_0009 / 0xF0009)
-
-        // NOP  (F000_000A / 0xF000A)
-
-        // IRET  (F000_000B / 0xF000B)
-        return InterruptRet();
-    }
-
-    public virtual Action interrupt_handler_0x16_F000_0014_F0014(int loadOffset)
-    {
-        // NOP  (F000_0014 / 0xF0014)
-
-        // NOP  (F000_0015 / 0xF0015)
-
-        // NOP  (F000_0016 / 0xF0016)
-
-        // IRET  (F000_0017 / 0xF0017)
-        return InterruptRet();
-    }
-
-    public virtual Action interrupt_handler_0x21_F000_0020_F0020(int loadOffset)
-    {
-        // NOP  (F000_0020 / 0xF0020)
-
-        // NOP  (F000_0021 / 0xF0021)
-
-        // NOP  (F000_0022 / 0xF0022)
-
-        // IRET  (F000_0023 / 0xF0023)
-        return InterruptRet();
     }
 }
 
