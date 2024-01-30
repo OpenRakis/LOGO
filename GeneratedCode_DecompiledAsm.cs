@@ -57,7 +57,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
         DefineFunction(cs1, 0xE49, CommonUnknown_1000_0E49_10E49, false);
         DefineFunction(cs1, 0xE4C, CommonUnknown_1000_0E4C_10E4C, false);
         DefineFunction(cs1, 0xE59, CommonUnknown_display_1000_0E59_10E59, false);
-        DefineFunction(cs1, 0xE86, CommonUnknown_1000_0E86_10E86, false);
+        DefineFunction(cs1, 0xE86, UpdatePaletteDataAddress_1000_0E86_10E86, false);
         DefineFunction(cs1, 0xEAD, CommonUnknown_1000_0EAD_10EAD, false);
         DefineFunction(cs1, 0xEB2, split_1000_0EB2_10EB2, false);
         DefineFunction(cs1, 0xEBD, CommonUnknown_1000_0EBD_10EBD, false);
@@ -1285,7 +1285,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
     /// </summary>
     public virtual Action CommonUnknown_1000_0E4C_10E4C(int loadOffset)
     {
-        NearCall(cs1, 0xE4F, CommonUnknown_1000_0E86_10E86);
+        NearCall(cs1, 0xE4F, UpdatePaletteDataAddress_1000_0E86_10E86);
         if (!ZeroFlag)
         {
             return NearRet();
@@ -1334,7 +1334,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action CommonUnknown_1000_0E86_10E86(int loadOffset)
+    public virtual Action UpdatePaletteDataAddress_1000_0E86_10E86(int loadOffset)
     {
         Stack.Push16(SI);
         SI = UInt16[DS, 0x56];

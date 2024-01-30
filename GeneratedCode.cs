@@ -1,5 +1,4 @@
 ﻿using Spice86.Core.CLI;
-using Spice86.Core.Emulator.CPU;
 using Spice86.Core.Emulator.Devices.Video;
 using Spice86.Shared.Emulator.Memory;
 using Spice86.Shared.Interfaces;
@@ -12,6 +11,7 @@ namespace logo;
 /// </summary>
 public class RewrittenOverrides : CSharpOverrideHelper
 {
+    private const ushort NumberOfFramesRemainingOffset_CB6 = 0xCB6;
     /// <summary>
     /// Observed entry segment address at generation time
     /// </summary>
@@ -27,83 +27,65 @@ public class RewrittenOverrides : CSharpOverrideHelper
 
     public void DefineGeneratedCodeOverrides()
     {
-        // 0x1000
         DefineFunction(EntrySegmentAddress, 0x0, EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000, false);
     }
 
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public virtual Action EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000(int loadOffset)
+    public virtual Action EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000(int offset)
     {
-        AX = 0x111C;
-        DS = AX;
+        DS = 0x111C;
         AX = UInt16[ES, 2];
         UInt16[DS, 0x50] = AX;
         BX = 8;
-        Nop_1000_10F4_110F4(0);
         AX = 0xC;
         SI = 0x8E;
         Alu8.Sub(UInt8[DS, SI], 0);
         UInt16[DS, 0x52] = AX;
         DX = 0x5A;
-        CirclesUnknown_1000_105F_1105F(0);
+        CirclesUnknown_1000_105F_1105F();
         Alu8.Sub(UInt8[DS, DI], 46);
-        if (!ZeroFlag)
-        {
-            UInt16[DS, DI] = 0x482E;
-            UInt16[DS, (ushort)(DI + 2U)] = 0x4D4E;
-            UInt8[DS, (ushort)(DI + 4U)] = 0;
+        if (!ZeroFlag) {
+            Memory.SetZeroTerminatedString(MemoryUtils.ToPhysicalAddress(DS,DI), ".HNM", 5);
         }
         // Open file handle (LOGO.HNM)
-        AX = 0x3D00;
-        Interrupt(0x21);
+        Machine.Dos.DosInt21Handler.OpenFile(false);
         DX = 0x2E;
         if (!CarryFlag)
         {
             Stack.Push16(AX);
-            SetVideoMode_1000_0970_10970(0);
-            CirclesUnknown_1000_1019_11019(0);
+            SetVideoMode_1000_0970_10970();
+            CirclesUnknown_1000_1019_11019();
             BX = Stack.Pop16();
             AX = UInt16[DS, 0x52];
-            CirclesAnimation_1000_0DDE_10DDE(0);
+            CirclesAnimation_1000_0DDE_10DDE();
             DX = 0;
             AL = 0;
             // End of LOGO.EXE
             // Quit With Exit Code (Cpu.IsRunning set to false)
-            AH = 0x4C;
-            Interrupt(0x21);
+            Machine.Dos.DosInt21Handler.QuitWithExitCode();
         }
         // End of LOGO.EXE
         // Print string: "\u0006<zw\u0002"
-        AH = 0x9;
-        Interrupt(0x21);
+        Machine.Dos.DosInt21Handler.PrintString();
         // End of LOGO.EXE
         // Quit to DOS
-        AL = 0;
-        AH = 0x4C;
-        Interrupt(0x21);
+        Machine.Dos.DosInt21Handler.QuitWithExitCode();;
         return () => { };
     }
 
     /// <summary>
     /// Sets Video mode VGA to 0x13
     /// </summary>
-    public void SetVideoMode_1000_0970_10970(int loadOffset)
+    public void SetVideoMode_1000_0970_10970()
     {
-        // MOV AX,0x13 (1000_0970 / 0x10970)
         AX = 0x13;
-        // INT 0x10 (1000_0973 / 0x10973)
-        Interrupt(0x10);
-        
+        Machine.VideoInt10Handler.SetVideoMode();
+
     }
 
-    public void CheckCrtRegisterForChange_1000_09B5_109B5(int loadOffset)
-    {
-        
-    }
-
-    public void CommonCirclesWaitFrameAndWriteNextPaletteData_1000_09D8_109D8(int loadOffset)
+    public void CommonCirclesWaitFrameAndWriteNextPaletteData_1000_09D8_109D8()
     {
         int colors = CX;
         ushort colorOffset = DX;
@@ -120,7 +102,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public void ConvertLineNumberToArrayIndex_1000_0A22_10A22(int loadOffset)
+    public void ConvertLineNumberToArrayIndex_1000_0A22_10A22()
     {
         DI = (ushort)(BX * 320 + DX);
         
@@ -129,7 +111,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public void CommonUnknown_1000_0B9A_10B9A(int loadOffset)
+    public void CommonUnknown_1000_0B9A_10B9A()
     {
         Alu8.Sub(CH, 0xFE);
         DI = Alu16.Or(DI, DI);
@@ -138,7 +120,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
             BP = DI;
             BP = Alu16.And(BP, 511);
             AX = DI;
-            ConvertLineNumberToArrayIndex_1000_0A22_10A22(0);
+            ConvertLineNumberToArrayIndex_1000_0A22_10A22();
             BX = CX;
             BH = 0;
             Alu8.Sub(CH, byte.MaxValue);
@@ -207,7 +189,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         BP = DI;
         BP = Alu16.And(BP, 511);
         AX = DI;
-        ConvertLineNumberToArrayIndex_1000_0A22_10A22(0);
+        ConvertLineNumberToArrayIndex_1000_0A22_10A22();
         BX = CX;
         BH = 0;
         Alu16.And(AX, 16384);
@@ -271,7 +253,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public void CirclesUnknown_display_1000_0C72_10C72(int loadOffset)
+    public void CirclesUnknown_display_1000_0C72_10C72()
     {
         Stack.Push16(DS);
         AX = 0xA000;
@@ -323,12 +305,12 @@ public class RewrittenOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public void CircleMainLoop_1000_0CF4_10CF4(int loadOffset)
+    public void CircleMainLoop_1000_0CF4_10CF4()
     {
-        CirclesUnknown_display_1000_0C72_10C72(0);
+        CirclesUnknown_display_1000_0C72_10C72();
         SI = 0xCBC;
         AX = UInt16[EntrySegmentAddress, SI];
-        UInt16[EntrySegmentAddress, 0xCB6] = AX;
+        UInt16[EntrySegmentAddress, NumberOfFramesRemainingOffset_CB6] = AX;
         UInt16[EntrySegmentAddress, 0xCBA] = SI;
         AX = 0;
         UInt16[EntrySegmentAddress, 0xCB0] = AX;
@@ -339,9 +321,9 @@ public class RewrittenOverrides : CSharpOverrideHelper
         do
         {
             Stack.Push16(CX);
-            CirclesDrawStep_1000_0D22_10D22(0);
+            CirclesDrawStep_1000_0D22_10D22();
             CX = Stack.Pop16();
-            CommonCheckForAnyKeyStroke_1000_1085_11085(0);
+            CommonCheckForAnyKeyStroke_1000_1085_11085();
             num = --CX;
         }
         while (num != 0 && ZeroFlag);
@@ -351,7 +333,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public void CirclesDrawStep_1000_0D22_10D22(int loadOffset)
+    public void CirclesDrawStep_1000_0D22_10D22()
     {
         Stack.Push16(DS);
         Stack.Push16(ES);
@@ -359,7 +341,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         Stack.Push16(EntrySegmentAddress);
         DS = Stack.Pop16();
         ES = Stack.Pop16();
-        Alu16.Sub(UInt16[EntrySegmentAddress, 0xCB6], 0);
+        Alu16.Sub(UInt16[EntrySegmentAddress, NumberOfFramesRemainingOffset_CB6], 0);
         if (!SignFlag)
         {
             DI = 0x160;
@@ -379,11 +361,11 @@ public class RewrittenOverrides : CSharpOverrideHelper
                 DI += (ushort)Direction8;
             }
             CX = DX;
-            CommonComputeNextVgaPalette_1000_0D5F_10D5F(0);
+            CommonComputeNextVgaPalette_1000_0D5F_10D5F();
             DX = 0x160;
             BX = 0x50;
             CX = 0x50;
-            CommonCirclesWaitFrameAndWriteNextPaletteData_1000_09D8_109D8(0);
+            CommonCirclesWaitFrameAndWriteNextPaletteData_1000_09D8_109D8();
         }
         ES = Stack.Pop16();
         DS = Stack.Pop16();
@@ -393,16 +375,16 @@ public class RewrittenOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public void CommonComputeNextVgaPalette_1000_0D5F_10D5F(int loadOffset)
+    public void CommonComputeNextVgaPalette_1000_0D5F_10D5F()
     {
         SI = UInt16[EntrySegmentAddress, 0xCBA];
-        UInt16[EntrySegmentAddress, 0xCB6] = Alu16.Dec(UInt16[EntrySegmentAddress, 0xCB6]);
+        UInt16[EntrySegmentAddress, NumberOfFramesRemainingOffset_CB6] = Alu16.Dec(UInt16[EntrySegmentAddress, NumberOfFramesRemainingOffset_CB6]);
         if (ZeroFlag)
         {
             SI = Alu16.Add(SI, 8);
             UInt16[EntrySegmentAddress, 0xCBA] = SI;
             AX = UInt16[DS, SI];
-            UInt16[EntrySegmentAddress, 0xCB6] = AX;
+            UInt16[EntrySegmentAddress, NumberOfFramesRemainingOffset_CB6] = AX;
         }
         AX = UInt16[DS, (ushort)(SI + 2U)];
         AX = Alu16.Add(AX, UInt16[EntrySegmentAddress, 0xCB0]);
@@ -434,15 +416,12 @@ public class RewrittenOverrides : CSharpOverrideHelper
         
     }
 
-    public void CirclesUnknown_1000_0DBC_10DBC(int loadOffset)
+    public void CirclesUnknown_1000_0DBC_10DBC()
     {
         // LES DI,[0x4c] (1000_0DBC / 0x10DBC)
         DI = UInt16[DS, 0x4C];
         ES = UInt16[DS, 0x4E];
-        // MOV word ptr [0x56],DI (1000_0DC0 / 0x10DC0)
-        UInt16[DS, 0x56] = DI;
-        // MOV word ptr [0x58],ES (1000_0DC4 / 0x10DC4)
-        UInt16[DS, 0x58] = ES;
+        WritePaletteDataAddress(ES, DI);
         // MOV CX,ES (1000_0DC8 / 0x10DC8)
         CX = ES;
         // MOV AX,[0x50] (1000_0DCA / 0x10DCA)
@@ -452,7 +431,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         // CMP AX,0x3a02 (1000_0DCF / 0x10DCF)
         Alu16.Sub(AX, 0x3A02);
         // CALL 0x1000:109a (1000_0DD4 / 0x10DD4)
-        HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A(0);
+        HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A();
         // ADD DI,CX (1000_0DD7 / 0x10DD7)
         DI += CX;
         // XOR AX,AX (1000_0DD9 / 0x10DD9)
@@ -469,30 +448,29 @@ public class RewrittenOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public void CirclesAnimation_1000_0DDE_10DDE(int loadOffset)
+    public void CirclesAnimation_1000_0DDE_10DDE()
     {
         // Read File
         UInt16[DS, 0x54] = AX;
-        CirclesUnknown_1000_0DBC_10DBC(0);
+        CirclesUnknown_1000_0DBC_10DBC();
         AX = UInt16[DS, 84];
         UInt16[DS, 0x52] = AX;
         DI = UInt16[DS, 76];
         ES = UInt16[DS, 78];
-        UInt16[DS, 0x56] = DI;
-        UInt16[DS, 0x58] = ES;
-        CommonUnknown_1000_0EAD_10EAD(0);
-        CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4(0);
-        CommonUnknown_1000_0E4C_10E4C(0);
+        WritePaletteDataAddress(ES, DI);
+        CommonUnknown_1000_0EAD_10EAD();
+        CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4();
+        CommonUnknown_1000_0E4C_10E4C();
         CarryFlag = true;
-        CommonUnknown_1000_0E49_10E49(0);
-        CircleMainLoop_1000_0CF4_10CF4(0);
+        CommonUnknown_1000_0E49_10E49();
+        CircleMainLoop_1000_0CF4_10CF4();
         CarryFlag = true;
 
         do
         {
             AX = UInt16[DS, 0x52];
             BP = 0xE46;
-            HNMUnknown_1000_0FEA_10FEA(0);
+            HNMUnknown_1000_0FEA_10FEA();
             CarryFlag = true;
             Alu16.Sub(UInt16[DS, 0x52], 0);
         }
@@ -500,39 +478,37 @@ public class RewrittenOverrides : CSharpOverrideHelper
         SI = 0xEE;
         AX = UInt16[DS, SI];
         SI += (ushort)Direction16;
-        Nop_1000_11BD_111BD(0);
         byte ah1 = AH;
         byte al1 = AL;
         AL = ah1;
         AH = al1;
-        Nop_1000_11BD_111BD(0);
         Alu16.Sub(AX, 0x4C4F);
         CarryFlag = false;
         
     }
 
-    public void HNMUnknown_1000_0E46_10E46(int loadOffset)
+    public void HNMUnknown_1000_0E46_10E46()
     {
         // CALL 0x1000:0d22 (1000_0E46 / 0x10E46)
-        CirclesDrawStep_1000_0D22_10D22(0);
+        CirclesDrawStep_1000_0D22_10D22();
         // Function call generated as ASM continues to next function entry point without return
-        CommonUnknown_1000_0E49_10E49(0);
+        CommonUnknown_1000_0E49_10E49();
     }
 
-    public void CommonUnknown_1000_0E49_10E49(int loadOffset)
+    public void CommonUnknown_1000_0E49_10E49()
     {
         // CALL 0x1000:0e59 (1000_0E49 / 0x10E49)
-        CommonUnknown_display_1000_0E59_10E59(0);
+        CommonUnknown_display_1000_0E59_10E59();
         // Function call generated as ASM continues to next function entry point without return
-        CommonUnknown_1000_0E4C_10E4C(0);
+        CommonUnknown_1000_0E4C_10E4C();
     }
 
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public void CommonUnknown_1000_0E4C_10E4C(int loadOffset)
+    public void CommonUnknown_1000_0E4C_10E4C()
     {
-        CommonUnknown_1000_0E86_10E86(0);
+        UpdatePaletteDataAddress_1000_0E86_10E86();
         if (!ZeroFlag)
         {
             return;
@@ -546,11 +522,11 @@ public class RewrittenOverrides : CSharpOverrideHelper
     /// <summary>
     /// TODO: High level rewrite this first.
     /// </summary>
-    public void CommonUnknown_display_1000_0E59_10E59(int loadOffset)
+    public void CommonUnknown_display_1000_0E59_10E59()
     {
         Stack.Push16(DS);
-        SI = UInt16[DS, 0x56];
-        DS = UInt16[DS, 0x58];
+        SI = PaletteDataAddress.Offset;
+        DS = PaletteDataAddress.Segment;
         SI = Alu16.Add(SI, 2);
         AX = UInt16[DS, SI];
         SI += (ushort)Direction16;
@@ -564,7 +540,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
             Alu16.And(DI, 0x200);
             if (!ZeroFlag)
             {
-                CommonUnknown_1000_0EBD_10EBD(0);
+                CommonUnknown_1000_0EBD_10EBD();
             }
             AX = UInt16[DS, SI];
             SI += (ushort)Direction16;
@@ -574,26 +550,25 @@ public class RewrittenOverrides : CSharpOverrideHelper
             BX = AX;
             AX = 0xA000;
             ES = AX;
-            CommonUnknown_1000_0B9A_10B9A(0);
+            CommonUnknown_1000_0B9A_10B9A();
         }
         DS = Stack.Pop16();
         
     }
 
-    public void CommonUnknown_1000_0E86_10E86(int loadOffset)
+    public void UpdatePaletteDataAddress_1000_0E86_10E86()
     {
-        SegmentedAddress pointer = new SegmentedAddress(UInt16[DS, 0x58], UInt16[DS, 0x56]);
+        SegmentedAddress pointer = PaletteDataAddress;
         ushort newSegmentOffset = (ushort)(UInt16[pointer.ToPhysical()] + pointer.Offset);
         ushort newSegment = (ushort)((newSegmentOffset >> 4) + pointer.Segment);
         ushort newOffset = (ushort)(newSegmentOffset & 0xF);
-        UInt16[DS, 0x56] = newOffset;
-        UInt16[DS, 0x58] = newSegment;
+        WritePaletteDataAddress(newSegment, newOffset);
         CommonUnknown_1000_0EB2_10EB2(newSegment, newOffset);
     }
 
-    public void CommonUnknown_1000_0EAD_10EAD(int loadOffset)
+    public void CommonUnknown_1000_0EAD_10EAD()
     {
-        CommonUnknown_1000_0EB2_10EB2(UInt16[DS, 0x58], UInt16[DS, 0x56]);
+        CommonUnknown_1000_0EB2_10EB2(PaletteDataAddress.Segment, PaletteDataAddress.Offset);
     }
 
     public Action CommonUnknown_1000_0EB2_10EB2(ushort segment, ushort offset)
@@ -601,10 +576,10 @@ public class RewrittenOverrides : CSharpOverrideHelper
         ushort value = UInt16[segment, offset];
         CX = (ushort)(value - 2);
         ZeroFlag = value == 0;
-        return NearRet(0);
+        return NearRet();
     }
 
-    public void CommonUnknown_1000_0EBD_10EBD(int loadOffset)
+    public void CommonUnknown_1000_0EBD_10EBD()
     {
         // AND DI,0xfdff (1000_0EBD / 0x10EBD)
         // DI &= 0xFDFF;
@@ -624,7 +599,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         // PUSH ES (1000_0ECC / 0x10ECC)
         Stack.Push16(ES);
         // CALL 0x1000:0efe (1000_0ECD / 0x10ECD)
-        CommonUnknown_1000_0EFE_10EFE(0);
+        CommonUnknown_1000_0EFE_10EFE();
         // POP DS (1000_0ED0 / 0x10ED0)
         DS = Stack.Pop16();
         // POP SI (1000_0ED1 / 0x10ED1)
@@ -637,20 +612,20 @@ public class RewrittenOverrides : CSharpOverrideHelper
         
     }
 
-    public void CommonUnknown_1000_0EFE_10EFE(int loadOffset)
+    public void CommonUnknown_1000_0EFE_10EFE()
     {
         Stack.Push16(CX);
         Stack.Push16(DI);
         Stack.Push16(DS);
         SI += 6;
         BP = 0;
-        CommonUnknownSplit_1000_0F30_10F30(0);
+        CommonUnknownSplit_1000_0F30_10F30();
     }
 
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public void CommonUnknownSplit_1000_0F30_10F30(int loadOffset)
+    public void CommonUnknownSplit_1000_0F30_10F30()
     {
         while (true)
         {
@@ -785,58 +760,34 @@ public class RewrittenOverrides : CSharpOverrideHelper
         
     }
 
-    /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
-    /// </summary>
-    public void CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4(int loadOffset)
+    public void WritePaletteDataAddress(ushort segment, ushort offset)
     {
-        SI = UInt16[DS, 0x56];
-        ES = UInt16[DS, 0x58];
-        SI = Alu16.Add(SI, 2);
-        while (true)
+        UInt16[DS, 0x58] = segment;
+        UInt16[DS, 0x56] = offset;
+    }
+    private SegmentedAddress PaletteDataAddress => new(UInt16[DS, 0x58], UInt16[DS, 0x56]);
+    private SegmentedAddress PaletteDataAddressPlusTwo => new(PaletteDataAddress.Segment, (ushort)(PaletteDataAddress.Offset + 2));
+    public void CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4()
+    {
+        PaletteData? current = new(Memory, PaletteDataAddressPlusTwo);
+        while (current != null)
         {
-            AX = UInt16[ES, SI];
-            SI += (ushort)Direction16;
-            Alu8.Sub(AL, byte.MaxValue);
-            if (!ZeroFlag)
-            {
-                CX = 0;
-                BX = 0;
-                BL = AL;
-                CL = AH;
-                DX = SI;
-                SI += CX;
-                SI += CX;
-                SI = Alu16.Add(SI, CX);
-                // Set VGA Palette
-                AX = 0x1012;
-                Interrupt(0x10);
-                nop_1000_0FCC_10FCC(0);
-            }
-            else
-            {
-                break;
-            }
+            current.LoadInVgaDac(State, Machine.VideoInt10Handler);
+            current = current.Next;
         }
-        
-    }
-
-    public void nop_1000_0FCC_10FCC(int loadOffset)
-    {
-        
     }
 
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public void HNMUnknown_1000_0FEA_10FEA(int loadOffset)
+    public void HNMUnknown_1000_0FEA_10FEA()
     {
         InterruptFlag = true;
         Stack.Push16(AX);
         AX = 0;
         ES = AX;
         Stack.Push16(UInt16[ES, 0x46C]);
-        HNMUnknown_1000_0E46_10E46(0);
+        HNMUnknown_1000_0E46_10E46();
         BX = Stack.Pop16();
         BP = Stack.Pop16();
         BP >>= 1;
@@ -858,11 +809,11 @@ public class RewrittenOverrides : CSharpOverrideHelper
             Alu16.Sub(AX, BP);
         }
         while (CarryFlag);
-        CommonCheckForAnyKeyStroke_1000_1085_11085(0);
+        CommonCheckForAnyKeyStroke_1000_1085_11085();
         
     }
 
-    public void CirclesUnknown_1000_1019_11019(int loadOffset)
+    public void CirclesUnknown_1000_1019_11019()
     {
         DI = DX;
         while (true)
@@ -876,7 +827,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         }
     }
 
-    public void CirclesUnknown_1000_105F_1105F(int loadOffset)
+    public void CirclesUnknown_1000_105F_1105F()
     {
         // MOV DI,DX (1000_105F / 0x1105F)
         DI = DX;
@@ -905,7 +856,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
     /// Checks 288 times during the whole program runtime if any key from the keyboard was received.
     /// If any, exit to DOS immediatly.
     /// </summary>
-    public void CommonCheckForAnyKeyStroke_1000_1085_11085(int loadOffset)
+    public void CommonCheckForAnyKeyStroke_1000_1085_11085()
     {
         // Bios Interrupt: GetKeystrokeStatus
         // MOV AH,0x1 (1000_1085 / 0x11085)
@@ -932,7 +883,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
     /// <summary>
     /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
     /// </summary>
-    public void HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A(int loadOffset)
+    public void HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A()
     {
         Stack.Push16(DS);
         AX = ES;
@@ -951,16 +902,5 @@ public class RewrittenOverrides : CSharpOverrideHelper
         AH = 0x3E;
         Interrupt(0x21);
         FlagRegister16 = Stack.Pop16();
-        
-    }
-
-    public void Nop_1000_10F4_110F4(int loadOffset)
-    {
-        
-    }
-
-    public void Nop_1000_11BD_111BD(int loadOffset)
-    {
-        
     }
 }

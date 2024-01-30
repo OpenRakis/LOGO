@@ -58,7 +58,7 @@ public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
         DefineFunction(cs1, 0xE49, CommonUnknown_1000_0E49_10E49, false);
         DefineFunction(cs1, 0xE4C, CommonUnknown_1000_0E4C_10E4C, false);
         DefineFunction(cs1, 0xE59, CommonUnknown_display_1000_0E59_10E59, false);
-        DefineFunction(cs1, 0xE86, CommonUnknown_1000_0E86_10E86, false);
+        DefineFunction(cs1, 0xE86, UpdatePaletteDataAddress_1000_0E86_10E86, false);
         DefineFunction(cs1, 0xEAD, CommonUnknown_1000_0EAD_10EAD, false);
         DefineFunction(cs1, 0xEB2, split_1000_0EB2_10EB2, false);
         DefineFunction(cs1, 0xEBD, CommonUnknown_1000_0EBD_10EBD, false);
@@ -1842,7 +1842,7 @@ public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
     public virtual Action CommonUnknown_1000_0E4C_10E4C(int loadOffset)
     {
         // CALL 0x1000:0e86 (1000_0E4C / 0x10E4C)
-        NearCall(cs1, 0xE4F, CommonUnknown_1000_0E86_10E86);
+        NearCall(cs1, 0xE4F, UpdatePaletteDataAddress_1000_0E86_10E86);
         // JZ 0x1000:0e52 (1000_0E4F / 0x10E4F)
         if (ZeroFlag)
         {
@@ -1918,7 +1918,7 @@ public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
         return NearRet();
     }
 
-    public virtual Action CommonUnknown_1000_0E86_10E86(int loadOffset)
+    public virtual Action UpdatePaletteDataAddress_1000_0E86_10E86(int loadOffset)
     {
     entrydispatcher:
         if (loadOffset != 0)
