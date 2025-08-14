@@ -11,7 +11,7 @@ class PaletteData : MemoryBasedDataStructure
 {
     public SegmentedAddress _address;
 
-    public PaletteData(IByteReaderWriter byteReaderWriter, SegmentedAddress baseAddress): base(byteReaderWriter, baseAddress.ToPhysical())
+    public PaletteData(IByteReaderWriter byteReaderWriter, SegmentedAddress baseAddress): base(byteReaderWriter, baseAddress.Linear)
     {
         _address = baseAddress;
     }
