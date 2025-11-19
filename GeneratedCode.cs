@@ -22,9 +22,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         DefineGeneratedCodeOverrides();
         SetProvidedInterruptHandlersAsOverridden();
     }
-
-    public Dictionary<SegmentedAddress, FunctionInformation> FunctionInformations => _functionInformations;
-
+    
     public void DefineGeneratedCodeOverrides()
     {
         DefineFunction(EntrySegmentAddress, 0x0, EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000, false);
@@ -50,7 +48,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
             Memory.SetZeroTerminatedString(MemoryUtils.ToPhysicalAddress(DS,DI), ".HNM", 5);
         }
         // Open file handle (LOGO.HNM)
-        Machine.Dos.DosInt21Handler.OpenFile(false);
+        Machine.Dos.DosInt21Handler.OpenFileorDevice(false);
         DX = 0x2E;
         if (!CarryFlag)
         {
@@ -559,7 +557,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
     public void UpdatePaletteDataAddress_1000_0E86_10E86()
     {
         SegmentedAddress pointer = PaletteDataAddress;
-        ushort newSegmentOffset = (ushort)(UInt16[pointer.ToPhysical()] + pointer.Offset);
+        ushort newSegmentOffset = (ushort)(UInt16[pointer] + pointer.Offset);
         ushort newSegment = (ushort)((newSegmentOffset >> 4) + pointer.Segment);
         ushort newOffset = (ushort)(newSegmentOffset & 0xF);
         WritePaletteDataAddress(newSegment, newOffset);

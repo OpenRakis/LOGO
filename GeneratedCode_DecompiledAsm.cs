@@ -30,12 +30,9 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
         cs2 = (ushort)(entrySegment + 0xE000);
 
         DefineGeneratedCodeOverrides();
-        DetectCodeRewrites();
         SetProvidedInterruptHandlersAsOverridden();
     }
     
-    public Dictionary<SegmentedAddress, FunctionInformation> FunctionInformations => _functionInformations;
-
     public void DefineGeneratedCodeOverrides()
     {
         // 0x1000
@@ -72,22 +69,6 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
         DefineFunction(cs1, 0x109A, HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A, false);
         DefineFunction(cs1, 0x10F4, Nop_1000_10F4_110F4, false);
         DefineFunction(cs1, 0x11BD, Nop_1000_11BD_111BD, false);
-    }
-
-    public void DetectCodeRewrites()
-    {
-        DefineExecutableArea(0x10000, 0x10090);
-        DefineExecutableArea(0x10970, 0x10CAF);
-        DefineExecutableArea(0x10CF4, 0x10ED4);
-        DefineExecutableArea(0x10EFE, 0x10F07);
-        DefineExecutableArea(0x10F30, 0x1103A);
-        DefineExecutableArea(0x1105F, 0x1106E);
-        DefineExecutableArea(0x11085, 0x11091);
-        DefineExecutableArea(0x1109A, 0x110C1);
-        DefineExecutableArea(0x110F4, 0x111C7);
-        DefineExecutableArea(0xF0008, 0xF000B);
-        DefineExecutableArea(0xF0014, 0xF0017);
-        DefineExecutableArea(0xF0020, 0xF0023);
     }
 
     /// <summary>

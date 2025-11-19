@@ -16,6 +16,12 @@
     <Using Include="Spice86.Core.Emulator.Function" />
   </ItemGroup>
   <ItemGroup>
-  <PackageReference Include="Spice86" Version="6.4.2" />
+    <PackageReference Include="Spice86" Version="6.4.2" />
+    <!--ProjectReference Include="../Spice86/src/Spice86.Shared/Spice86.Shared.csproj" />
+    <ProjectReference Include="../Spice86/src/Spice86.Logging/Spice86.Logging.csproj" />
+    <ProjectReference Include="../Spice86/src/Bufdio.Spice86/Bufdio.Spice86.csproj" />
+    <ProjectReference Include="../Spice86/src/Spice86/Spice86.csproj" />
+    <ProjectReference Include="../Spice86/src/Spice86.Core/Spice86.Core.csproj" />
+    <ProjectReference Include="../Spice86/src/Spice86.MicroBenchmarkTemplate/Spice86.MicroBenchmarkTemplate.csproj" /-->
   </ItemGroup>
 </Project>
