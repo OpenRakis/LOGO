@@ -888,6 +888,11 @@ public static class HnmBitstreamDecoder
                 }
             }
 
+            // CommonUnknownSplit_1000_0F30_10F30 loads the long back-reference length into CL
+            // before falling through label_12, where CX is incremented twice for the final copy
+            // count. Preserve that exact handoff instead of leaving CX at zero.
+            cx = clByte;
+
         label_12:
             // Original asm does ADD AX,DI on 16-bit registers before XCHG AX,SI.
             // That is a wraparound address calculation, not a clamp.

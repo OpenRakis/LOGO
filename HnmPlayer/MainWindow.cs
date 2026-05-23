@@ -34,9 +34,10 @@ public sealed class MainWindow : Window
 
         _image = new Image
         {
-            Stretch = Stretch.None,
-            HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Center
+            Stretch = Stretch.Uniform,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+            VerticalAlignment = VerticalAlignment.Stretch,
+            Margin = new Thickness(16)
         };
 
         _statusText = new TextBlock
@@ -204,6 +205,7 @@ public sealed class MainWindow : Window
             Debug.Assert(_bitmap.PixelSize.Width == HnmPlaybackEngine.FrameWidth && _bitmap.PixelSize.Height == HnmPlaybackEngine.FrameHeight, "Bitmap dimensions must match HNM output dimensions.");
             _engine.RenderCurrentFrame(_bitmap);
             _image.Source = _bitmap;
+            _image.InvalidateVisual();
             _restartButton.IsEnabled = true;
             _pauseButton.IsEnabled = true;
             _statusText.Text = $"Loaded {Path.GetFileName(path)}: {_engine.TotalChunks} chunks, {_engine.CurrentChunkIndex} ready.";
@@ -252,6 +254,7 @@ public sealed class MainWindow : Window
         if (result.VisualChanged)
         {
             _engine.RenderCurrentFrame(_bitmap);
+            _image.InvalidateVisual();
         }
 
         _statusText.Text = _engine.StatusText;
