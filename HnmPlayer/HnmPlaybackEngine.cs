@@ -15,9 +15,7 @@ public sealed class HnmPlaybackEngine
     private const int VgaMode13RetraceEndScanline = 414;
     private const double CirclesPreludeFrameDurationMs = (VgaMode13HorizontalTotalClocks * VgaMode13FrameTotalScanlines * 1000.0) / VgaMode13DotClockHz;
     private const ushort DefaultPlaybackDelaySeed = 0x000C;
-    private const int CirclesPaletteBufferOffset = 0x160;
     private const int CirclesPaletteBufferLength = 0xF0;
-    private const int CirclesPaletteStepWidthOffset = 0xCB8;
     private const int CirclesPaletteTableOffset = 0xCBC;
     private const int CirclesPaletteTableEndOffset = 0xDDE;
     private const int CirclesPaletteTableLength = CirclesPaletteTableEndOffset - CirclesPaletteTableOffset;
@@ -328,32 +326,23 @@ public sealed class HnmPlaybackEngine
 
     private void InitializeCirclesPaletteAnimationState()
     {
-        if (InputPath is null)
+        if (CirclesPaletteData.Buffer.Length != CirclesPaletteBufferLength)
         {
-            throw new InvalidOperationException("HNM input path must be initialized before circles palette state can be loaded.");
+            throw new InvalidOperationException($"Embedded circles palette buffer must be exactly 0x{CirclesPaletteBufferLength:X} bytes.");
         }
 
-        string executablePath = FindOriginalExecutablePath(InputPath);
-        byte[] executableBytes = File.ReadAllBytes(executablePath);
-        if (executableBytes.Length < 0x20)
+        if (CirclesPaletteData.Table.Length != CirclesPaletteTableLength)
         {
-            throw new InvalidDataException($"Original executable '{executablePath}' is too short to contain the circles palette state.");
+            throw new InvalidOperationException($"Embedded circles palette table must cover CS:0x{CirclesPaletteTableOffset:X}..0x{CirclesPaletteTableEndOffset:X} exactly.");
         }
 
-        ushort headerParagraphCount = BinaryPrimitives.ReadUInt16LittleEndian(executableBytes.AsSpan(8, 2));
-        int imageOffset = headerParagraphCount * 16;
-        if (imageOffset + CirclesPaletteTableEndOffset > executableBytes.Length)
-        {
-            throw new InvalidDataException($"Original executable '{executablePath}' does not contain the circles palette table through 0x{CirclesPaletteTableEndOffset:X}.");
-        }
+        Array.Copy(CirclesPaletteData.Buffer, _circlesPaletteBuffer, CirclesPaletteBufferLength);
+        Array.Copy(CirclesPaletteData.Table, _circlesPaletteTable, CirclesPaletteTableLength);
 
-        executableBytes.AsSpan(imageOffset + CirclesPaletteBufferOffset, CirclesPaletteBufferLength).CopyTo(_circlesPaletteBuffer);
-        executableBytes.AsSpan(imageOffset + CirclesPaletteTableOffset, CirclesPaletteTableLength).CopyTo(_circlesPaletteTable);
-
-        _circlesPaletteStepWidth = BinaryPrimitives.ReadUInt16LittleEndian(executableBytes.AsSpan(imageOffset + CirclesPaletteStepWidthOffset, 2));
+        _circlesPaletteStepWidth = CirclesPaletteData.StepWidth;
         if (_circlesPaletteStepWidth == 0)
         {
-            throw new InvalidDataException($"Original executable '{executablePath}' reports a zero circles palette step width at 0x{CirclesPaletteStepWidthOffset:X}.");
+            throw new InvalidOperationException("Embedded circles palette step width must be non-zero.");
         }
 
         int shiftedByteCount = _circlesPaletteStepWidth * 3;
@@ -373,27 +362,6 @@ public sealed class HnmPlaybackEngine
         _circlesPaletteAccumulatorG = 0;
         _circlesPaletteAccumulatorB = 0;
         _circlesPaletteStateInitialized = true;
-    }
-
-    private static string FindOriginalExecutablePath(string hnmPath)
-    {
-        string? inputDirectory = Path.GetDirectoryName(hnmPath);
-        string[] candidates =
-        [
-            inputDirectory is null ? string.Empty : Path.Combine(inputDirectory, "LOGO.EXE"),
-            Path.Combine(AppContext.BaseDirectory, "LOGO.EXE"),
-            Path.Combine(Environment.CurrentDirectory, "LOGO.EXE")
-        ];
-
-        foreach (string candidate in candidates)
-        {
-            if (!string.IsNullOrWhiteSpace(candidate) && File.Exists(candidate))
-            {
-                return Path.GetFullPath(candidate);
-            }
-        }
-
-        throw new FileNotFoundException($"Original LOGO.EXE is required to load the circles palette state. Looked next to '{hnmPath}', under '{AppContext.BaseDirectory}', and under '{Environment.CurrentDirectory}'.");
     }
 
     private void ApplyCirclesPreludeFramebufferTransform()
