@@ -51,6 +51,12 @@ By default, this project now starts Spice86 with:
 
 You can still pass these flags explicitly if you want to override the defaults.
 
+To re-enable the C# reverse-engineered overrides, pass:
+
+    --OverrideSupplierClassName logo.MyOverrideSupplier --UseCodeOverride true
+
+Both flags are required together.
+
 ## Main files of interest
 
 - Program.cs : Entry point.
