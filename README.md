@@ -39,7 +39,17 @@ sha256 checksum:
     896a55f02555f708b57c6fd7576c8404aa479c1ec6e90fbbb230130bc7a31921
 Then:
 
-    dotnet run -e /path/to/LOGO.EXE -d false
+    dotnet run -- -e /path/to/LOGO.EXE -d false
+
+## Cloud / MCP run profile
+
+By default, this project now starts Spice86 with:
+
+- headless mode (`--HeadlessMode Minimal`)
+- MCP server enabled on port `8081` (`--mcp-http-port 8081`)
+- C# code overrides disabled (`--UseCodeOverride false`)
+
+You can still pass these flags explicitly if you want to override the defaults.
 
 ## Main files of interest
 
