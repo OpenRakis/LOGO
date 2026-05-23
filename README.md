@@ -1,7 +1,8 @@
 # LOGO
+
 A fully reverse-engineered real DOS app exemple, from the floppy version of DUNE.
 
-https://github.com/user-attachments/assets/9d0987ae-4c27-4c83-b6d7-79880e20c76a
+<https://github.com/user-attachments/assets/9d0987ae-4c27-4c83-b6d7-79880e20c76a>
 
 ## High level view
 
@@ -24,12 +25,13 @@ In this animation there is a lot. Let's break it down:
 
 This repository serves as an example in order to document and show case the usage of Spice86.
 
+LOGO.EXE and LOGO.HNM only exist in the PC floppy version of DUNE.
 
-LOGO.EXE and LOGO.HNM only exist in the PC Floppy version of DUNE.
+This repository does not include LOGO.EXE. If you want to run the original DOS binary through the root emulator project, supply your own copy from Dune PC floppy 2.1.
 
 ## How to run
 
-Get LOGO.EXE from the floppy version of Dune.
+Get LOGO.EXE from Dune PC floppy 2.1. The checksum below is for that binary.
 
 sha256 checksum:
 
@@ -37,6 +39,8 @@ sha256 checksum:
 Then:
 
     dotnet run -- -e /path/to/LOGO.EXE -d false
+
+The standalone desktop player under HnmPlayer no longer needs LOGO.EXE at runtime.
 
 ## Cloud / MCP run profile
 
@@ -59,7 +63,6 @@ Both flags are required together.
 - Program.cs : Entry point.
 
 - CodeGeneratorConfig.json: Configuration file used by the Ghidra script named "Spice86CodeGenerator.java". This script is available on the Spice86 repo.
-
 
 ### Namespace
 
