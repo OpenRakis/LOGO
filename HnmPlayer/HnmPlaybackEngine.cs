@@ -32,6 +32,7 @@ public sealed class HnmPlaybackEngine
 
     private readonly byte[] _framebuffer = new byte[VgaSegmentByteCount];
     private readonly byte[] _palette = new byte[256 * 3];
+    private readonly byte[] _compressedFrameBuffer = new byte[VgaSegmentByteCount];
     private readonly byte[] _circlesPaletteBuffer = new byte[CirclesPaletteBufferLength];
     private readonly byte[] _circlesPaletteTable = new byte[CirclesPaletteTableLength];
     private static readonly long CirclesPreludeFrameStopwatchTicks = checked((long)Math.Ceiling((CirclesPreludeFrameDurationMs * Stopwatch.Frequency) / 1000.0));
@@ -74,6 +75,7 @@ public sealed class HnmPlaybackEngine
         PendingWaitMilliseconds = 0;
         Array.Clear(_framebuffer);
         Array.Clear(_palette);
+        Array.Clear(_compressedFrameBuffer);
         Array.Clear(_circlesPaletteBuffer);
         Array.Clear(_circlesPaletteTable);
         _circlesPaletteTablePosition = 0;
@@ -535,7 +537,7 @@ public sealed class HnmPlaybackEngine
             return (false, "header-skip");
         }
 
-        bool changed = HnmFrameParser.TryRenderFrameChunk(payload, _framebuffer)
+        bool changed = HnmFrameParser.TryRenderFrameChunk(payload, _framebuffer, _compressedFrameBuffer)
             ? true
             : throw new InvalidDataException($"Frame chunk at offset 0x{chunk.Offset:X} failed strict decode.");
         return (changed, $"frame 0x{(controlWord >> 8):X2}");
@@ -660,9 +662,10 @@ public static class HnmPaletteParser
 
 public static class HnmFrameParser
 {
-    public static bool TryRenderFrameChunk(ReadOnlySpan<byte> payload, byte[] framebuffer)
+    public static bool TryRenderFrameChunk(ReadOnlySpan<byte> payload, byte[] framebuffer, byte[] compressedFrameBuffer)
     {
         Debug.Assert(framebuffer.Length == HnmPlaybackEngine.VgaSegmentByteCount, "Framebuffer must model the full 64K VGA segment.");
+        Debug.Assert(compressedFrameBuffer.Length == HnmPlaybackEngine.VgaSegmentByteCount, "Compressed frame buffer must model the original 64K auxiliary segment.");
 
         if (payload.Length < 8)
         {
@@ -688,20 +691,23 @@ public static class HnmFrameParser
                 return false;
             }
 
-            byte[] decoded = new byte[0x10000];
             // Original code consumes flags/control, then the decoder prologue skips an
             // additional 6-byte compressed-frame preamble before reading bitstream data.
-            int decodedLength = HnmBitstreamDecoder.Decode(payload.Slice(10), decoded);
-            Debug.Assert(decodedLength >= 0 && decodedLength <= decoded.Length, "Decoded length must be in destination range.");
+            int decodedLength = HnmBitstreamDecoder.Decode(payload.Slice(10), compressedFrameBuffer);
+            Debug.Assert(decodedLength >= 0 && decodedLength <= compressedFrameBuffer.Length, "Decoded length must be in destination range.");
             if (decodedLength < 4)
             {
                 return false;
             }
 
             flags = (ushort)(flags & 0xFDFF);
-            dx = BinaryPrimitives.ReadUInt16LittleEndian(decoded.AsSpan(0, 2));
-            bx = BinaryPrimitives.ReadUInt16LittleEndian(decoded.AsSpan(2, 2));
-            source = decoded.AsSpan(4, decodedLength - 4);
+            dx = BinaryPrimitives.ReadUInt16LittleEndian(compressedFrameBuffer.AsSpan(0, 2));
+            bx = BinaryPrimitives.ReadUInt16LittleEndian(compressedFrameBuffer.AsSpan(2, 2));
+
+            // CommonUnknown_1000_0EBD_10EBD restores DS to the fixed auxiliary segment and the
+            // blitter then reads from that 64K segment starting at SI=4. The original code does
+            // not communicate the decoder's output length to CommonUnknown_1000_0B9A_10B9A.
+            source = compressedFrameBuffer.AsSpan(4);
         }
         else
         {
@@ -885,26 +891,25 @@ public static class HnmBitstreamDecoder
         label_12:
             // Original asm does ADD AX,DI on 16-bit registers before XCHG AX,SI.
             // That is a wraparound address calculation, not a clamp.
-            int sourceIndex = (ushort)(ax + di);
+            ushort sourceIndex = (ushort)(ax + di);
 
             int savedSi = si;
             si = sourceIndex;
+            ushort backReferenceSi = sourceIndex;
             ++cx;
             cx = (ushort)(cx + 1);
             while (cx != 0)
             {
                 cx--;
-                // Per NO FALLBACK rule: back-reference copy must never silently truncate.
-                // The original asm assumes the back-reference window is valid.
-                if (si < 0 || si >= destination.Length)
-                {
-                    throw new InvalidDataException($"Back-reference source out of range: si=0x{si:X4} (destination length 0x{destination.Length:X4}).");
-                }
                 if (di >= destination.Length)
                 {
                     throw new InvalidDataException($"Back-reference destination overflow: di=0x{di:X4}.");
                 }
-                destination[di++] = destination[si++];
+
+                // CommonUnknownSplit_1000_0F30_10F30 copies with MOVSB on 16-bit SI/DI.
+                // Source reads therefore wrap at 0x10000 instead of faulting on 0xFFFF + 1.
+                destination[di++] = destination[backReferenceSi];
+                backReferenceSi = (ushort)(backReferenceSi + 1);
             }
             si = savedSi;
             continue;
