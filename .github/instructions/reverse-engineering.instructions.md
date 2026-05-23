@@ -1,0 +1,109 @@
+---
+description: "Use when implementing or modifying C# overrides in LOGO override files. Covers reverse-engineering workflow, address tracing, naming conventions, return type validation, and dump-first evidence gathering."
+applyTo: "{GeneratedCode*.cs,MyOverrideSupplier.cs}"
+---
+
+# Override Implementation Guidelines
+
+## Before Writing Code: Gather Evidence
+
+1. **Check live Spice86 state first** (if emulator is running):
+   - Use MCP server (http://localhost:8081 by default, see `--mcp-http-port`)
+   - Connect via GDB (port 10000 by default) and inspect registers, memory, CS:IP
+   - Set breakpoints and step through the relevant code path
+   - Use custom GDB commands like `monitor dumpall` to export current runtime state
+
+2. **Use existing dumps** when live inspection is unavailable:
+   - [spice86dumpExecutionFlow.json](../../spice86dumpExecutionFlow.json) — executed code paths, function addresses
+   - [spice86dumpGhidraSymbols.txt](../../spice86dumpGhidraSymbols.txt) — function names and addresses discovered by Ghidra
+   - [CodeGeneratorConfig.json](../../CodeGeneratorConfig.json) — manual instruction replacements and hook injection points
+   - Any targeted memory snapshots in the repository root for the specific code path
+
+3. **Reuse existing in-repo workflows before adding automation**:
+   - Check `scripts/`, `.github/prompts/`, `.github/skills/`, and nearby docs for an existing workflow first
+   - If a suitable repo script already covers the task, run it with the right arguments instead of writing a new helper script
+   - Only add new automation when the repository does not already provide a suitable path, and state that gap explicitly
+
+4. **Examine existing overrides** in the same file or related domain files for patterns:
+   - How do they access game state via `CSharpOverrideHelper` members (`UInt8`, `UInt16`, registers, `Machine`, `Stack`)?
+   - What `NearRet()` or `FarRet()` pattern matches your scenario?
+   - Are there helper methods you should reuse?
+
+## Naming and Traceability
+
+All override methods follow: `{FunctionName}_{Segment}_{Offset}_{LinearAddress}`
+
+Example: `SetBackBufferAsActiveFrameBuffer_1000_C085_01C085`
+
+- `Segment`: Hex segment field value (`1000` for cs1, `D000` for cs2, etc.)
+- `Offset`: Offset within the segment
+- `LinearAddress`: Physical address in memory (segment * 16 + offset in hex)
+
+This naming preserves traceability with the DOS disassembly and helps future developers locate the original assembly.
+
+## Critical Rules: No Exceptions
+
+### Return Type
+The chosen return must match the original instruction:
+- **`NearRet()`**: Near CALL/RET within the same segment (most common in DOS code)
+- **`FarRet()`**: Far CALL/RET across segments (x86 CS:IP indirect)
+
+Wrong choice silently corrupts the emulated stack. If unsure, inspect the original assembly via Ghidra or the GDB disassembly view.
+
+### Register/Flags Contract
+- Preserve the original register and FLAGS post-state at function exit. In this codebase, callers may rely on side effects rather than explicit parameters/returns.
+- Validate whether modified outputs are consumed by callers (AX/BX/CX/DX/SI/DI/BP/SP and FLAGS). If consumed, your override must expose identical post-state.
+- If a computed value is not consumed by any caller, it may remain internal to the override. If consumed, return it through the same register/FLAGS channel as the original function.
+- Pay special attention to SI/DI advancement patterns used by callers as implicit iterators/byte counters.
+- Treat stack traffic as observable contract, not implementation detail: mirror assembly PUSH/POP ordering and temporary stack usage exactly when it affects register restoration or call flow.
+- For assembly `PUSHF`/`POPF` sequences, use stack-based FLAGS preservation (`Stack.Push16(State.Flags.FlagRegister16)` and restore from `Stack.Pop16()` into `State.Flags.FlagRegister`) to keep emulator-wide FLAGS semantics consistent.
+- Do not replace `PUSHF`/`POPF` with ad-hoc per-flag snapshots unless runtime evidence proves complete equivalence for that exact call path.
+
+### Segment Field Anchors
+Never change segment anchor constants (for example `cs1`) without auditing all existing `DefineFunction` and injected-instruction registrations. These are anchors for the override table in this repository's generated override files.
+
+### State Access
+- Prefer `CSharpOverrideHelper` members (`UInt8`, `UInt16`, registers, `Machine`, `Stack`) instead of ad-hoc pointer math helpers.
+- Keep generated files traceable to source dumps and avoid introducing opaque wrapper layers for one-off accesses.
+
+## Implementation Checklist
+
+- [ ] Behavior matches the original assembly exactly (check via step-through or test in-game)
+- [ ] Method name follows `{FunctionName}_{Segment}_{Offset}_{LinearAddress}` pattern
+- [ ] Return type chosen and validated: `NearRet()` or `FarRet()`
+- [ ] Register/FLAGS side effects at function exit match original behavior
+- [ ] PUSH/POP and PUSHF/POPF stack effects match original behavior (ordering and restore points)
+- [ ] Caller audit done for post-call register/FLAGS usage; consumed outputs are preserved
+- [ ] All state access uses consistent `CSharpOverrideHelper` primitives and register semantics
+- [ ] Edge cases from the original assembly are documented
+- [ ] Unobserved code paths throw `FailAsUntested` or are guarded; never guess
+- [ ] XML doc comment explains what the override does and its original address
+- [ ] Logging via `_loggerService.Debug` is terse and structured
+- [ ] In-game scenario exercise confirms the behavior against the original
+
+## Documentation Template
+
+```csharp
+/// <summary>
+/// [Brief description of what the function does in game terms].
+/// Original assembly at CS1:XXXX. Replaces [n] instructions.
+/// </summary>
+public void FunctionName_1000_XXXX_0XXXXX() {
+    // Implementation
+    NearRet(); // or FarRet()
+}
+```
+
+## Common Pitfalls
+
+- **Segment field mismatch**: Using hardcoded `0x1000` instead of `cs1` variable breaks relocation
+- **FailAsUntested not thrown**: Code path never observed, behavior invented — will fail in-game
+- **Helper reuse ignored**: Writing duplicated memory-copy or palette logic instead of reusing existing helper methods in this repo's override code
+- **Magic numbers**: Using addresses without semantic names; prefer named constants near override entry points
+
+## Coordination with Reverse-Engineering
+
+This file auto-applies when you edit LOGO override files (`GeneratedCode*.cs`, `MyOverrideSupplier.cs`). Before committing, ensure:
+- Dumps are current (`CodeGeneratorConfig.json` matches your assumptions)
+- GDB/debugger evidence supports the behavior
+- In-game test pass; compare behavior frame-by-frame against the original if possible
