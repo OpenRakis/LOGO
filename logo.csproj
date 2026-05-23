@@ -17,7 +17,7 @@
     <Using Include="Spice86.Core.Emulator.Function" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Spice86" Version="14" />
+    <PackageReference Include="Spice86" Version="14.1" />
     <!--ProjectReference Include="../Spice86/src/Spice86.Shared/Spice86.Shared.csproj" />
     <ProjectReference Include="../Spice86/src/Spice86.Logging/Spice86.Logging.csproj" />
     <ProjectReference Include="../Spice86/src/Bufdio.Spice86/Bufdio.Spice86.csproj" />
