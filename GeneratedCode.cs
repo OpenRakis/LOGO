@@ -22,7 +22,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         DefineGeneratedCodeOverrides();
         SetProvidedInterruptHandlersAsOverridden();
     }
-    
+
     public void DefineGeneratedCodeOverrides()
     {
         DefineFunction(EntrySegmentAddress, 0x0, EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000, false);
@@ -44,11 +44,12 @@ public class RewrittenOverrides : CSharpOverrideHelper
         DX = 0x5A;
         CirclesUnknown_1000_105F_1105F();
         Alu8.Sub(UInt8[DS, DI], 46);
-        if (!ZeroFlag) {
-            Memory.SetZeroTerminatedString(MemoryUtils.ToPhysicalAddress(DS,DI), ".HNM", 5);
+        if (!ZeroFlag)
+        {
+            Memory.SetZeroTerminatedString(MemoryUtils.ToPhysicalAddress(DS, DI), ".HNM", 5);
         }
         // Open file handle (LOGO.HNM)
-        Machine.Dos.DosInt21Handler.OpenFileorDevice(false);
+        Machine.Dos.DosInt21Handler.OpenFileOrDevice(false);
         DX = 0x2E;
         if (!CarryFlag)
         {
@@ -69,7 +70,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         Machine.Dos.DosInt21Handler.PrintString();
         // End of LOGO.EXE
         // Quit to DOS
-        Machine.Dos.DosInt21Handler.QuitWithExitCode();;
+        Machine.Dos.DosInt21Handler.QuitWithExitCode(); ;
         return () => { };
     }
 
@@ -87,14 +88,14 @@ public class RewrittenOverrides : CSharpOverrideHelper
     {
         int colors = CX;
         ushort colorOffset = DX;
-        Thread.Sleep(1000/60);
+        Thread.Sleep(1000 / 60);
         IVideoState videoState = Machine.VgaRegisters;
         videoState.DacRegisters.IndexRegisterWriteMode = BL;
         for (int i = 0; i < colors * 3; i++)
         {
             videoState.DacRegisters.DataRegister = UInt8[DS, (ushort)(colorOffset + i)];
         }
-        
+
     }
 
     /// <summary>
@@ -103,7 +104,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
     public void ConvertLineNumberToArrayIndex_1000_0A22_10A22()
     {
         DI = (ushort)(BX * 320 + DX);
-        
+
     }
 
     /// <summary>
@@ -297,7 +298,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         }
         while (!ZeroFlag);
         DS = Stack.Pop16();
-        
+
     }
 
     /// <summary>
@@ -325,7 +326,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
             num = --CX;
         }
         while (num != 0 && ZeroFlag);
-        
+
     }
 
     /// <summary>
@@ -367,7 +368,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         }
         ES = Stack.Pop16();
         DS = Stack.Pop16();
-        
+
     }
 
     /// <summary>
@@ -411,7 +412,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         AL = Alu8.And(AL, 0x3F);
         UInt8[ES, DI] = AL;
         DI += (ushort)Direction8;
-        
+
     }
 
     public void CirclesUnknown_1000_0DBC_10DBC()
@@ -440,7 +441,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         // CLC  (1000_0DDC / 0x10DDC)
         CarryFlag = false;
         // RET  (1000_0DDD / 0x10DDD)
-        
+
     }
 
     /// <summary>
@@ -482,7 +483,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         AH = al1;
         Alu16.Sub(AX, 0x4C4F);
         CarryFlag = false;
-        
+
     }
 
     public void HNMUnknown_1000_0E46_10E46()
@@ -514,7 +515,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         //Runs on program end
         //Without this line, the program doesn't exit.
         UInt16[DS, 0x52] = 0;
-        
+
     }
 
     /// <summary>
@@ -551,7 +552,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
             CommonUnknown_1000_0B9A_10B9A();
         }
         DS = Stack.Pop16();
-        
+
     }
 
     public void UpdatePaletteDataAddress_1000_0E86_10E86()
@@ -607,7 +608,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         // POP CX (1000_0ED3 / 0x10ED3)
         CX = Stack.Pop16();
         // RET  (1000_0ED4 / 0x10ED4)
-        
+
     }
 
     public void CommonUnknown_1000_0EFE_10EFE()
@@ -698,7 +699,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
                 goto label_16;
             }
             label_12();
-        void label_12()
+            void label_12()
             {
                 AX = Alu16.Add(AX, DI);
                 (SI, AX) = (AX, SI);
@@ -755,7 +756,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         DI = Stack.Pop16();
         SP += 2;
         CX = Alu16.Sub(CX, DI);
-        
+
     }
 
     public void WritePaletteDataAddress(ushort segment, ushort offset)
@@ -808,7 +809,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         }
         while (CarryFlag);
         CommonCheckForAnyKeyStroke_1000_1085_11085();
-        
+
     }
 
     public void CirclesUnknown_1000_1019_11019()
@@ -875,7 +876,7 @@ public class RewrittenOverrides : CSharpOverrideHelper
         // INT 0x16 (1000_108D / 0x1108D)
         Interrupt(0x16);
         // RET  (1000_1091 / 0x11091)
-        
+
     }
 
     /// <summary>

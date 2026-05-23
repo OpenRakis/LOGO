@@ -32,7 +32,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
         DefineGeneratedCodeOverrides();
         SetProvidedInterruptHandlersAsOverridden();
     }
-    
+
     public void DefineGeneratedCodeOverrides()
     {
         // 0x1000
@@ -160,7 +160,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
         UInt16[cs1, CrtRegisterOffset_6C] = DX;
         BP = CrtRegisterOffset_6C;
         CheckExternalEvents(cs1, 0x98C);
-        AL = Cpu.In8(DX);
+        AL = Machine.IoPortDispatcher.ReadByte(DX);
         AL = Alu8.And(AL, 8);
         NearCall(cs1, 0x992, CheckCrtRegisterForChange_1000_09B5_109B5);
         if (CarryFlag)
@@ -207,7 +207,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
             {
                 // IN AL,DX (1000_09C1 / 0x109C1)
                 CheckExternalEvents(cs1, 0x9c2);
-                AL = Cpu.In8(DX);
+                AL = Machine.IoPortDispatcher.ReadByte(DX);
                 // AND AL,0x8 (1000_09C2 / 0x109C2)
                 AL &= 0x8;
                 // CMP AL,AH (1000_09C4 / 0x109C4)
@@ -261,7 +261,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
             do
             {
                 CheckExternalEvents(cs1, 0x9EC);
-                AL = Cpu.In8(DX);
+                AL = Machine.IoPortDispatcher.ReadByte(DX);
                 AL &= 8;
                 // CMP AL,byte ptr CS:[0x6f] (1000_09EF / 0x109EF)
                 Alu8.Sub(AL, UInt8[cs1, CrtRegisterLastObservedValueOffset_6F]);
@@ -271,7 +271,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
         InterruptFlag = false;
         DX = 0x3C8;
         AL = BL;
-        Cpu.Out8(DX, AL);
+        Machine.IoPortDispatcher.WriteByte(DX, AL);
         DX = Alu16.Inc(DX);
         AX = CX;
         CX += CX;
@@ -283,7 +283,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
             while (CX != 0)
             {
                 CX--;
-                Cpu.Out8(DX, UInt8[DS, SI]);
+                Machine.IoPortDispatcher.WriteByte(DX, UInt8[DS, SI]);
                 SI = (ushort)(SI + Direction8);
             }
             FlagRegister16 = Stack.Pop16();
@@ -296,7 +296,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
         {
             AL = UInt8[DS, SI];
             SI = (ushort)(SI + Direction8);
-            Cpu.Out8(DX, AL);
+            Machine.IoPortDispatcher.WriteByte(DX, AL);
             num4 = CX--;
         }
         while (num4 != 0);
@@ -528,7 +528,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
         BX = Alu16.Dec(BX);
         if (!ZeroFlag)
             goto label_2;
-        label_9:
+    label_9:
         DirectionFlag = false;
         UInt8[cs1, 0xA71] = 0xC7;
         UInt8[cs1, 0xB2F] = 0xC7;
@@ -1049,7 +1049,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
         Stack.Push16(cs1);
         DS = Stack.Pop16();
         ES = Stack.Pop16();
-        
+
         int num1 = Alu16.Sub(UInt16[cs1, NumberOfFramesRemainingOffset_CB6], 0);
         if (!SignFlag)
         {
@@ -1449,7 +1449,7 @@ public class GeneratedOverrides_DecompiledAsm : CSharpOverrideHelper
             BP = Alu16.Rcr(BP, 1);
             if (CarryFlag)
                 goto label_2;
-            label_4:
+        label_4:
             CX = 0;
             BP = Alu16.Shr(BP, 1);
             if (ZeroFlag)

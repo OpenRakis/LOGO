@@ -19,7 +19,7 @@ namespace logo;
 /// The Ghidra plugin has replaced it.
 /// See Spice86 README for details.
 /// </summary>
-public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
+public partial class GeneratedOverrides_OriginalAsm : CSharpOverrideHelper
 {
     protected ushort cs1; // 0x1000
     protected ushort cs2; // 0xF000
@@ -33,7 +33,7 @@ public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
         DefineGeneratedCodeOverrides();
         SetProvidedInterruptHandlersAsOverridden();
     }
-    
+
     public void DefineGeneratedCodeOverrides()
     {
         // 0x1000
@@ -238,7 +238,7 @@ public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
         BP = 0x6C;
         CheckExternalEvents(cs1, 0x098C);
         // IN AL,DX (1000_098C / 0x1098C)
-        AL = Cpu.In8(DX);
+        AL = Machine.IoPortDispatcher.ReadByte(DX);
         // AND AL,0x8 (1000_098D / 0x1098D)
         // AL &= 0x8;
         AL = Alu8.And(AL, 0x8);
@@ -306,7 +306,7 @@ public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
     label_1000_09C1_109C1:
         // IN AL,DX (1000_09C1 / 0x109C1)
         CheckExternalEvents(cs1, 0x9c2);
-        AL = Cpu.In8(DX);
+        AL = Machine.IoPortDispatcher.ReadByte(DX);
         // AND AL,0x8 (1000_09C2 / 0x109C2)
         AL &= 0x8;
         // CMP AL,AH (1000_09C4 / 0x109C4)
@@ -366,7 +366,7 @@ public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
     label_1000_09EC_109EC:
         CheckExternalEvents(cs1, 0x09EC);
         // IN AL,DX (1000_09EC / 0x109EC)
-        AL = Cpu.In8(DX);
+        AL = Machine.IoPortDispatcher.ReadByte(DX);
         // AND AL,0x8 (1000_09ED / 0x109ED)
         AL &= 0x8;
         // CMP AL,byte ptr CS:[0x6f] (1000_09EF / 0x109EF)
@@ -384,7 +384,7 @@ public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
         // MOV AL,BL (1000_09FA / 0x109FA)
         AL = BL;
         // OUT DX,AL (1000_09FC / 0x109FC)
-        Cpu.Out8(DX, AL);
+        Machine.IoPortDispatcher.WriteByte(DX, AL);
         // JMP 0x1000:09ff (1000_09FD / 0x109FD)
         // JMP target is JMP, inlining.
         // JMP 0x1000:0a01 (1000_09FF / 0x109FF)
@@ -414,7 +414,7 @@ public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
         {
             CX--;
             // OUTSB DX,SI (1000_0A14 / 0x10A14)
-            Cpu.Out8(DX, UInt8[DS, SI]);
+            Machine.IoPortDispatcher.WriteByte(DX, UInt8[DS, SI]);
             SI = (ushort)(SI + Direction8);
         }
         // POPF  (1000_0A16 / 0x10A16)
@@ -430,7 +430,7 @@ public partial class GeneratedOverrides_OriginalAsm: CSharpOverrideHelper
         AL = UInt8[DS, SI];
         SI = (ushort)(SI + Direction8);
         // OUT DX,AL (1000_0A1B / 0x10A1B)
-        Cpu.Out8(DX, AL);
+        Machine.IoPortDispatcher.WriteByte(DX, AL);
         // LOOP 0x1000:0a1a (1000_0A1C / 0x10A1C)
         if (--CX != 0)
         {
