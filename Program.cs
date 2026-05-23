@@ -2,6 +2,7 @@
 // Use "-a "some string"" to pass arguments to the emulated program.
 // See https://github.com/OpenRakis/Spice86 for more information
 
+// Must match the documented LOGO.EXE checksum in README.md.
 const string ExpectedChecksum = "896a55f02555f708b57c6fd7576c8404aa479c1ec6e90fbbb230130bc7a31921";
 
 List<string> spice86Args = [..args];

@@ -22,6 +22,7 @@ Read these first, in order:
 - Run: `dotnet run -- -e /path/to/LOGO.EXE -d false`
 - Required DOS binary checksum is enforced in [Program.cs](Program.cs).
 - Default run profile is cloud-friendly: headless minimal UI, MCP on `8081`, and `UseCodeOverride=false` unless explicitly overridden.
+- To run with repository C# overrides, pass `--OverrideSupplierClassName logo.MyOverrideSupplier --UseCodeOverride true`.
 - Main project targets `net10.0` in [logo.csproj](logo.csproj).
 
 ## File Ownership And Edit Rules
