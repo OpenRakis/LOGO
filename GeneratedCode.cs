@@ -29,8 +29,11 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Program entry point. Builds the "LOGO.HNM" filename, opens the file via DOS Int21 OpenFile,
+    /// switches the VGA to mode 13h, runs the circles intro animation, then quits to DOS. The trailing
+    /// PrintString / second QuitWithExitCode after the main quit are unreachable in normal execution.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public virtual Action EntryPoint_OpenLogoHnmFileAndRun_1000_0000_10000(int offset)
     {
         DS = 0x111C;
@@ -84,6 +87,10 @@ public class RewrittenOverrides : CSharpOverrideHelper
 
     }
 
+    /// <summary>
+    /// Sleeps ~one VGA frame (~16.67 ms) then writes <c>CX * 3</c> palette bytes (RGB triples)
+    /// starting at <c>DS:DX</c> into the VGA DAC, using <c>BL</c> as the starting DAC index.
+    /// </summary>
     public void CommonCirclesWaitFrameAndWriteNextPaletteData_1000_09D8_109D8()
     {
         int colors = CX;
@@ -99,8 +106,9 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Computes a linear VGA mode 13h screen offset for a given row/column: <c>DI = BX * 320 + DX</c>.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public void ConvertLineNumberToArrayIndex_1000_0A22_10A22()
     {
         DI = (ushort)(BX * 320 + DX);
@@ -108,8 +116,13 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Blits a rectangle of <c>BX</c> rows by <c>BP</c> columns from <c>DS:SI</c> to <c>ES:DI</c>
+    /// with a 320-byte row stride (VGA mode 13h). The exact code path depends on the value of
+    /// <c>CH</c> (0xFE vs 0xFF) and the sign of <c>DI</c>: it performs either a plain word/byte copy,
+    /// or a sparse copy where a zero byte from the source skips one destination byte and a non-zero
+    /// byte is written. Used to draw the animated circles into the VGA framebuffer.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public void CommonUnknown_1000_0B9A_10B9A()
     {
         Alu8.Sub(CH, 0xFE);
@@ -250,8 +263,12 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Performs a vertical mirror/flip blit of the VGA mode 13h framebuffer (segment 0xA000):
+    /// the first pass copies the top 100 lines into rows 1..100 with per-word byte-swap,
+    /// the second pass copies them into the area starting at offset 0xF8C0. Effectively
+    /// produces the symmetric reflection used by the circles animation backdrop.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public void CirclesUnknown_display_1000_0C72_10C72()
     {
         Stack.Push16(DS);
@@ -302,8 +319,13 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Main loop driving the circles animation. Performs the initial framebuffer flip blit, then
+    /// initializes the per-frame counters at <c>EntrySegment:0xCB6/0xCBA/0xCB0/0xCB2/0xCB4</c>
+    /// (frames-remaining, palette-stream pointer, R/G/B accumulators) and iterates
+    /// <see cref="CirclesDrawStep_1000_0D22_10D22"/> 0xFB (251) times, polling the keyboard
+    /// between frames to allow an early exit.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public void CircleMainLoop_1000_0CF4_10CF4()
     {
         CirclesUnknown_display_1000_0C72_10C72();
@@ -330,8 +352,12 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// One step of the circles animation. While the frames-remaining counter is non-negative,
+    /// copies the next ring of palette source bytes into the working buffer at offset 0x160,
+    /// computes the next interpolated RGB triple via <see cref="CommonComputeNextVgaPalette_1000_0D5F_10D5F"/>,
+    /// then waits one frame and pushes 0x50 (80) palette entries to the VGA DAC.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public void CirclesDrawStep_1000_0D22_10D22()
     {
         Stack.Push16(DS);
@@ -372,8 +398,14 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Computes the next RGB triple for the rolling circles palette. For each of the R, G and B
+    /// channels the per-channel accumulator stored at <c>EntrySegment:0xCB0/0xCB2/0xCB4</c> is
+    /// advanced by a delta read from the current palette-stream entry, and the high byte
+    /// (shifted left by 1) masked with 0x3F is written to the destination at <c>ES:DI</c>.
+    /// When the frames-remaining counter at <c>0xCB6</c> reaches zero the palette-stream
+    /// pointer at <c>0xCBA</c> is advanced by 8 bytes to the next segment.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public void CommonComputeNextVgaPalette_1000_0D5F_10D5F()
     {
         SI = UInt16[EntrySegmentAddress, 0xCBA];
@@ -415,6 +447,13 @@ public class RewrittenOverrides : CSharpOverrideHelper
 
     }
 
+    /// <summary>
+    /// Refills the palette/HNM data buffer pointed to by <c>DS:[0x4C]:[0x4E]</c>: records the
+    /// current address, compares the remaining capacity against 0x3A02, calls
+    /// <see cref="HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A"/> to read the next chunk
+    /// from the HNM file, then advances <c>DI</c> by the bytes-read count and zero-terminates
+    /// the buffer.
+    /// </summary>
     public void CirclesUnknown_1000_0DBC_10DBC()
     {
         // LES DI,[0x4c] (1000_0DBC / 0x10DBC)
@@ -445,8 +484,13 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Top-level orchestrator for the circles animation phase. Stores the file handle, primes
+    /// the HNM data buffer via <see cref="CirclesUnknown_1000_0DBC_10DBC"/>, loads the initial
+    /// VGA palette, then runs <see cref="CircleMainLoop_1000_0CF4_10CF4"/> followed by the HNM
+    /// per-frame loop calling <see cref="HNMUnknown_1000_0FEA_10FEA"/> until the remaining-frames
+    /// counter at <c>DS:0x52</c> hits zero, and finally verifies the "LO" signature at offset 0xEE.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public void CirclesAnimation_1000_0DDE_10DDE()
     {
         // Read File
@@ -486,6 +530,11 @@ public class RewrittenOverrides : CSharpOverrideHelper
 
     }
 
+    /// <summary>
+    /// ASM fall-through wrapper: invokes <see cref="CirclesDrawStep_1000_0D22_10D22"/> and then
+    /// continues straight into <see cref="CommonUnknown_1000_0E49_10E49"/> without an intervening
+    /// return.
+    /// </summary>
     public void HNMUnknown_1000_0E46_10E46()
     {
         // CALL 0x1000:0d22 (1000_0E46 / 0x10E46)
@@ -494,6 +543,10 @@ public class RewrittenOverrides : CSharpOverrideHelper
         CommonUnknown_1000_0E49_10E49();
     }
 
+    /// <summary>
+    /// ASM fall-through wrapper: invokes <see cref="CommonUnknown_display_1000_0E59_10E59"/> and
+    /// then continues straight into <see cref="CommonUnknown_1000_0E4C_10E4C"/>.
+    /// </summary>
     public void CommonUnknown_1000_0E49_10E49()
     {
         // CALL 0x1000:0e59 (1000_0E49 / 0x10E49)
@@ -503,8 +556,12 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Advances the HNM/palette stream pointer via
+    /// <see cref="UpdatePaletteDataAddress_1000_0E86_10E86"/>. When the new chunk reports a size
+    /// of zero (ZeroFlag set on return), zeroes the remaining-frames counter at <c>DS:0x52</c>,
+    /// which terminates the outer animation loop and allows the program to exit.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public void CommonUnknown_1000_0E4C_10E4C()
     {
         UpdatePaletteDataAddress_1000_0E86_10E86();
@@ -519,6 +576,12 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
+    /// Reads the next HNM frame header from the current palette/HNM stream (flags into <c>DI</c>,
+    /// length into <c>CX</c>, two command words into <c>DX</c> and <c>BX</c>). If the 0x200 flag
+    /// bit is set the auxiliary buffer decoder <see cref="CommonUnknown_1000_0EBD_10EBD"/> is
+    /// invoked first; then the main HNM bitstream decoder
+    /// <see cref="CommonUnknown_1000_0B9A_10B9A"/> is called to draw the decoded pixels into
+    /// the VGA framebuffer at <c>ES = 0xA000</c>.
     /// TODO: High level rewrite this first.
     /// </summary>
     public void CommonUnknown_display_1000_0E59_10E59()
@@ -555,6 +618,12 @@ public class RewrittenOverrides : CSharpOverrideHelper
 
     }
 
+    /// <summary>
+    /// Advances <see cref="PaletteDataAddress"/> by the chunk-size word stored at its current
+    /// location, normalizing the result back to a seg:offset pair, and updates the cached
+    /// chunk size via <see cref="CommonUnknown_1000_0EB2_10EB2"/> (sets <c>CX = size - 2</c>
+    /// and <c>ZeroFlag</c>).
+    /// </summary>
     public void UpdatePaletteDataAddress_1000_0E86_10E86()
     {
         SegmentedAddress pointer = PaletteDataAddress;
@@ -565,11 +634,20 @@ public class RewrittenOverrides : CSharpOverrideHelper
         CommonUnknown_1000_0EB2_10EB2(newSegment, newOffset);
     }
 
+    /// <summary>
+    /// Reads the chunk size at the current <see cref="PaletteDataAddress"/> via
+    /// <see cref="CommonUnknown_1000_0EB2_10EB2"/>, leaving <c>CX = size - 2</c> and the
+    /// <c>ZeroFlag</c> set when the original chunk size is zero.
+    /// </summary>
     public void CommonUnknown_1000_0EAD_10EAD()
     {
         CommonUnknown_1000_0EB2_10EB2(PaletteDataAddress.Segment, PaletteDataAddress.Offset);
     }
 
+    /// <summary>
+    /// Reads the 16-bit chunk-size word at <c>segment:offset</c>, then sets <c>CX = value - 2</c>
+    /// and the <c>ZeroFlag</c> to reflect whether the original word was zero (end-of-stream).
+    /// </summary>
     public Action CommonUnknown_1000_0EB2_10EB2(ushort segment, ushort offset)
     {
         ushort value = UInt16[segment, offset];
@@ -578,6 +656,12 @@ public class RewrittenOverrides : CSharpOverrideHelper
         return NearRet();
     }
 
+    /// <summary>
+    /// Decodes an HNM stream into an auxiliary buffer at <c>0x1131:0000</c>. Saves caller's
+    /// <c>CX</c> and <c>DI</c>, redirects the destination to the auxiliary segment, invokes the
+    /// inner decoder <see cref="CommonUnknown_1000_0EFE_10EFE"/>, then restores the registers.
+    /// Called when the HNM frame header indicates flag bit 0x200.
+    /// </summary>
     public void CommonUnknown_1000_0EBD_10EBD()
     {
         // AND DI,0xfdff (1000_0EBD / 0x10EBD)
@@ -611,6 +695,11 @@ public class RewrittenOverrides : CSharpOverrideHelper
 
     }
 
+    /// <summary>
+    /// Decoder prologue: saves caller <c>CX</c>, <c>DI</c> and <c>DS</c>, skips the 6-byte HNM
+    /// frame header by adding 6 to <c>SI</c>, zeros the bit-buffer <c>BP</c>, then enters the
+    /// main HNM bitstream decoder loop <see cref="CommonUnknownSplit_1000_0F30_10F30"/>.
+    /// </summary>
     public void CommonUnknown_1000_0EFE_10EFE()
     {
         Stack.Push16(CX);
@@ -622,8 +711,14 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Core HNM bitstream decoder. Consumes a 16-bit prefix-code stream from <c>DS:SI</c>
+    /// (re-filling the bit buffer <c>BP</c> from the stream when it empties) and writes the
+    /// decoded byte run into <c>ES:DI</c>. Supports three encodings: literal bytes, short
+    /// 2-bit length back-references with a one-byte near offset, and long back-references with
+    /// a 13-bit far offset followed by an optional one-byte length. Terminates when the special
+    /// end-of-stream code is reached, returning the number of bytes written in <c>CX</c>.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public void CommonUnknownSplit_1000_0F30_10F30()
     {
         while (true)
@@ -759,6 +854,10 @@ public class RewrittenOverrides : CSharpOverrideHelper
 
     }
 
+    /// <summary>
+    /// Stores the current palette/HNM data segment and offset into <c>DS:[0x58]:[0x56]</c>,
+    /// the two-word slot read back by <see cref="PaletteDataAddress"/>.
+    /// </summary>
     public void WritePaletteDataAddress(ushort segment, ushort offset)
     {
         UInt16[DS, 0x58] = segment;
@@ -766,6 +865,11 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
     private SegmentedAddress PaletteDataAddress => new(UInt16[DS, 0x58], UInt16[DS, 0x56]);
     private SegmentedAddress PaletteDataAddressPlusTwo => new(PaletteDataAddress.Segment, (ushort)(PaletteDataAddress.Offset + 2));
+    /// <summary>
+    /// Walks the linked list of <see cref="PaletteData"/> records that begins at
+    /// <see cref="PaletteDataAddressPlusTwo"/> and loads each entry into the VGA DAC. Used to
+    /// initialize the VGA palette before the HNM playback loop starts.
+    /// </summary>
     public void CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4()
     {
         PaletteData? current = new(Memory, PaletteDataAddressPlusTwo);
@@ -777,8 +881,13 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Renders one HNM frame via <see cref="HNMUnknown_1000_0E46_10E46"/> and then sleeps until
+    /// the BIOS Data Area tick counter at <c>0000:046C</c> has advanced by ~5/8 of the per-frame
+    /// tick budget, polling <see cref="CSharpOverrideHelper.CheckExternalEvents"/> in the wait
+    /// loop. After waking, polls the keyboard via
+    /// <see cref="CommonCheckForAnyKeyStroke_1000_1085_11085"/> for an early-exit request.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public void HNMUnknown_1000_0FEA_10FEA()
     {
         InterruptFlag = true;
@@ -812,6 +921,11 @@ public class RewrittenOverrides : CSharpOverrideHelper
 
     }
 
+    /// <summary>
+    /// String-scan helper. Reads bytes from <c>DS:DX</c> and walks <c>DI</c> forward; mirrors
+    /// the layout of <see cref="CirclesUnknown_1000_105F_1105F"/> minus the explicit comparison
+    /// against '.' (0x2E). Companion to that routine in the filename-handling code path.
+    /// </summary>
     public void CirclesUnknown_1000_1019_11019()
     {
         DI = DX;
@@ -826,6 +940,11 @@ public class RewrittenOverrides : CSharpOverrideHelper
         }
     }
 
+    /// <summary>
+    /// Scans the zero-terminated string at <c>DS:DX</c> for the first '.' (0x2E) byte and
+    /// returns with <c>DI</c> pointing at it. Used by the entry point to find the extension
+    /// position before appending ".HNM" to build the filename to open.
+    /// </summary>
     public void CirclesUnknown_1000_105F_1105F()
     {
         // MOV DI,DX (1000_105F / 0x1105F)
@@ -880,8 +999,12 @@ public class RewrittenOverrides : CSharpOverrideHelper
     }
 
     /// <summary>
-    /// First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation)
+    /// Reads up to 0x8000 bytes from the currently-open file handle into <c>ES:DI</c> via
+    /// DOS Int21 ReadFile (AH=0x3F), leaving the bytes-actually-read count in <c>CX</c>, then
+    /// closes the file handle via DOS Int21 CloseFile (AH=0x3E). Used after the last HNM chunk
+    /// has been consumed.
     /// </summary>
+    /// <remarks>First pass rewrite done by the .NET Roslyn compiler (ReadyToRun pre-compilation).</remarks>
     public void HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A()
     {
         Stack.Push16(DS);
