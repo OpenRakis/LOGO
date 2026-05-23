@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <Using Include="Spice86.Core.Emulator.Function" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Spice86" Version="11.1.0" />
+    <PackageReference Include="Spice86" Version="14" />
     <!--ProjectReference Include="../Spice86/src/Spice86.Shared/Spice86.Shared.csproj" />
     <ProjectReference Include="../Spice86/src/Spice86.Logging/Spice86.Logging.csproj" />
     <ProjectReference Include="../Spice86/src/Bufdio.Spice86/Bufdio.Spice86.csproj" />
