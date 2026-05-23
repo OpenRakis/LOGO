@@ -208,9 +208,9 @@ public sealed class MainWindow : Window
             _image.InvalidateVisual();
             _restartButton.IsEnabled = true;
             _pauseButton.IsEnabled = true;
-            _statusText.Text = $"Loaded {Path.GetFileName(path)}: {_engine.TotalChunks} chunks, {_engine.CurrentChunkIndex} ready.";
+            _statusText.Text = $"Loaded {Path.GetFileName(path)}: {_engine.TotalChunks} chunks, {_engine.CurrentChunkIndex} ready (paused).";
             _nextStepAtTicks = _clock.ElapsedTicks + MillisecondsToStopwatchTicks(_engine.PendingWaitMilliseconds);
-            SetPlaying(true);
+            SetPlaying(false);
         }
         catch (Exception ex)
         {
