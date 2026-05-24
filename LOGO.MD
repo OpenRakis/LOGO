@@ -1,47 +1,97 @@
-# LOGO.HNM Format Notes
+# LOGO.HNM and LOGO.EXE: Deep Technical Notes
 
-This document records the current best reconstruction of the `LOGO.HNM` file as used by `LOGO.EXE` in the PC floppy version of Dune.
+This document is a working technical specification for the Dune floppy logo animation path.
 
-The short version is:
+It focuses on two artifacts:
 
-- `LOGO.HNM` is not plain HSQ data.
-- The repository's `UnHsq` tool rejects it with `cannot apply UNHSQ algorithm`, so the file should be treated as a custom HNM animation container, not as a vanilla HSQ archive.
-- The playback code consumes the file as a chain of self-sized chunks, then interprets those chunks as palette updates and compressed frame payloads.
-- The actual frame compression is a small bitstream codec with literal bytes, short back-references, long back-references, and an end-of-stream marker.
+- `LOGO.EXE`: the original DOS program that controls playback.
+- `LOGO.HNM`: the animation data stream consumed by that program.
 
-The goal here is not to pretend that every byte is solved. The goal is to document what is directly supported by the code and by raw-file inspection, and to mark the remaining uncertain areas explicitly.
+The intent is evidence-first documentation. When behavior is unknown, this file marks it explicitly instead of guessing.
 
-## What Was Verified
+## Executive Summary
 
-The following points are directly supported by the generated code and the original assembly dump:
+- `LOGO.HNM` is **not** a plain HSQ file.
+- The file is consumed as a chain of self-sized outer chunks.
+- Those chunks drive two major pipelines: palette updates and frame decoding.
+- Frame payloads are decoded through a bit-level LZ-style codec.
+- `LOGO.EXE` owns orchestration: I/O, timing, palette evolution, frame dispatch, input polling, and termination.
 
-- The program opens `LOGO.HNM` directly at startup. See [GeneratedCode.cs](GeneratedCode.cs#L32) and [README.md](README.md#L1).
-- The file is read in large blocks through DOS Int 21h read calls, then closed when the stream is exhausted. See [HNMReadFile_AdvancePointer_CloseFile_1000_109A_1109A](GeneratedCode.cs#L1008).
-- Playback advances through a pointer stored in `DS:[0x56]` / `DS:[0x58]`, which behaves like a current stream address. See [WritePaletteDataAddress](GeneratedCode.cs#L858) and [UpdatePaletteDataAddress_1000_0E86_10E86](GeneratedCode.cs#L559).
-- The visible palette list is decoded from the stream before frame rendering begins. See [CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4](GeneratedCode.cs#L871).
-- The frame path reads a small header, optionally decodes into an auxiliary buffer when flag bit `0x200` is set, then runs a bitstream decoder into the VGA framebuffer. See [CommonUnknown_display_1000_0E59_10E59](GeneratedCode.cs#L579), [CommonUnknown_1000_0EBD_10EBD](GeneratedCode.cs#L660), [CommonUnknown_1000_0EFE_10EFE](GeneratedCode.cs#L699), and [CommonUnknownSplit_1000_0F30_10F30](GeneratedCode.cs#L714).
-- The decoder returns the number of bytes produced in `CX` and uses the carry flag / zero flag contract as part of its control flow. See the same decoder block in [GeneratedCode_OriginalAsm.cs](GeneratedCode_OriginalAsm.cs#L2334).
+## Scope and Evidence Rules
 
-## High-Level File Shape
+Statements below are based on one or more of:
 
-The raw `LOGO.HNM` file on disk is `18417` bytes long.
+- direct execution behavior in this repository
+- generated translation in `GeneratedCode.cs`
+- assembly-aligned output in `GeneratedCode_OriginalAsm.cs`
+- raw byte inspection of `LOGO.HNM`
 
-The file is not a single monolithic blob. It is a sequence of variable-size chunks. The first word of each chunk is a little-endian size, and the next chunk begins by advancing that many bytes from the current chunk start.
+If a field name or semantic role is uncertain, it is labeled as provisional.
 
-That behavior is implemented in `UpdatePaletteDataAddress_1000_0E86_10E86`:
+## What LOGO.EXE Actually Does
+
+`LOGO.EXE` is not just a decoder. It is a playback state machine with hard timing and device-facing behavior.
+
+### High-level responsibilities
+
+- Open `LOGO.HNM` through DOS file services.
+- Maintain current stream pointer and chunk stepping state.
+- Decode and apply palette records to VGA DAC.
+- Decode frame payloads, optionally through an auxiliary segment.
+- Blit decoded bytes into VGA memory (`A000:` space).
+- Wait and sync against video cadence.
+- Poll keyboard for early exit.
+- Close file and terminate through DOS interrupt paths.
+
+### Why this matters
+
+If you only copy the compression algorithm but ignore orchestration (palette loop ordering, chunk stepping, timing gates, retrace-aligned behavior), playback diverges even when decoded bytes look plausible.
+
+## Verified Control-Flow Anchors
+
+The following control points are directly visible in code and assembly mappings.
+
+- Startup opens `LOGO.HNM` and enters the playback path.
+- Stream advancement is pointer-based (`DS:[0x56]` / `DS:[0x58]`) and chunk-size driven.
+- Palette records are consumed in a dedicated loop until `0xFF` terminator.
+- Frame handler reads a compact header, branches on flags, then decodes and blits.
+- Inner decode routine reports produced byte count via `CX`.
+
+Representative references:
+
+- `GeneratedCode.cs` entry and file open path
+- `UpdatePaletteDataAddress_1000_0E86_10E86`
+- `CommonUnknown_display_1000_0E59_10E59`
+- `CommonUnknown_1000_0EBD_10EBD`
+- `CommonUnknown_1000_0EFE_10EFE`
+- `CommonUnknownSplit_1000_0F30_10F30`
+
+## LOGO.HNM Outer Container
+
+`LOGO.HNM` length in this repository: `18417` bytes.
+
+The strongest supported outer structure is:
+
+```text
+while not EOF:
+  u16 chunk_size_le   ; includes this 2-byte field
+  u8  payload[chunk_size_le - 2]
+```
+
+Chunk stepping mirrors the program logic:
 
 ```text
 current = [segment:offset]
-size    = word at current
+size    = word(current)
 current = current + size
-normalize current back to segment:offset
+normalize segmented pointer
 ```
 
-`CommonUnknown_1000_0EB2_10EB2` then loads the size word and leaves `CX = size - 2`. That is the strongest evidence that the leading word is a self-size field, not just a payload length.
+`CommonUnknown_1000_0EB2_10EB2` leaving `CX = size - 2` is key evidence that the leading word is a total record size, not a payload-only length.
 
-### Observed Outer Chunk Chain
+### Observed chunk chain
 
-The following offsets and sizes were observed by walking the raw file with the same size arithmetic used by the program:
+The offsets below were produced by walking the file with that exact arithmetic:
 
 | Index | Offset | Size | Leading words |
 |---:|---:|---:|---|
@@ -85,31 +135,15 @@ The following offsets and sizes were observed by walking the raw file with the s
 | 37 | 0x47E5 | 0x0006 | `0x8200`, `0xFF00` |
 | 38 | 0x47EB | 0x0006 | `0x8200`, `0xFF00` |
 
-The repeated `0x0006` chunks at the end are real on disk. They are not a guessed artifact of the parser.
+The repeated `0x0006` tail chunks are real data, not parser artifacts.
 
-## Outer Container Layout
+## Inner Record Families
 
-The top-level view that best fits the evidence is:
+The outer container holds different payload families.
 
-```text
-HNM file
-  repeated chunk:
-    u16 chunk_size   ; includes the size word itself
-    u8  payload[chunk_size - 2]
-```
+### 1) Palette record stream
 
-The payload is not uniform across all chunks. The same file contains at least two distinct kinds of payloads:
-
-- palette update records, which are parsed by `CirclesChangeVgaPaletteLoop_1000_0FA4_10FA4`
-- frame/control records, which are parsed by `CommonUnknown_display_1000_0E59_10E59`
-
-The code does not give those payloads friendly names, so this document keeps the more generic label `chunk` for the outer wrapper and `record` for the inner logical structures.
-
-## Palette Record Structure
-
-The palette path starts at the stream pointer, skips the leading size word, and then reads a stream of palette records until it sees a terminator byte `0xFF` in `AL`.
-
-The observed layout of one palette record is:
+Observed shape:
 
 ```text
 u8 start_index
@@ -117,204 +151,141 @@ u8 color_count
 u8 rgb[color_count * 3]
 ```
 
-The palette loader then:
+Termination rule: `start_index == 0xFF` ends the palette record list.
 
-- loads the palette into the VGA DAC with Int 10h function `AX = 1012h`
-- uses `BL = start_index`
-- uses `CL = color_count`
-- uses `DX` as the source address of the RGB triplets
-- copies the RGB data into a code segment scratch area with a helper call
+Operational behavior:
 
-The termination rule is simple:
+- Program issues VGA DAC update through INT 10h (`AX = 1012h`).
+- `BL` carries start index, `CL` carries count.
+- `DX` points to triplet data.
 
-- if the first byte of the record header is `0xFF`, the palette list ends
+### 2) Frame/control record stream
 
-That is why the first word of the very first chunk matters so much. On disk, it begins with `0x5655`, which means the first palette record starts at index `0x55` and contains `0x56` colors.
+In `CommonUnknown_display_1000_0E59_10E59`, the stream is interpreted as a compact header plus payload controls.
 
-## Frame Header Structure
+Observed semantics:
 
-The frame path is visible in `CommonUnknown_display_1000_0E59_10E59`.
+- `DI`: control/flag word
+- `CX`: length/size-related word
+- `CX == 0`: early out for this record
+- `DI & 0x0200`: auxiliary decode pre-pass
 
-The routine reads a small header from the stream and interprets it like this:
+After header interpretation, additional words are read and used by blit/decode logic.
 
-- `DI` receives the first word after the chunk-size word and acts as flags or a control word
-- `CX` receives the second word and acts as a length or record-size field
-- if `CX == 0`, the frame branch ends early
-- if `DI & 0x200` is set, a special auxiliary decode path is taken first
-- after that, two more words are read into `DX` and `BX`
-- the main display path writes to VGA segment `0xA000` and invokes the blitter
+## Compression Core
 
-The important part is that the code treats the first two words as a header and the next two words as additional parameters.
+Decoder anchor: `CommonUnknownSplit_1000_0F30_10F30`.
 
-### The `0x200` Bit
+### Conceptual model
 
-The flag `0x200` is special.
+The codec is a bitstream LZ variant with:
 
-When the bit is set, the code enters `CommonUnknown_1000_0EBD_10EBD`, which:
+- literal byte emissions
+- short backward references
+- long backward references
+- in-band end marker
 
-- clears bit `0x200` from `DI`
-- redirects output to segment `0x1131`
-- saves and restores `CX`, `DI`, `DS`, and related stack state
-- calls the inner decoder at `CommonUnknown_1000_0EFE_10EFE`
+### Bitstream mechanics
 
-That means the same compressed stream can be decoded either into a scratch buffer or directly into the visible buffer, depending on the header flags.
+- Bit reservoir lives in 16-bit `BP`.
+- Control path shifts bits one at a time.
+- On depletion, fetch next 16-bit word from stream.
+- Carry/zero flag combinations drive token selection.
 
-### The Six-Byte Decoder Prologue
+This is not byte-framed coding; token boundaries are bit-granular.
 
-`CommonUnknown_1000_0EFE_10EFE` skips six bytes before the bitstream decoder starts.
+### Decoder preamble
 
-That is the strongest evidence for the decoder prologue being a fixed-size subheader:
+`CommonUnknown_1000_0EFE_10EFE` skips 6 bytes before entering the token loop.
+
+Current safest interpretation:
 
 ```text
-u8[6] decoder_preamble
-compressed_bitstream
+u8 preamble[6]
+u8 compressed_bitstream[]
 ```
 
-The exact semantic name of those six bytes is not fully proven yet, so the safest statement is that the decoder consumes a 6-byte preamble and then starts bit-level decoding.
+Exact semantic naming of all six preamble bytes remains open.
 
-## Compression Algorithm
+### Token behavior details
 
-The core of the file compression is the function at [CommonUnknownSplit_1000_0F30_10F30](GeneratedCode.cs#L714). It is best described as a prefix-code stream with LZ-style back-references.
-
-### Bit Buffer Behavior
-
-The decoder maintains a 16-bit bit buffer in `BP`.
-
-The flow is:
-
-- shift `BP` right by one bit each iteration
-- if the buffer becomes empty, load the next word from `DS:SI`
-- use `RCR` to seed the carry flag from the new stream word
-- carry and zero flag combinations choose the next token type
-
-This is not a byte-aligned format. It is a bit-level prefix stream.
-
-### Token Types
-
-The decoder can emit three kinds of output:
-
-1. A literal byte copied directly from the input stream to the output buffer.
-2. A short back-reference, using a one-byte signed-ish offset and a compact length.
-3. A long back-reference, using a wider offset and a short or extended length.
-
-The end of the stream is also encoded in-band.
-
-### Literal Path
-
-The literal path is the simplest one.
-
-When the control bits select the literal branch, the decoder performs a byte copy from the stream source to the output destination.
-
-In the generated code this is the `label_2` path:
+Literal token:
 
 ```text
-output[DI] = input[SI]
+dst[DI] = src[SI]
 SI++
 DI++
 ```
 
-### Short Back-Reference Path
+Short back-reference token:
 
-The short-copy path constructs a small length value from control bits and then reads a single offset byte from the stream.
+- Reads compact length from control bits.
+- Reads one-byte offset.
+- Extends to 16-bit source location in already produced output window.
+- Copies from prior output to current output.
 
-The offset byte is expanded into a 16-bit address by forcing the high byte to `0xFF`, then it is added to `DI` to form a source pointer inside the already-decoded output window.
+Long back-reference token:
 
-The code then temporarily swaps `SI` with that computed source address and copies bytes from the output buffer back into the current destination.
+- Reads 16-bit packed descriptor.
+- Decodes larger backward offset.
+- Length is inline 3-bit value or extended byte.
+- Extended length value `0` is end-of-stream.
 
-The practical effect is LZ-style copy-from-previous-output.
+Copy source is the already decoded output segment, not a separate dictionary.
 
-### Long Back-Reference Path
-
-The long-copy path reads a 16-bit word and then repacks it into:
-
-- a larger backward offset
-- a 3-bit inline length, or
-- an extended length byte when the low 3 bits are zero
-
-The extended-length case is also the stream terminator case:
-
-- if the extension length byte is zero, the decoder stops
-
-That gives the format an in-band end marker without needing a separate chunk terminator inside the compressed stream.
-
-### Copy Semantics
-
-The copy helper temporarily swaps `DS` to the destination segment so the decoder can copy from already written output bytes while still reading the input stream from the original location when done.
-
-This matters because the decoder is not copying from a separate dictionary buffer. It is copying from its own output window.
-
-The final byte count is returned in `CX` as:
+Reported output byte count after decode pass:
 
 ```text
-CX = DI - original_DI
+CX = DI - DI_start
 ```
 
-That is, the number of bytes written by the decode pass.
+## `DI & 0x0200` Auxiliary Path
 
-## Timing and Playback Loop
+When bit `0x0200` is set:
 
-The visual playback loop is separate from the format itself, but it matters because it explains why the HNM stream is consumed in short bursts.
+- control bit is cleared before continuing
+- decode target switches to auxiliary segment (`0x1131` path in current reconstruction)
+- state is saved/restored around decode call
 
-After rendering each frame, the code waits for approximately one video frame interval by polling the BIOS tick counter at `0000:046C`, then it checks for keyboard input to allow early exit.
+This path allows the same coded payload family to be routed through an intermediate segment before final display handling.
 
-That means the HNM stream is not merely decoded once. It is consumed over time, one frame at a time, as part of the animation loop.
+## Timing Contract and Playback Cadence
 
-The relevant entry point is [HNMUnknown_1000_0FEA_10FEA](GeneratedCode.cs#L884).
+The format is consumed in a timed loop, not in one bulk decode.
 
-## Practical Reconstruction Summary
+- Render/update stage executes per record.
+- Program waits using BIOS/video timing behavior.
+- Keyboard is polled between iterations to permit early termination.
 
-The best current reconstruction of the format is:
+Implication: high-fidelity reproduction must preserve ordering and pacing, not just decode bytes correctly.
 
-```text
-LOGO.HNM
-  chunk 0
-    u16 size
-    payload
-      palette record list and/or header data
-  chunk 1
-    u16 size
-    payload
-      frame/control data
-  chunk 2
-    u16 size
-    payload
-      more frame/control data
-  ...
-```
+## Relationship Between LOGO.EXE and LOGO.HNM
 
-Inside the playback path, the stream splits into two logical layers:
+Think of the pair as engine + script:
 
-- an outer chunked container with self-sized records
-- an inner compressed bitstream used for frame expansion
+- `LOGO.HNM` carries encoded visual instructions and payloads.
+- `LOGO.EXE` interprets those instructions, owns timing, and controls VGA side effects.
 
-If you want the most implementation-friendly one-line description, it is this:
+Neither artifact alone fully defines observed behavior.
 
-> `LOGO.HNM` is a chunked animation stream whose frame payloads are bitstream-compressed with a compact LZ-style decoder, not an HSQ archive.
+## Current Unknowns
 
-## What Is Still Uncertain
+Still unresolved or intentionally provisional:
 
-The following parts are still best treated as provisional:
+- exact semantic role of each byte in the 6-byte decode preamble
+- complete semantic naming for frame-header fields (`DI`, `CX`, later words)
+- whether every tiny `0x0006` tail chunk is control, padding, or mixed role
+- full taxonomy of all record subtypes in late-stream control sections
 
-- the exact semantic name of the 6-byte decoder preamble
-- the exact meaning of the `DI` and `CX` header fields beyond their observed control flow
-- whether every chunk type uses the same logical internal record structure
-- whether the repeated `0x0006` chunks near the end are pure padding, palette-control records, or a distinct control subformat
+## Practical One-Line Description
 
-Where this document uses a generic name like `chunk`, `record`, or `header`, that is intentional. It avoids turning an inference into a false certainty.
+`LOGO.HNM` is a chunked animation stream whose frame payloads are decoded by a bit-level LZ-style codec, while `LOGO.EXE` provides orchestration, timing, palette behavior, and device-facing playback control.
 
-## Source References
+## References
 
-- [README.md](README.md) for the high-level startup and file-loading summary.
-- [GeneratedCode.cs](GeneratedCode.cs#L32) for the entry point that opens `LOGO.HNM`.
-- [GeneratedCode.cs](GeneratedCode.cs#L559) for the chunk-pointer update logic.
-- [GeneratedCode.cs](GeneratedCode.cs#L579) for the frame-header reader.
-- [GeneratedCode.cs](GeneratedCode.cs#L660) for the auxiliary decode path.
-- [GeneratedCode.cs](GeneratedCode.cs#L699) for the 6-byte prologue before bitstream decoding.
-- [GeneratedCode.cs](GeneratedCode.cs#L714) for the core compressed-stream decoder.
-- [GeneratedCode.cs](GeneratedCode.cs#L871) for the palette-loading loop.
-- [GeneratedCode.cs](GeneratedCode.cs#L1008) for file read / close handling.
-- [GeneratedCode_OriginalAsm.cs](GeneratedCode_OriginalAsm.cs#L1807) and [GeneratedCode_OriginalAsm.cs](GeneratedCode_OriginalAsm.cs#L2334) for the original assembly-aligned versions of the same logic.
+- `README.md`
+- `GeneratedCode.cs`
+- `GeneratedCode_OriginalAsm.cs`
+- `tools/UnHsq/Program.cs`
 
-## Note On Decompression
-
-The repository contains a reusable HSQ decompressor at [tools/UnHsq/Program.cs](tools/UnHsq/Program.cs), but it does not apply to `LOGO.HNM` as-is. The raw file rejects that path, so the correct analysis target here is the custom HNM animation format documented above.
+Note on HSQ: `UnHsq` rejects `LOGO.HNM` (`cannot apply UNHSQ algorithm`). This is expected and reinforces that `LOGO.HNM` is its own container/codec path, not a vanilla HSQ archive.

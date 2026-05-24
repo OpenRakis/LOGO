@@ -1,91 +1,91 @@
 # LOGO
 
-A fully reverse-engineered real DOS app exemple, from the floppy version of DUNE.
+Reverse-engineering and preservation project for the Dune PC floppy logo animation player.
+
+This repository documents and reimplements the original DOS behavior of `LOGO.EXE` and `LOGO.HNM`, with a strong focus on execution fidelity rather than approximation.
 
 <https://github.com/user-attachments/assets/9d0987ae-4c27-4c83-b6d7-79880e20c76a>
 
-## High level view
+## What This Repo Contains
 
-In this animation there is a lot. Let's break it down:
+The repo currently serves two complementary goals.
 
-- Call to the DOS Open File Interrupt (LOGO.HNM is the argument)
-- The code checks 288 times overall (via the BIOS Keyboard interrupts) for any key received in the input buffer, and exit to DOS in that case.
-- Constant changes to the VGA palette
-- Loops to animate colors on the screen (and wait ~16.667 ms for the VGA retrace in between)
-- Call to the DOS Read File Interrupt (several times)
-- Copy part of the file into the main memory
-- Decompression of video frames read in memory previously
-- Show it to the screen (which means changes to the VGA palette, and deciding where to write which color on the screen)
-- Call to the DOS Close File Interrupt
-- Call to the "Quit with exit code" DOS Interrupt (here, in Spice86, Cpu.IsRunning is set to false, marking the end of the emulation loop)
-- Call to to the DOS Print String Interrupt (for some reason)
-- Call to the "Exit to DOS" Interrupt (here, the Spice86 emulation loop exits, since the DOS command prompt isn't emulated)
+- Emulator-accurate reverse engineering of the original DOS binary (`LOGO.EXE`) through Spice86.
+- Standalone playback implementation (`HnmPlayer`) that reproduces the same animation contract in managed desktop code.
 
-## Purpose
+### Project layout
 
-This repository serves as an example in order to document and show case the usage of Spice86.
+- Root project: Spice86-based execution environment for the original executable and override development.
+- `HnmPlayer`: independent desktop HNM player focused on deterministic playback of the Dune floppy stream.
 
-LOGO.EXE and LOGO.HNM only exist in the PC floppy version of DUNE.
+## Data Provenance
 
-This repository does not include LOGO.EXE. If you want to run the original DOS binary through the root emulator project, supply your own copy from Dune PC floppy 2.1.
+`LOGO.EXE` and `LOGO.HNM` come from the Dune PC floppy release.
 
-## How to run
+This repository does **not** ship `LOGO.EXE`. If you run the root emulator project against the original binary, provide your own copy from Dune PC floppy 2.1.
 
-Get LOGO.EXE from Dune PC floppy 2.1. The checksum below is for that binary.
-
-sha256 checksum:
+Reference checksum for `LOGO.EXE`:
 
     896a55f02555f708b57c6fd7576c8404aa479c1ec6e90fbbb230130bc7a31921
-Then:
+
+## Execution Model (Original DOS)
+
+At a high level, the original animation path performs the following sequence:
+
+- Open `LOGO.HNM` via DOS interrupt services.
+- Parse and apply palette records.
+- Read frame records and decode compressed payloads.
+- Render into VGA memory and update DAC entries.
+- Wait on video timing and poll keyboard to allow early exit.
+- Close file and terminate through DOS interrupt paths.
+
+For deep format internals, see [LOGO.MD](LOGO.MD).
+
+## Quick Start
+
+### Root emulator project (original `LOGO.EXE` path)
 
     dotnet run -- -e /path/to/LOGO.EXE -d false
 
-The standalone desktop player under HnmPlayer no longer needs LOGO.EXE at runtime.
+### Standalone player (`HnmPlayer`)
 
-## Cloud / MCP run profile
+`HnmPlayer` is now independent from runtime `LOGO.EXE` loading. It targets the Dune floppy HNM playback contract directly.
 
-By default, this project now starts Spice86 with:
+Build:
 
-- headless mode (`--HeadlessMode Minimal`)
-- MCP server enabled on port `8081` (`--mcp-http-port 8081`)
-- C# code overrides disabled (`--UseCodeOverride false`)
+    dotnet build HnmPlayer/HnmPlayer.csproj --configuration Debug
 
-You can still pass these flags explicitly if you want to override the defaults.
+## MCP Default Profile
 
-To re-enable the C# reverse-engineered overrides, pass:
+By default, the root project starts Spice86 with:
+
+- MCP HTTP server on port `8081` (`--mcp-http-port 8081`)
+- C# overrides disabled (`--UseCodeOverride false`)
+
+To re-enable reverse-engineered overrides, pass both flags together:
 
     --OverrideSupplierClassName logo.MyOverrideSupplier --UseCodeOverride true
 
-Both flags are required together.
+## Core Reverse-Engineering Files
 
-## Main files of interest
+- `Program.cs`: root entry point and runtime wiring.
+- `CodeGeneratorConfig.json`: Ghidra code-generation configuration (`Spice86CodeGenerator.java`).
+- `GeneratedCode_OriginalAsm.cs`: direct generated assembly-to-C# form.
+- `GeneratedCode_DecompiledAsm.cs`: optional decompiled cleanup stage.
+- `GeneratedCode.cs`: hand-maintained high-level translation.
+- `HnmPlayer/*`: independent playback implementation.
 
-- Program.cs : Entry point.
+### CheckExternalEvents guidance
 
-- CodeGeneratorConfig.json: Configuration file used by the Ghidra script named "Spice86CodeGenerator.java". This script is available on the Spice86 repo.
+Interrupt handling requires frequent `CheckExternalEvents` calls. You can inject broadly or at selected hot points.
 
-### Namespace
+Example targeted injection:
 
-The namespace of your assembly the Generated Code must use.
+    "CodeToInject": {
+      "CheckExternalEvents({nextSegment}, {nextOffset});": ["CS1:100B", "CS1:09C1", "CS1:09EC", "CS1:098C", "CS1:09D9"]
+    }
 
-### CheckExternalEvents
+## Documentation Index
 
-CheckExternalEvents must be called often enough to let interrupts run. Interrupts such as DOS interrupts, keyboard interrupts, ...
-
-You can either let the code generator insert it everywhere with
-
-    GenerateCheckExternalEventsBeforeInstruction
-
-(probably overkill)
-
-Or inject it at keypoints with (for example):
-
-        "CodeToInject": {
-        "CheckExternalEvents({nextSegment}, {nextOffset});": ["CS1:100B", "CS1:09C1", "CS1:09EC", "CS1:098C", "CS1:09D9"]
-    },
-
-- GeneratedCode_OriginalAsm.cs: Code generated by Spice86CodeGenerator.java (Ghidra script)
-- GeneratedCode_DecompiledAsm.cs: (optional step) Code written by the .NET Ahead of Time compilation and re-formed into C# from the IL by Jetbrains Dotpeek. This is optional, but the compiler removes a lot of GOTOs for us.
-- GeneratedCode: Final high level translation of "C# ASM" to high level C#. This is done by hand.
-
-HnmPlayer: the independant HNM video player (Dune floppy format, aka 'HNM0')
+- [LOGO.MD](LOGO.MD): deep technical specification and evidence-backed reconstruction of `LOGO.HNM` and the `LOGO.EXE` playback contract.
+- [AGENTS.md](AGENTS.md): repository workflow guidance and reverse-engineering constraints.
