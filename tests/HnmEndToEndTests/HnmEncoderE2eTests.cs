@@ -1,14 +1,11 @@
-using System.Buffers.Binary;
 using System.Diagnostics;
-using System.Runtime.Versioning;
-using System.Drawing;
-using System.Drawing.Imaging;
 using logo;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using Xunit;
 
 namespace HnmEndToEndTests;
 
-[SupportedOSPlatform("windows")]
 public sealed class HnmEncoderE2eTests
 {
     [Fact]
@@ -62,7 +59,7 @@ public sealed class HnmEncoderE2eTests
         string[] screenshots = Directory.GetFiles(screenshotDir, "*.png");
         Assert.NotEmpty(screenshots);
 
-        using System.Drawing.Bitmap firstScreenshot = new(screenshots[0]);
+        using Image<Rgba32> firstScreenshot = Image.Load<Rgba32>(screenshots[0]);
         Assert.Equal(HnmPlaybackEngine.FrameWidth, firstScreenshot.Width);
         Assert.Equal(HnmPlaybackEngine.FrameHeight, firstScreenshot.Height);
     }
@@ -85,8 +82,8 @@ public sealed class HnmEncoderE2eTests
 
     private static IReadOnlyList<string> CreateSourceFrames(string framesDir)
     {
-        Color colorA = Color.FromArgb(64, 128, 192);
-        Color colorB = Color.FromArgb(192, 64, 128);
+        Rgba32 colorA = new(64, 128, 192);
+        Rgba32 colorB = new(192, 64, 128);
 
         var paths = new List<string>(2)
         {
@@ -97,26 +94,28 @@ public sealed class HnmEncoderE2eTests
         return paths;
     }
 
-    private static string DrawCheckerboard(string path, Color colorA, Color colorB, bool swapCells)
+    private static string DrawCheckerboard(string path, Rgba32 colorA, Rgba32 colorB, bool swapCells)
     {
-        using var bitmap = new System.Drawing.Bitmap(HnmPlaybackEngine.FrameWidth, HnmPlaybackEngine.FrameHeight);
-        using Graphics graphics = Graphics.FromImage(bitmap);
-
-        for (int y = 0; y < HnmPlaybackEngine.FrameHeight; y++)
+        using Image<Rgba32> image = new(HnmPlaybackEngine.FrameWidth, HnmPlaybackEngine.FrameHeight);
+        image.ProcessPixelRows(accessor =>
         {
-            for (int x = 0; x < HnmPlaybackEngine.FrameWidth; x++)
+            for (int y = 0; y < accessor.Height; y++)
             {
-                bool useFirst = ((x / 16) + (y / 16)) % 2 == 0;
-                if (swapCells)
+                Span<Rgba32> row = accessor.GetRowSpan(y);
+                for (int x = 0; x < row.Length; x++)
                 {
-                    useFirst = !useFirst;
+                    bool useFirst = ((x / 16) + (y / 16)) % 2 == 0;
+                    if (swapCells)
+                    {
+                        useFirst = !useFirst;
+                    }
+
+                    row[x] = useFirst ? colorA : colorB;
                 }
-
-                bitmap.SetPixel(x, y, useFirst ? colorA : colorB);
             }
-        }
+        });
 
-        bitmap.Save(path, ImageFormat.Png);
+        image.SaveAsPng(path);
         return path;
     }
 
@@ -207,23 +206,29 @@ public sealed class HnmEncoderE2eTests
 
     private static void AssertFrameMatchesPng(string pngPath, byte[] framebuffer, byte[] palette)
     {
-        using System.Drawing.Bitmap png = new(pngPath);
+        using Image<Rgba32> png = Image.Load<Rgba32>(pngPath);
         Assert.Equal(HnmPlaybackEngine.FrameWidth, png.Width);
         Assert.Equal(HnmPlaybackEngine.FrameHeight, png.Height);
 
-        for (int y = 0; y < png.Height; y++)
+        png.ProcessPixelRows(accessor =>
         {
-            for (int x = 0; x < png.Width; x++)
+            for (int y = 0; y < accessor.Height; y++)
             {
-                Color expected = png.GetPixel(x, y);
-                byte index = framebuffer[(y * HnmPlaybackEngine.FrameWidth) + x];
-                int paletteOffset = index * 3;
-                Color actual = Color.FromArgb(palette[paletteOffset + 0] << 2, palette[paletteOffset + 1] << 2, palette[paletteOffset + 2] << 2);
+                Span<Rgba32> row = accessor.GetRowSpan(y);
+                for (int x = 0; x < row.Length; x++)
+                {
+                    Rgba32 expected = row[x];
+                    byte index = framebuffer[(y * HnmPlaybackEngine.FrameWidth) + x];
+                    int paletteOffset = index * 3;
+                    byte actualR = (byte)(palette[paletteOffset + 0] << 2);
+                    byte actualG = (byte)(palette[paletteOffset + 1] << 2);
+                    byte actualB = (byte)(palette[paletteOffset + 2] << 2);
 
-                Assert.Equal(expected.R & 0xFC, actual.R);
-                Assert.Equal(expected.G & 0xFC, actual.G);
-                Assert.Equal(expected.B & 0xFC, actual.B);
+                    Assert.Equal((byte)(expected.R & 0xFC), actualR);
+                    Assert.Equal((byte)(expected.G & 0xFC), actualG);
+                    Assert.Equal((byte)(expected.B & 0xFC), actualB);
+                }
             }
-        }
+        });
     }
 }

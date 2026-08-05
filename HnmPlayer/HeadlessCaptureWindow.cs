@@ -2,11 +2,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using System.Diagnostics;
-using System.Runtime.Versioning;
 
 namespace logo;
 
-[SupportedOSPlatform("windows")]
 public sealed class HeadlessCaptureWindow : Window
 {
     public HeadlessCaptureWindow()
