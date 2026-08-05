@@ -28,12 +28,17 @@ jobs:
 
       - name: Restore
         working-directory: ./
-        run: dotnet restore
+        run: |
+          dotnet restore tools/Hnm0Encoder/Hnm0Encoder.csproj
+          dotnet restore HnmPlayer/HnmPlayer.csproj
+          dotnet restore tests/HnmEndToEndTests/HnmEndToEndTests.csproj
 
-      - name: Build
+      - name: Build encoder and player
         working-directory: ./
-        run: dotnet build --configuration Release
+        run: |
+          dotnet build tools/Hnm0Encoder/Hnm0Encoder.csproj --configuration Release --no-restore
+          dotnet build HnmPlayer/HnmPlayer.csproj --configuration Release --no-restore
 
       - name: Test
         working-directory: ./
-        run: dotnet test --configuration Release --no-build
+        run: dotnet test tests/HnmEndToEndTests/HnmEndToEndTests.csproj --configuration Release
