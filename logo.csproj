@@ -10,6 +10,7 @@
     <None Remove=".gitignore" />
     <Compile Remove="tools\**\*.cs" />
     <Compile Remove="HnmPlayer\**\*.cs" />
+    <Compile Remove="tests\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Using Include="Spice86.Core.Emulator.Memory" />
@@ -20,9 +21,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Spice86" Version="14.1" />
-    <PackageReference Include="Avalonia" Version="12.0.3" />
-    <PackageReference Include="Avalonia.Desktop" Version="12.0.3" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.3" />
+    <PackageReference Include="Avalonia" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
     <!--ProjectReference Include="../Spice86/src/Spice86.Shared/Spice86.Shared.csproj" />
     <ProjectReference Include="../Spice86/src/Spice86.Logging/Spice86.Logging.csproj" />
     <ProjectReference Include="../Spice86/src/Bufdio.Spice86/Bufdio.Spice86.csproj" />

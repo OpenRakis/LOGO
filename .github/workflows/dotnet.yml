@@ -1,26 +1,44 @@
 name: .NET Build
 
-# Trigger the workflow on push or pull request
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - encoder
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
-
     strategy:
       matrix:
         os: [macos-latest, windows-latest, ubuntu-latest]
       fail-fast: false
-    
+
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v1
-      
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '10.0.x'
+      - uses: actions/checkout@v4
 
-    - name: Build with dotnet
-      working-directory: ./
-      run: dotnet build --configuration Release
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore
+        working-directory: ./
+        run: |
+          dotnet restore tools/Hnm0Encoder/Hnm0Encoder.csproj
+          dotnet restore HnmPlayer/HnmPlayer.csproj
+          dotnet restore tests/HnmEndToEndTests/HnmEndToEndTests.csproj
+
+      - name: Build encoder and player
+        working-directory: ./
+        run: |
+          dotnet build tools/Hnm0Encoder/Hnm0Encoder.csproj --configuration Release --no-restore
+          dotnet build HnmPlayer/HnmPlayer.csproj --configuration Release --no-restore
+
+      - name: Test
+        working-directory: ./
+        run: dotnet test tests/HnmEndToEndTests/HnmEndToEndTests.csproj --configuration Release

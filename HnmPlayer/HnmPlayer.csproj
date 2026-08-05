@@ -14,11 +14,15 @@
         <Compile Include="MainWindow.cs" />
         <Compile Include="CirclesPaletteData.cs" />
         <Compile Include="HnmPlaybackEngine.cs" />
+        <Compile Include="PlayerLaunchContext.cs" />
+        <Compile Include="HeadlessCaptureWindow.cs" />
+        <Compile Include="HeadlessPlayerRunner.cs" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="12.0.3" />
-        <PackageReference Include="Avalonia.Desktop" Version="12.0.3" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.3" />
+        <PackageReference Include="Avalonia" Version="12.1.1" />
+        <PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
+        <PackageReference Include="Avalonia.Headless" Version="12.1.1" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
     </ItemGroup>
 </Project>
